@@ -188,6 +188,23 @@ function getEdits($num, $page) {
     return null;
 }
 
+function searchEntities($query, $page, $num) {
+    global $db;
+
+    try {
+        $stmt = $db->prepare('SELECT DISTINCT Entities.Name, Entities.Id, GROUP_CONCAT(Tags.Data) Tags FROM Entities LEFT JOIN EntityTags ON Entities.Id = EntityTags.EntityId LEFT JOIN Tags ON EntityTags.TagId = Tags.Id GROUP BY Entities.Id HAVING Name LIKE :sterm OR Tags LIKE :sterm LIMIT :page, :num');
+        $stmt->bindValue(':sterm', '%' . $query . '%');
+        $stmt->bindValue(':num', $num, PDO::PARAM_INT);
+        $stmt->bindValue(':page', $page * $num, PDO::PARAM_INT);
+        $stmt->execute();
+        return $stmt->fetchAll();
+    } catch (PDOException $e) {
+        handleError($e);
+    }
+
+    return null;
+}
+
 /**
  * @param Entity $entity
  */
