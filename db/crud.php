@@ -12,7 +12,38 @@ function getEntity($id) {
         $stmt->setFetchMode(PDO::FETCH_CLASS, 'Entity');
         $stmt->execute();
         return $stmt->fetch();
+    } catch (PDOException $e) {
+        handleError($e);
+    }
 
+    return null;
+}
+
+function getEntityCreation($id) {
+    global $db;
+
+    try {
+        $stmt = $db->prepare('SELECT UserId, (SELECT Username FROM Users WHERE Id = UserId) AS Username, Time FROM EditLog WHERE Time = (SELECT MIN(Time) FROM EditLog WHERE EntityId = :id)');
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Edit');
+        $stmt->execute();
+        return $stmt->fetch();
+    } catch (PDOException $e) {
+        handleError($e);
+    }
+
+    return null;
+}
+
+function getEntityLastEdit($id) {
+    global $db;
+
+    try {
+        $stmt = $db->prepare('SELECT UserId, (SELECT Username FROM Users WHERE Id = UserId) AS Username, Time FROM EditLog WHERE Time = (SELECT MAX(Time) FROM EditLog WHERE EntityId = :id)');
+        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
+        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Edit');
+        $stmt->execute();
+        return $stmt->fetch();
     } catch (PDOException $e) {
         handleError($e);
     }
@@ -144,7 +175,7 @@ function getEdits($num, $page) {
 
     if (isset($db)) {
         try {
-            $stmt = $db->prepare('SELECT UserId, Time, EntityId, TagId, PictureId FROM EditLog ORDER BY Time DESC LIMIT :page, :num');
+            $stmt = $db->prepare('SELECT UserId, Time, EntityId, TagId, PictureId, Username FROM EditLog LEFT JOIN Users ON EditLog.UserId = Users.Id ORDER BY Time DESC LIMIT :page, :num');
             $stmt->bindValue(':num', $num, PDO::PARAM_INT);
             $stmt->bindValue(':page', $page * $num, PDO::PARAM_INT);
             $stmt->execute();

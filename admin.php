@@ -94,8 +94,8 @@ exit;
         <tbody>
             <?php foreach ($edits as $edit): ?>
                 <tr>
-                    <td><?= getUser($edit->getUserId())->getUsername() ?></td>
-                    <td><?= PrettyDateTime::parse(date_create_from_format('Y-m-d H:i:s', $edit->getTime()), new DateTime('now')); ?> (<?= $edit->getTime() ?>)</td>
+                    <td><?= $edit->getUsername() ?></td>
+                    <td><?= prettyTime($edit->getTime()) ?> (<?= $edit->getTime() ?>)</td>
                     <?php if($edit->getEntityId() != null): ?>
                         <td><a href="/entity/<?= $edit->getEntityId() ?>">Entity</a></td>
                     <?php elseif($edit->getTagId() != null): ?>

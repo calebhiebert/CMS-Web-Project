@@ -1,10 +1,7 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Caleb
- * Date: 2/9/2017
- * Time: 9:01 PM
- */
+require_once 'PrettyDateTime.php';
+
+use PrettyDateTime\PrettyDateTime;
 
 function random_text( $type = 'alnum', $length = 8 )
 {
@@ -57,6 +54,10 @@ function random_text( $type = 'alnum', $length = 8 )
 
 function truncate($text, $length, $truncationChars) {
     return strlen($text) > $length ? substr($text, 0, $length - strlen($truncationChars)) . $truncationChars : $text;
+}
+
+function prettyTime($time) {
+    return PrettyDateTime::parse(date_create_from_format('Y-m-d H:i:s', $time), new DateTime('now'));
 }
 
 ?>

@@ -10,6 +10,10 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
     $ent->setTags(getEntityTags($id));
     $parents = array($ent);
     $inheritedTags = array();
+    $created = getEntityCreation($ent->getId());
+    $edited = getEntityLastEdit($ent->getId());
+
+    $editString = 'Created ' . prettyTime($created->getTime()) . ($created != $edited ? ' by ' . $created->getUsername() . '. Last edited ' . prettyTime($edited->getTime()) . ' by ' . $edited->getUsername() . '.' : '.');
 
     populateParentTree($ent);
 
@@ -71,22 +75,27 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
                             <a class="card-link" href="/entity/<?= $ent->getId() ?>/edit">Edit</a>
                         <?php endif ?>
                     </div>
+                    <small class="card-footer text-muted p-2">
+                        <?= $editString ?>
+                    </small>
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="col-md-auto mb-3">
-                    <div class="card">
-                        <h6 class="card-header">Data</h6>
-                        <div class="list-group list-group-flush">
-                            <?php foreach ($inheritedTags as $tag): ?>
-                                <a class="list-group-item text-muted" href="/tag/<?= urlencode($tag->getTagName()) ?>/<?= urlencode($tag->getTagData()) ?>"><strong><?= $tag->getTagName() ?></strong>: <?= $tag->getTagData() ?></a>
-                            <?php endforeach ?>
-                            <?php foreach ($ent->getTags() as $tag): ?>
-                                <a class="list-group-item" href="/tag/<?= urlencode($tag->getTagName()) ?>/<?= urlencode($tag->getTagData()) ?>"><strong><?= $tag->getTagName() ?></strong>: <?= $tag->getTagData() ?></a>
-                            <?php endforeach ?>
+                <?php if (count($inheritedTags) != 0 && count($ent->getTags()) != 0): ?>
+                    <div class="col-md-auto mb-3">
+                        <div class="card">
+                            <h6 class="card-header">Data</h6>
+                            <div class="list-group list-group-flush">
+                                <?php foreach ($inheritedTags as $tag): ?>
+                                    <a class="list-group-item text-muted" href="/tag/<?= urlencode($tag->getTagName()) ?>/<?= urlencode($tag->getTagData()) ?>"><strong><?= $tag->getTagName() ?></strong>: <?= $tag->getTagData() ?></a>
+                                <?php endforeach ?>
+                                <?php foreach ($ent->getTags() as $tag): ?>
+                                    <a class="list-group-item" href="/tag/<?= urlencode($tag->getTagName()) ?>/<?= urlencode($tag->getTagData()) ?>"><strong><?= $tag->getTagName() ?></strong>: <?= $tag->getTagData() ?></a>
+                                <?php endforeach ?>
+                            </div>
                         </div>
                     </div>
-                </div>
+                <?php endif ?>
                 <?php if(count($ent->getChildren()) > 0): ?>
                     <div class="col-md-auto mb-3">
                         <div class="card">

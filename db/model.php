@@ -370,6 +370,7 @@ class Session {
 
 class Edit {
     private $UserId;
+    private $Username;
     private $Time;
     private $EntityId;
     private $TagId;
@@ -462,7 +463,21 @@ class Edit {
         $this->PictureId = $PictureId;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getUsername()
+    {
+        return $this->Username;
+    }
 
+    /**
+     * @param mixed $UserName
+     */
+    public function setUsername($UserName)
+    {
+        $this->Username = $UserName;
+    }
 }
 
 class RegistrationCode {
