@@ -36,6 +36,9 @@ require_once 'db/crud.php';
                     </li>
                 <?php endif ?>
                 <li class="nav-item">
+                    <a href="/entity/create" class="nav-link">Create Entity</a>
+                </li>
+                <li class="nav-item">
                     <a href="/logout" class="nav-link">Logout</a>
                 </li>
             <?php endif ?>

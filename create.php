@@ -53,6 +53,8 @@
 <?php startblock('title') ?>Create Entity<?php endblock() ?>
 
 <?php startblock('body') ?>
+<link rel="stylesheet" href="/css/select2.min.css">
+
 <div class="container mt-4">
     <h4>Create Entity</h4>
     <div class="card">
@@ -100,9 +102,16 @@
 </div>
 <?php endblock() ?>
 <?php startblock('script') ?>
+    <script src="/js/select2.full.min.js"></script>
     <?php if(isset($parent)): ?>
         <script>
             $('#in-parent').val(<?= $parent ?>);
         </script>
     <?php endif; ?>
+    <script>
+        $('#in-parent').select2({
+            placeholder: "Select a parent (optional)",
+            allowClear: true
+        });
+    </script>
 <?php endblock() ?>
