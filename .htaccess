@@ -26,6 +26,9 @@ RewriteRule ^entity/([0-9]+)/edit/?$ create.php?editid=$1
 RewriteRule ^tag/(.*)/(.*)/?$ tag.php?name=$1&data=$2
 RewriteRule ^tag/(.*)/?$ tagname.php?name=$1
 
+# Search
+RewriteRule ^search/?$ search.php
+
 # Api
 RewriteRule ^api/(.*)/?$ api.php?call=$1
 

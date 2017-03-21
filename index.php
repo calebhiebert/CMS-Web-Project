@@ -7,7 +7,10 @@ require_once "token.php";
 require_once 'db/crud.php';
 require_once "db.php";
 
-$entities = getEntities(9, 0);
+if($token_valid)
+    $entities = getEntities(9, 0, true);
+else
+    $entities = getEntities(9, 0, false);
 ?>
 
 <?php include 'base.php' ?>
@@ -17,20 +20,18 @@ $entities = getEntities(9, 0);
 <div class="container mt-4">
     <div class="card-columns">
         <?php foreach ($entities as $entity): ?>
-            <?php if($token_valid || $entity->isPublished()): ?>
-                <?php $edit = getEntityLastEdit($entity->getId()) ?>
-                <div class="card mt-2">
-                    <h5 class="card-header"><?= $entity->getName() ?></h5>
-                    <div class="card-block">
-                        <p class="card-text">
-                            <?= truncate($entity->getDescription(), 100, '...') ?>
-                        </p>
-                        <small class="text-muted">Edited <?= prettyTime($edit->getTime()) ?> by <?= $edit->getUsername() ?></small>
-                        <br/>
-                        <a href="/entity/<?= $entity->getId() ?>" class="card-link">View</a>
-                    </div>
+            <?php $edit = getEntityLastEdit($entity->getId()) ?>
+            <div class="card mt-2">
+                <h5 class="card-header"><?= $entity->getName() ?></h5>
+                <div class="card-block">
+                    <p class="card-text">
+                        <?= truncate($entity->getDescription(), 100, '...') ?>
+                    </p>
+                    <small class="text-muted">Edited <?= prettyTime($edit->getTime()) ?> by <?= $edit->getUsername() ?></small>
+                    <br/>
+                    <a href="/entity/<?= $entity->getId() ?>" class="card-link">View</a>
                 </div>
-            <?php endif ?>
+            </div>
         <?php endforeach; ?>
     </div>
 </div>

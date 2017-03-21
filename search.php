@@ -7,7 +7,25 @@ require_once "token.php";
 require_once 'db/crud.php';
 require_once "db.php";
 
-$entities = getEntities(9, 0);
+$page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT);
+$query = filter_input(INPUT_GET, 'query', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
+$resultsPerPage = filter_input(INPUT_GET, 'rpp', FILTER_VALIDATE_INT);
+
+if($page == null)
+    $page = 0;
+else if ($page > 0)
+    $page--;
+else if ($page < 0)
+    $page = 0;
+
+if($resultsPerPage == null)
+    $resultsPerPage = 5;
+else if ($resultsPerPage < 5)
+    $resultsPerPage = 5;
+else if ($resultsPerPage > 250)
+    $resultsPerPage = 250;
+
+$searchResults = searchEntities($query);
 ?>
 
 <?php include 'base.php' ?>
@@ -15,64 +33,23 @@ $entities = getEntities(9, 0);
 
 <?php startblock('body') ?>
     <div class="container mt-4" id="entity-list">
-        <label>
-            Search
-            <input type="text" class="form-control" v-model="query">
-        </label>
-        <ul class="list-group">
-            <li class="list-group-item" v-for="entity in entities.entities"><a href="/entity/{{ entity.id }}">{{ entity.name }}</a></li>
+        <div class="card">
+            <form class="card-block" action="/search" method="get">
+                <div class="input-group">
+                    <input type="text" name="query" class="form-control" placeholder="Search" value="<?= $query ?>">
+                    <button type="submit" class="input-group-addon"><i class="fa fa-search" aria-hidden="true"></i></button>
+                </div>
+            </form>
+        </div>
+        <div class="list-group mt-2">
+            <?php for ($i = ($page * $resultsPerPage); $i < min(($page * $resultsPerPage) + $resultsPerPage, count($searchResults)); $i++): ?>
+                <a class="list-group-item list-group-item-action" href="/entity/<?= $searchResults[$i]['Id'] ?>"><?= $searchResults[$i]['Name'] ?></a>
+            <?php endfor ?>
+        </div>
+        <ul class="pagination justify-content-center mt-2">
+            <?php for ($i = 0; $i < ceil(count($searchResults) / $resultsPerPage); $i++): ?>
+                <li class="page-item<?= $i == $page ? ' active' : '' ?>"><a href="/search?query=<?= urlencode($query) ?>&page=<?= $i + 1 ?>&rpp=<?= $resultsPerPage ?>" class="page-link"><?= $i + 1 ?></a></li>
+            <?php endfor; ?>
         </ul>
-        <button type="button" class="btn btn-outline-secondary" v-if="page > 0" @click="prevPage">Previous Page</button>
-        Page: {{ page }}
-        <button type="button" class="btn btn-outline-secondary" @click="nextPage">Next Page</button>
     </div>
-<?php endblock() ?>
-
-<?php startblock('script') ?>
-<script src="https://vuejs.org/js/vue.js"></script>
-<script>
-    var app = new Vue({
-        el: '#entity-list',
-        data: {
-            page: 0,
-            query: '',
-            entities: {}
-        },
-        watch: {
-            query: function (newQuery) {
-                getEntities(newQuery, this.page, 5);
-            }
-        },
-        methods: {
-            nextPage: function () {
-                this.page ++;
-                getEntities(this.query, this.page, 5);
-            },
-            prevPage: function () {
-                this.page --;
-                if(this.page < 0)
-                    this.page = 0;
-
-                getEntities(this.query, this.page, 5);
-            }
-        }
-    });
-
-    getEntities('', 0, 5);
-    
-    function getEntities(query, page, num) {
-        var data = "query=" + encodeURIComponent(query) + '&page=' + encodeURIComponent(page) + '&num=' + encodeURIComponent(num);
-        var xhr = new XMLHttpRequest();
-
-        xhr.addEventListener("readystatechange", function () {
-            if (this.readyState === 4 && this.status == 200) {
-                app.entities = JSON.parse(this.responseText);
-            }
-        });
-
-        xhr.open("POST", "/api/entity-search");
-        xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
-        xhr.send(data);
-    }
-</script>
 <?php endblock() ?>

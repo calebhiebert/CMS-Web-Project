@@ -23,7 +23,7 @@ require_once 'db/crud.php';
     <div class="collapse navbar-collapse" id="navContent">
         <ul class="navbar-nav mr-auto">
             <li class="nav-item">
-                <a href="#" class="nav-link">Search</a>
+                <a href="/search" class="nav-link">Search</a>
             </li>
             <?php if(!$token_valid): ?>
             <li class="nav-item">

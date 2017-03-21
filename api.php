@@ -17,9 +17,6 @@ if($_GET) {
             case 'delete-registration-code':
                 deleteRegistrationCode(filter_input(INPUT_POST, 'code', FILTER_SANITIZE_NUMBER_INT));
                 break;
-            case 'entity-search':
-                search(filter_input(INPUT_POST, 'query', FILTER_SANITIZE_FULL_SPECIAL_CHARS), filter_input(INPUT_POST, 'page', FILTER_VALIDATE_INT), filter_input(INPUT_POST, 'num', FILTER_VALIDATE_INT));
-                break;
             default:
                 defaultResponse($call);
         }
@@ -67,32 +64,6 @@ function deleteRegistrationCode($code) {
 function defaultResponse($call) {
     http_response_code(400);
     echo json_encode(createResponse($call . ' is not a valid api call :('));
-}
-
-function search($query, $page, $num) {
-
-    if($page == null)
-        $page = 0;
-
-    if($num == null)
-        $num = 5;
-
-    $res = searchEntities($query);
-
-    if($res != null) {
-        $result = ['resultsPerPage'=>$num, 'pages'=>ceil(count($res) / $num), 'page'=>$page];
-        $ents = [];
-
-        for ($i = $page * $num; $i < min(($page * $num) + $num, count($res)); $i++) {
-            array_push($ents, ['name'=>$res[$i]['Name'], 'id'=>$res[$i]['Id'], 'tags'=>$res[$i]['Tags']]);
-        }
-
-        $result['entities'] = $ents;
-
-        echo json_encode($result);
-    } else {
-        echo json_encode(['resultsPerPage'=>0, 'entities'=>[]]);
-    }
 }
 
 /**

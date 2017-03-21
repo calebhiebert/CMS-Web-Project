@@ -51,11 +51,11 @@ function getEntityLastEdit($id) {
     return null;
 }
 
-function getEntities($num, $page) {
+function getEntities($num, $page, $includeUnpublished) {
     global $db;
 
     try {
-        $stmt = $db->prepare('SELECT Id AS id, Name AS name, Description AS description, Parent AS parent, Published AS published FROM Entities ORDER BY Id LIMIT :page, :num');
+        $stmt = $db->prepare('SELECT Id AS id, Name AS name, Description AS description, Parent AS parent, Published AS published FROM Entities ' . ($includeUnpublished ? '' : 'WHERE Published = 1') . ' ORDER BY Id LIMIT :page, :num');
         $stmt->bindValue(':num', $num, PDO::PARAM_INT);
         $stmt->bindValue(':page', $page * $num, PDO::PARAM_INT);
         $stmt->execute();
