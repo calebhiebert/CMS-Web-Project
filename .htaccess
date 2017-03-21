@@ -9,6 +9,7 @@ RewriteRule ^/?$ index.php
 
 # Users
 RewriteRule ^user/([0-9]+)/?$ user.php?id=$1
+RewriteRule ^user/([0-9]+)/delete/?$ user_operations.php?id=$1&operation=delete
 
 # Register
 RewriteRule ^register/?$ register.php

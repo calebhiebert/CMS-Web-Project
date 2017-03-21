@@ -268,6 +268,19 @@ function getUser($id) {
     return null;
 }
 
+function deleteUser($id) {
+
+    global $db;
+
+    try {
+        $stmt = $db->prepare('DELETE FROM Users WHERE Id = :id LIMIT 1');
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+    } catch (PDOException $e) {
+        handleError($e);
+    }
+}
+
 function getUsers() {
 
     global $db;
