@@ -77,21 +77,21 @@ function search($query, $page, $num) {
     if($num == null)
         $num = 5;
 
-    $res = searchEntities($query, $page, $num);
+    $res = searchEntities($query);
 
     if($res != null) {
-        $result = ['count'=>count($res)];
+        $result = ['resultsPerPage'=>$num, 'pages'=>ceil(count($res) / $num), 'page'=>$page];
         $ents = [];
 
-        foreach ($res as $entity) {
-            array_push($ents, ['name'=>$entity['Name'], 'id'=>$entity['Id'], 'tags'=>$entity['Tags']]);
+        for ($i = $page * $num; $i < min(($page * $num) + $num, count($res)); $i++) {
+            array_push($ents, ['name'=>$res[$i]['Name'], 'id'=>$res[$i]['Id'], 'tags'=>$res[$i]['Tags']]);
         }
 
         $result['entities'] = $ents;
 
         echo json_encode($result);
     } else {
-        echo json_encode(['count'=>0, 'entities'=>[]]);
+        echo json_encode(['resultsPerPage'=>0, 'entities'=>[]]);
     }
 }
 
