@@ -11,7 +11,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $passwordConf = filter_input(INPUT_POST, 'password_conf', FILTER_SANITIZE_STRING);
     $employeeCode = filter_input(INPUT_POST, 'employee_code', FILTER_SANITIZE_SPECIAL_CHARS);
 
-    if (strlen(trim($username)) < 5 || strlen(trim($username)) > 60) {
+    if (strlen(trim($username)) < USERNAME_MIN_LENGTH || strlen(trim($username)) > 60) {
         $msgUname = 'Your username must be between 5 and 60 characters long';
     }
 
@@ -82,6 +82,8 @@ function getEmployeeCodePermLevel($code) {
     } catch (PDOException $e) {
         echo $e->getMessage();
     }
+
+    return null;
 }
 
 function invalidatemployeeCode($code) {

@@ -17,6 +17,13 @@ if($_GET) {
             case 'delete-registration-code':
                 deleteRegistrationCode(filter_input(INPUT_POST, 'code', FILTER_SANITIZE_NUMBER_INT));
                 break;
+            case 'update-user':
+                updateUser([
+                    'username'=>filter_input(INPUT_POST, 'username', FILTER_SANITIZE_FULL_SPECIAL_CHARS),
+                    'email'=>filter_input(INPUT_POST. 'email', FILTER_VALIDATE_EMAIL),
+                    'permlevel'=>filter_input(INPUT_POST, 'permlevel', FILTER_VALIDATE_INT)
+                ]);
+                break;
             default:
                 defaultResponse($call);
         }
