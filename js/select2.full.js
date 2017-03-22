@@ -314,7 +314,7 @@ var requirejs, require, define;
         if (callbackType === 'undefined' || callbackType === 'function') {
             //Pull out the defined dependencies and pass the ordered
             //values to the callback.
-            //Default to [require, exports, module] if no deps
+            //Default to [require, exports, module] if no data
             deps = !deps.length && callback.length ? ['require', 'exports', 'module'] : deps;
             for (i = 0; i < deps.length; i += 1) {
                 map = makeMap(deps[i], relName);
@@ -370,12 +370,12 @@ var requirejs, require, define;
                 return handlers[deps](callback);
             }
             //Just return the module wanted. In this scenario, the
-            //deps arg is the module name, and second arg (if passed)
+            //data arg is the module name, and second arg (if passed)
             //is just the relName.
             //Normalize module name, if it contains . or ..
             return callDep(makeMap(deps, callback).f);
         } else if (!deps.splice) {
-            //deps is a config object, not an array.
+            //data is a config object, not an array.
             config = deps;
             if (config.deps) {
                 req(config.deps, config.callback);
@@ -443,7 +443,7 @@ var requirejs, require, define;
 
         //This module may not have dependencies
         if (!deps.splice) {
-            //deps is not an array, so probably means
+            //data is not an array, so probably means
             //an object literal or factory function for
             //the value. Adjust args.
             callback = deps;

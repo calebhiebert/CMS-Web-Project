@@ -1,5 +1,5 @@
 <?php
-require_once 'token.php';
+require_once 'data/token.php';
 
 if($token_valid) {
 
@@ -43,7 +43,7 @@ if($token_valid) {
 }
 ?>
 
-<?php include 'base.php' ?>
+<?php include 'data/base.php' ?>
 <?php startblock('title') ?>Administration<?php endblock() ?>
 
 <?php startblock('body') ?>

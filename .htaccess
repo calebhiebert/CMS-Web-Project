@@ -1,37 +1,37 @@
 RewriteEngine on
 
 # Admin Related
-RewriteRule ^admin/?$ admin.php
+RewriteRule ^admin/?$ pages/admin.php
 RewriteRule ^admin/initialize-database/?$ db_init.php
 
 # Match index
-RewriteRule ^/?$ index.php
+RewriteRule ^/?$ pages/index.php
 
 # Users
-RewriteRule ^user/([0-9]+)/?$ user.php?id=$1
-RewriteRule ^user/([0-9]+)/edit/?$ user_edit.php?id=$1
-RewriteRule ^user/([0-9]+)/delete/?$ user_operations.php?id=$1&operation=delete
+RewriteRule ^user/([0-9]+)/?$ pages/user.php?id=$1
+RewriteRule ^user/([0-9]+)/edit/?$ pages/user_edit.php?id=$1
+RewriteRule ^user/([0-9]+)/delete/?$ pages/user_operations.php?id=$1&operation=delete
 
 # Register
-RewriteRule ^register/?$ register.php
+RewriteRule ^register/?$ pages/register.php
 
 # Login
-RewriteRule ^login/?$ login.php
-RewriteRule ^logout/?$ logout.php
+RewriteRule ^login/?$ pages/login.php
+RewriteRule ^logout/?$ pages/logout.php
 
 # Entity Related
-RewriteRule ^entity/([0-9]+)/?$ entity.php?id=$1
-RewriteRule ^entity/create/?$ create.php
-RewriteRule ^entity/([0-9]+)/edit/?$ create.php?editid=$1
+RewriteRule ^entity/([0-9]+)/?$ pages/entity.php?id=$1
+RewriteRule ^entity/create/?$ pages/create.php
+RewriteRule ^entity/([0-9]+)/edit/?$ pages/create.php?editid=$1
 
 # Tag
-RewriteRule ^tag/(.*)/(.*)/?$ tag.php?name=$1&data=$2
-RewriteRule ^tag/(.*)/?$ tagname.php?name=$1
+RewriteRule ^tag/(.*)/(.*)/?$ pages/tag.php?name=$1&data=$2
+RewriteRule ^tag/(.*)/?$ pages/tagname.php?name=$1
 
 # Search
-RewriteRule ^search/?$ search.php
+RewriteRule ^search/?$ pages/search.php
 
 # Api
-RewriteRule ^api/(.*)/?$ api.php?call=$1
+RewriteRule ^api/(.*)/?$ pages/data/api.php?call=$1
 
-ErrorDocument 404 /404.php
+ErrorDocument 404 pages/data/404.php

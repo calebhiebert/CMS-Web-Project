@@ -2,8 +2,7 @@
 /**
  * Allows users to search entities
  */
-
-require_once "token.php";
+require_once "data/token.php";
 
 $page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT);
 $query = filter_input(INPUT_GET, 'query', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
@@ -17,16 +16,16 @@ else if ($page < 0)
     $page = 0;
 
 if($resultsPerPage == null)
-    $resultsPerPage = 5;
-else if ($resultsPerPage < 5)
-    $resultsPerPage = 5;
-else if ($resultsPerPage > 250)
-    $resultsPerPage = 250;
+    $resultsPerPage = DEFAULT_RESULTS_PER_PAGE;
+else if ($resultsPerPage < MINIMUM_RESULTS_PER_PAGE)
+    $resultsPerPage = MINIMUM_RESULTS_PER_PAGE;
+else if ($resultsPerPage > MAXIMUM_RESULTS_PER_PAGE)
+    $resultsPerPage = MAXIMUM_RESULTS_PER_PAGE;
 
 $searchResults = searchEntities($query);
 ?>
 
-<?php include 'base.php' ?>
+<?php include 'data/base.php' ?>
 <?php startblock('title') ?>Entity Index<?php endblock() ?>
 
 <?php startblock('body') ?>

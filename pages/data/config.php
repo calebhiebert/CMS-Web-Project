@@ -34,3 +34,10 @@ define('EDITS_TO_DISPLAY', 15);
  */
 define('DISPLAY_SIBLINGS', true);
 define('DISPLAY_CHILDREN', true);
+
+/**
+ * Search Page
+ */
+define('DEFAULT_RESULTS_PER_PAGE', 10);
+define('MINIMUM_RESULTS_PER_PAGE', 10);
+define('MAXIMUM_RESULTS_PER_PAGE', 250);

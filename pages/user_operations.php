@@ -1,6 +1,5 @@
 <?php
-require_once 'token.php';
-require_once 'db/crud.php';
+require_once 'data/token.php';
 
 if($token_valid) {
 
