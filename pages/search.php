@@ -40,7 +40,7 @@ $searchResults = searchEntities($query);
         </div>
         <div class="list-group mt-2">
             <?php for ($i = ($page * $resultsPerPage); $i < min(($page * $resultsPerPage) + $resultsPerPage, count($searchResults)); $i++): ?>
-                <a class="list-group-item list-group-item-action" href="/entity/<?= $searchResults[$i]['Id'] ?>"><?= $searchResults[$i]['Name'] ?></a>
+                <a class="list-group-item list-group-item-action" href="/entity/<?= urlencode($searchResults[$i]['Name']) ?>"><?= $searchResults[$i]['Name'] ?></a>
             <?php endfor ?>
         </div>
         <ul class="pagination justify-content-center mt-2">

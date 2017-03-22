@@ -86,7 +86,7 @@ exit;
                     <td><?= $edit->getUsername() ?></td>
                     <td><?= prettyTime($edit->getTime()) ?> (<?= $edit->getTime() ?>)</td>
                     <?php if($edit->getEntityId() != null): ?>
-                        <td><a href="/entity/<?= $edit->getEntityId() ?>">Entity</a></td>
+                        <td><a href="/entity/<?= urlencode(getEntity($edit->getEntityId())->getName()) ?>">Entity</a></td>
                     <?php elseif($edit->getTagId() != null): ?>
                         <?php $tag = getTagById($edit->getTagId()) ?>
                         <td><a href="/tag/<?= urlencode($tag->getTagName()) ?>/<?= urlencode($tag->getTagData()) ?>">Tag</a></td>
