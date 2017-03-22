@@ -3,8 +3,6 @@ require_once 'PrettyDateTime.php';
 
 use PrettyDateTime\PrettyDateTime;
 
-define('USERNAME_MIN_LENGTH', 5);
-
 function random_text( $type = 'alnum', $length = 8 )
 {
     switch ( $type ) {

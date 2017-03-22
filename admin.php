@@ -1,24 +1,14 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Caleb
- * Date: 2/27/2017
- * Time: 7:58 PM
- */
-
 require_once 'token.php';
-require_once 'db/crud.php';
-require_once 'PrettyDateTime.php';
-
-use PrettyDateTime\PrettyDateTime;
 
 if(!$token_valid) {
 header('Location: /');
 exit;
 } else {
-    $edits = getEdits(25, 0);
+    $edits = getEdits(EDITS_TO_DISPLAY, 0);
     $codes = getRegistrationCodes();
 
+    //TODO variablize perm level
     if($current_user == null || $current_user->getPermLevel() != 9) {
         header('Location: /');
         exit;

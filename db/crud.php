@@ -1,7 +1,5 @@
 <?php
-
 require_once 'model.php';
-require_once 'db.php';
 
 function getEntity($id) {
     global $db;

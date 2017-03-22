@@ -1,7 +1,5 @@
 <?php
-define('DB_HOST', 'piikl.com');
-define('DB_USER', 'creature');
-define('DB_PASSWORD', 'creature');
+require 'config.php';
 
 try {
     $db = new PDO('mysql:host=' . DB_HOST . ';dbname=creature;charset=utf8', DB_USER, DB_PASSWORD);

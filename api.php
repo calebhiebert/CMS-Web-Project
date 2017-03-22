@@ -2,7 +2,6 @@
 require_once 'util.php';
 require_once 'db.php';
 require_once 'db/crud.php';
-require_once 'db/model.php';
 
 header('Content-Type: application/json');
 
