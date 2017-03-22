@@ -20,9 +20,9 @@ RewriteRule ^login/?$ pages/login.php
 RewriteRule ^logout/?$ pages/logout.php
 
 # Entity Related
-RewriteRule ^entity/([0-9]+)/?$ pages/entity.php?id=$1
 RewriteRule ^entity/create/?$ pages/create.php
 RewriteRule ^entity/([0-9]+)/edit/?$ pages/create.php?editid=$1
+RewriteRule ^entity/(.*)/?$ pages/entity.php?name=$1
 
 # Tag
 RewriteRule ^tag/(.*)/(.*)/?$ pages/tag.php?name=$1&data=$2

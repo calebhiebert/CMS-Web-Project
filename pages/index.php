@@ -20,7 +20,7 @@ $entities = getEntities(ENTITIES_TO_DISPLAY, 0, $token_valid);
                     </p>
                     <small class="text-muted">Edited <?= prettyTime($edit->getTime()) ?> by <?= $edit->getUsername() ?></small>
                     <br/>
-                    <a href="/entity/<?= $entity->getId() ?>" class="card-link">View</a>
+                    <a href="/entity/<?= urlencode($entity->getName()) ?>" class="card-link">View</a>
                 </div>
             </div>
         <?php endforeach; ?>

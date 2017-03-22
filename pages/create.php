@@ -36,7 +36,7 @@ if($_POST) {
             $edit->setEntityId($result);
             $edit->setUserId($current_user->getId());
             putEditEntry($edit);
-            header('Location: /entity/' . $result);
+            header('Location: /entity/' . urlencode($newEntity->getName()));
             exit;
         }
     } else if(isset($_GET['editid'])) {

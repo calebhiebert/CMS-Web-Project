@@ -119,10 +119,20 @@ function insert($sql, $inputs = null) {
 
 function getEntity($id) {
     return getSingle(
-        "SELECT Id AS id, Name AS name, Description AS description, Parent AS parent, Published AS published 
+        "SELECT Id, Name, Description, Parent, Published
           FROM Entities 
           WHERE Id = :id",
         [':id'=>$id],
+        'Entity'
+    );
+}
+
+function getEntityByName($name) {
+    return getSingle(
+        'SELECT Id, Name, Description, Parent, Published
+          FROM Entities
+          WHERE Name = :name',
+        ['name'=>$name],
         'Entity'
     );
 }
@@ -139,15 +149,14 @@ function getEntityCreation($id) {
 
 function getEntityLastEdit($id) {
     return getSingle(
-        'SELECT UserId, (SELECT Username FROM Users WHERE Id = UserId) AS Username, Time 
-            FROM EditLog WHERE Time = (SELECT MAX(Time) FROM EditLog WHERE EntityId = :id)',
+        'SELECT UserId, (SELECT Username FROM Users WHERE Id = UserId) AS Username, Time FROM EditLog WHERE Time = (SELECT MAX(Time) FROM EditLog WHERE EntityId = :id)',
         ['id'=>$id],
         'Edit');
 }
 
 function getEntities($num, $page, $includeUnpublished) {
     return getMultiple(
-        'SELECT Id AS id, Name AS name, Description AS description, Parent AS parent, Published AS published 
+        'SELECT Id, Name, Description, Parent, Published
             FROM Entities ' . ($includeUnpublished ? '' : 'WHERE Published = 1') .
           ' ORDER BY Id LIMIT :page, :num',
         ['num'=>$num, 'page'=>($page*$num)],
@@ -250,7 +259,7 @@ function populateParentTree($entity) {
  */
 function populateChildren($entity) {
     $children = getMultiple(
-        'SELECT Id AS id, Name AS name, Description AS description, Parent AS parent, Published AS published FROM Entities WHERE Parent = :id',
+        'SELECT Id, Name, Description, Parent, Published FROM Entities WHERE Parent = :id',
         ['id'=>$entity->getId()],
         'Entity'
     );
@@ -321,12 +330,11 @@ function putEntity($entity) {
  */
 function editEntity($entity) {
     $result = execute(
-        'UPDATE Entities SET Name = :name, Description = :description, Parent = :parent, Published = :published WHERE Id = :id',
+        'UPDATE Entities SET Name = :name, Description = :description, Parent = :parent, Published = :published WHERE Name = :name',
         ['name'=>$entity->getName(),
             'description'=>$entity->getDescription(),
             'parent'=>($entity->getParent() != null) ? $entity->getParent() : null,
-            'published'=>($entity->isPublished() != null) ? 1 : 0,
-            'id'=>$entity->getId()]
+            'published'=>($entity->isPublished() != null) ? 1 : 0]
     );
 
     if($result == 1) {

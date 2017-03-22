@@ -17,7 +17,8 @@ try {
         "Parent INT UNSIGNED," .
         "Published BOOLEAN NOT NULL DEFAULT FALSE," .
         "KEY Entity_Entity_Id_fk (Parent)," .
-        "CONSTRAINT Entity_Entity_Id_fk FOREIGN KEY (Parent) REFERENCES Entities (Id) ON DELETE SET NULL)");
+        "CONSTRAINT Entity_Entity_Id_fk FOREIGN KEY (Parent) REFERENCES Entities (Id) ON DELETE SET NULL," .
+        "CONSTRAINT Entity_Name_Unique UNIQUE (Name))");
 
     $status_entity = $create_entity->execute() ? 'Success' : 'Error';
 } catch (PDOException $e) {

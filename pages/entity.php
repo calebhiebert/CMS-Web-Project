@@ -1,18 +1,18 @@
 <?php
 require_once 'data/token.php';
 
-$id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
+$name = filter_input(INPUT_GET, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 
-$ent = getEntity($id);
+$ent = getEntityByName($name);
 
 if($ent != null && ($ent->isPublished() || $token_valid)) {
-    $ent->setTags(getEntityTags($id));
+    $ent->setTags(getEntityTags($ent->getId()));
     $parents = array($ent);
     $inheritedTags = array();
     $created = getEntityCreation($ent->getId());
     $edited = getEntityLastEdit($ent->getId());
 
-    $editString = 'Created ' . prettyTime($created->getTime()) . ($created != $edited ? ' by ' . $created->getUsername() . '. Last edited ' . prettyTime($edited->getTime()) . ' by ' . $edited->getUsername() . '.' : '.');
+    $editString = 'Created ' . prettyTime($created->getTime()) . ($created != $edited ? ' by ' . $created->getUsername() . '. Last edited ' . prettyTime($edited->getTime()) . ' by ' . $edited->getUsername() . '.' : ' by '.$created->getUsername().'.');
 
     populateParentTree($ent);
 
@@ -51,7 +51,7 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
                 <?php if($entity === end($parents)): ?>
                     <span class="breadcrumb-item active"><?= $entity->getName() ?></span>
                 <?php else: ?>
-                    <a class="breadcrumb-item" href="<?= '/entity/' . $entity->getId() ?>"><?= $entity->getName() ?></a>
+                    <a class="breadcrumb-item" href="<?= '/entity/' . urlencode($entity->getName()) ?>"><?= $entity->getName() ?></a>
                 <?php endif ?>
             <?php endforeach ?>
         </nav>
@@ -80,7 +80,7 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
                 </div>
             </div>
             <div class="col-md-4">
-                <?php if (count($inheritedTags) != 0 && count($ent->getTags()) != 0): ?>
+                <?php if (count($inheritedTags) != 0 || count($ent->getTags()) != 0): ?>
                     <div class="col-md-auto mb-3">
                         <div class="card">
                             <h6 class="card-header">Data</h6>
@@ -101,7 +101,7 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
                             <h6 class="card-header">Children</h6>
                             <ul class="list-group list-group-flush">
                                 <?php foreach ($ent->getChildren() as $child): ?>
-                                    <a href="/entity/<?= $child->getId() ?>" class="list-group-item"><?= $child->getName() ?></a>
+                                    <a href="/entity/<?= urlencode($child->getName()) ?>" class="list-group-item"><?= $child->getName() ?></a>
                                 <?php endforeach ?>
                             </ul>
                         </div>
@@ -114,7 +114,7 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
                             <ul class="list-group list-group-flush">
                                 <?php foreach ($ent->getParent()->getChildren() as $sibling): ?>
                                     <?php if($sibling->getId() != $ent->getId() && $sibling->isPublished()): ?>
-                                        <a href="/entity/<?= $sibling->getId() ?>" class="list-group-item"><?= $sibling->getName() ?></a>
+                                        <a href="/entity/<?= urlencode($sibling->getName()) ?>" class="list-group-item"><?= $sibling->getName() ?></a>
                                     <?php endif ?>
                                 <?php endforeach ?>
                             </ul>

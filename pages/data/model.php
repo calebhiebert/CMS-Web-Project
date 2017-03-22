@@ -1,15 +1,13 @@
 <?php
 
 class Entity {
-    private $id;
-    private $name;
-    private $description;
-    private $published;
+    private $Id;
+    private $Name;
+    private $Description;
+    private $Published;
 
     private $tags;
-
-    private $parent;
-
+    private $Parent;
     private $children;
 
     function __construct()
@@ -21,15 +19,15 @@ class Entity {
      */
     public function getId()
     {
-        return $this->id;
+        return $this->Id;
     }
 
     /**
-     * @param mixed $id
+     * @param mixed $Id
      */
-    public function setId($id)
+    public function setId($Id)
     {
-        $this->id = $id;
+        $this->Id = $Id;
     }
 
     /**
@@ -37,15 +35,15 @@ class Entity {
      */
     public function getName()
     {
-        return $this->name;
+        return $this->Name;
     }
 
     /**
-     * @param mixed $name
+     * @param mixed $Name
      */
-    public function setName($name)
+    public function setName($Name)
     {
-        $this->name = $name;
+        $this->Name = $Name;
     }
 
     /**
@@ -53,15 +51,15 @@ class Entity {
      */
     public function getDescription()
     {
-        return $this->description;
+        return $this->Description;
     }
 
     /**
-     * @param mixed $description
+     * @param mixed $Description
      */
-    public function setDescription($description)
+    public function setDescription($Description)
     {
-        $this->description = $description;
+        $this->Description = $Description;
     }
 
     /**
@@ -69,15 +67,15 @@ class Entity {
      */
     public function isPublished()
     {
-        return $this->published == 1 ? true : false;
+        return $this->Published == 1 ? true : false;
     }
 
     /**
-     * @param mixed $published
+     * @param mixed $Published
      */
-    public function setPublished($published)
+    public function setPublished($Published)
     {
-        $this->published = $published;
+        $this->Published = $Published;
     }
 
     /**
@@ -101,15 +99,15 @@ class Entity {
      */
     public function getParent()
     {
-        return $this->parent;
+        return $this->Parent;
     }
 
     /**
-     * @param mixed $parent
+     * @param mixed $Parent
      */
-    public function setParent($parent)
+    public function setParent($Parent)
     {
-        $this->parent = $parent;
+        $this->Parent = $Parent;
     }
 
     /**
