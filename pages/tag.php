@@ -6,6 +6,7 @@ $tagData = strtoupper(trim(filter_input(INPUT_GET, 'data', FILTER_SANITIZE_FULL_
 $tagName = strtoupper(trim(filter_input(INPUT_GET, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS)));
 
 $tag = getTag($tagName, $tagData);
+
 $tags = getTagsByName($tagName);
 
 if($tag == null) {

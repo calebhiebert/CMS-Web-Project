@@ -6,6 +6,8 @@ define('DB_USER', 'creature');
 define('DB_PASSWORD', 'creature');
 
 // Users
+const CLEARANCE_LEVELS = ['EMPLOYEE'=>1, 'ADVANCED_EMPLOYEE'=>6, 'ADMIN'=>9];
+const CLEARANCE_LEVELS_REV = [1=>'EMPLOYEE', 6=>'ADVANCED_EMPLOYEE', 9=>'ADMIN'];
 define('USERNAME_MIN_LENGTH', 5);
 define('USERNAME_MAX_LENGTH', 60);
 define('EMAIL_MAX_LENGTH', 255);

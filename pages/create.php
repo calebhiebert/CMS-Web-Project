@@ -50,13 +50,17 @@ if($_POST) {
 ?>
 
 <?php include 'data/base.php' ?>
-<?php startblock('title') ?>Create Entity<?php endblock() ?>
+<?php startblock('title') ?><?= isset($editId) ? 'Edit Entity' : 'Create Entity' ?><?php endblock() ?>
 
 <?php startblock('body') ?>
 <link rel="stylesheet" href="/css/select2.min.css">
 
 <div class="container mt-4">
-    <h4>Create Entity</h4>
+    <?php if(isset($editId)): ?>
+        <h4>Edit <?= $entity->getName() ?></h4>
+    <?php else: ?>
+        <h4>Create Entity</h4>
+    <?php endif; ?>
     <div class="card">
         <div class="card-block">
             <form action="/entity/create" method="post">
@@ -72,7 +76,7 @@ if($_POST) {
                 </fieldset>
                 <fieldset class="form-group <?= $errDescription ? 'has-danger' : '' ?>">
                     <label for="in-description" class="form-control-label">Description</label>
-                    <textarea id="in-description" class="form-control" name="description"><?= isset($description) ? $description : '' ?></textarea>
+                    <textarea id="in-description" class="form-control" name="description" rows="10"><?= isset($description) ? $description : '' ?></textarea>
                     <?php if(isset($errDescription) && $errDescription == true): ?>
                         <span class="form-control-feedback">The description must be more than <?= DESCRIPTION_MIN_LENGTH ?> characters in length</span>
                     <?php endif ?>

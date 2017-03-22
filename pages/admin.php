@@ -34,9 +34,9 @@ exit;
             <div class="modal-body">
                 <label for="perm-level">Employee Clearance</label>
                 <select id="perm-level" class="form-control">
-                    <option value="1">Employee</option>
-                    <option value="6">Advanced Employee</option>
-                    <option value="9">Admin</option>
+                    <?php foreach (CLEARANCE_LEVELS as $NAME => $LEVEL): ?>
+                        <option value="<?= $LEVEL ?>"><?= $NAME ?></option>
+                    <?php endforeach; ?>
                 </select>
             </div>
             <div class="modal-footer">
@@ -64,7 +64,7 @@ exit;
                     <th scope="row"><?= $usr->getId() ?></th>
                     <td><?= $usr->getUsername() ?></td>
                     <td><?= $usr->getEmail() ?></td>
-                    <td><?= $usr->getPermLevel() ?></td>
+                    <td><?= CLEARANCE_LEVELS_REV[$usr->getPermLevel()] ?></td>
                     <td><?= $usr->getRegisterDate() ?></td>
                     <td class="text-center"><a href="/user/<?= $usr->getId() ?>"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
                 </tr>
@@ -111,7 +111,7 @@ exit;
         <?php foreach ($codes as $code): ?>
             <tr>
                 <td><?= $code->getCode() ?></td>
-                <td><?= $code->getPermLevel() ?></td>
+                <td><?= CLEARANCE_LEVELS_REV[$code->getPermLevel()] ?></td>
                 <td><i class="fa fa-times" style="cursor: pointer; color: #ff1c17;" onclick="deleteCode(<?= $code->getCode() ?>)"></i></td>
             </tr>
         <?php endforeach; ?>

@@ -15,7 +15,7 @@ if($token_valid) {
     if($_POST) {
         $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
         $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-        $perm = filter_input(INPUT_POST, 'permlevel', FILTER_VALIDATE_INT);
+        $clearance = filter_input(INPUT_POST, 'clearance', FILTER_VALIDATE_INT);
 
         if (strlen(trim($username)) < USERNAME_MIN_LENGTH || strlen(trim($username)) > USERNAME_MAX_LENGTH) {
             $msgUname = 'Your username must be between ' . USERNAME_MIN_LENGTH . ' and ' . USERNAME_MAX_LENGTH . ' characters long';
@@ -29,13 +29,15 @@ if($token_valid) {
             $msgEml = 'This email is too long! The max length is ' . EMAIL_MAX_LENGTH . 'characters';
         }
 
-        if($perm == null) {
-            $msgPerm = 'You must include a permission level';
-        } else if(!is_numeric($perm)) {
-            $msgPerm = 'The clearance level must be a valid number';
-        } else if ($perm < 1 || $perm > 9) { //TODO make into config variables
-            $msgPerm = 'The clearance level must be between 1 and 9';
+        if($clearance == null) {
+            $msgClrnce = 'You must include a permission level';
+        } else if(!is_numeric($clearance)) {
+            $msgClrnce = 'The clearance is invalid';
+        } else if ($clearance < 1 || $clearance > 9) {
+            $msgClrnce = 'The clearance level must be between 1 and 9';
         }
+
+        //TODO update in database
     }
 
 } else {
@@ -66,14 +68,18 @@ if($token_valid) {
                         <input id="email" name="email" type="email" class="form-control" value="<?= $_POST ? $email : $user->getEmail() ?>">
                         <div class="form-control-feedback"><?= isset($msgEml) ? $msgEml : '' ?></div>
                     </li>
-                    <li class="list-group-item form-control<?= isset($msgPerm) ? ' has-danger' : '' ?>">
-                        <label class="form-control-label" for="perm">Clearance Level</label>
-                        <input id="perm" name="permlevel" type="number" class="form-control" value="<?= $_POST ? $perm : $user->getPermLevel() ?>">
-                        <div class="form-control-feedback"><?= isset($msgPerm) ? $msgPerm : '' ?></div>
+                    <li class="list-group-item form-control<?= isset($msgClrnce) ? ' has-danger' : '' ?>">
+                        <label for="clearance">Clearance Level</label>
+                        <select id="clearance" class="form-control" name="clearance">
+                            <?php foreach (CLEARANCE_LEVELS_REV as $LEVEL => $NAME): ?>
+                                <option value="<?= $LEVEL ?>" <?= $_POST ? $clearance == $LEVEL ? 'selected' : '' : $user->getPermLevel() == $LEVEL ? 'selected' : '' ?>><?= $NAME ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                        <div class="form-control-feedback"><?= isset($msgClrnce) ? $msgClrnce : '' ?></div>
                     </li>
                 <?php else: ?>
                     <li class="list-group-item">Email: <?= $user->getEmail() ?></li>
-                    <li class="list-group-item">Clearance: <?= $user->getPermLevel() ?></li>
+                    <li class="list-group-item">Clearance: <?= CLEARANCE_LEVELS_REV[$user->getPermLevel()] ?></li>
                 <?php endif; ?>
             </ul>
         </div>

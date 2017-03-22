@@ -1,15 +1,21 @@
 <?php
 require_once 'model.php';
 
-function getEntity($id) {
+function getSingle($sql, $inputs = null, $bindingObject = null) {
     global $db;
 
     try {
-        $stmt = $db->prepare('SELECT Id AS id, Name AS name, Description AS description, Parent AS parent, Published AS published FROM Entities WHERE Id = :id');
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Entity');
-        $stmt->execute();
+        $stmt = $db->prepare($sql);
+        if($inputs != null)
+            $stmt->execute($inputs);
+        else
+            $stmt->execute();
+
+        if($bindingObject != null)
+            $stmt->setFetchMode(PDO::FETCH_CLASS, $bindingObject);
+
         return $stmt->fetch();
+
     } catch (PDOException $e) {
         handleError($e);
     }
@@ -17,20 +23,20 @@ function getEntity($id) {
     return null;
 }
 
+function getEntity($id) {
+    return getSingle(
+        "SELECT Id AS id, Name AS name, Description AS description, Parent AS parent, Published AS published FROM Entities WHERE Id = :id",
+        [':id'=>$id],
+        'Entity'
+    );
+}
+
 function getEntityCreation($id) {
-    global $db;
-
-    try {
-        $stmt = $db->prepare('SELECT UserId, (SELECT Username FROM Users WHERE Id = UserId) AS Username, Time FROM EditLog WHERE Time = (SELECT MIN(Time) FROM EditLog WHERE EntityId = :id)');
-        $stmt->bindValue(':id', $id, PDO::PARAM_INT);
-        $stmt->setFetchMode(PDO::FETCH_CLASS, 'Edit');
-        $stmt->execute();
-        return $stmt->fetch();
-    } catch (PDOException $e) {
-        handleError($e);
-    }
-
-    return null;
+    return getSingle(
+        "SELECT UserId, (SELECT Username FROM Users WHERE Id = UserId) AS Username, Time FROM EditLog WHERE Time = (SELECT MIN(Time) FROM EditLog WHERE EntityId = :id)",
+        ['id'=>$id],
+        'Edit'
+    );
 }
 
 function getEntityLastEdit($id) {
