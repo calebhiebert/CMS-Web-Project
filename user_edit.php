@@ -1,6 +1,5 @@
 <?php
 require_once 'token.php';
-require_once 'db/crud.php';
 
 if($token_valid) {
 
@@ -17,23 +16,23 @@ if($token_valid) {
         $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
         $perm = filter_input(INPUT_POST, 'permlevel', FILTER_VALIDATE_INT);
 
-        if (strlen(trim($username)) < USERNAME_MIN_LENGTH || strlen(trim($username)) > 60) {
-            $msgUname = 'Your username must be between 5 and 60 characters long';
+        if (strlen(trim($username)) < USERNAME_MIN_LENGTH || strlen(trim($username)) > USERNAME_MAX_LENGTH) {
+            $msgUname = 'Your username must be between ' . USERNAME_MIN_LENGTH . ' and ' . USERNAME_MAX_LENGTH . ' characters long';
         }
 
         if (strlen(trim($email)) == 0) {
             $msgEml = 'You must enter an email';
         } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             $msgEml = 'Please enter a valid email';
-        } else if (strlen(trim($email)) > 255) {
-            $msgEml = 'This email is too long! The max length is 255 characters';
+        } else if (strlen(trim($email)) > EMAIL_MAX_LENGTH) {
+            $msgEml = 'This email is too long! The max length is ' . EMAIL_MAX_LENGTH . 'characters';
         }
 
         if($perm == null) {
             $msgPerm = 'You must include a permission level';
         } else if(!is_numeric($perm)) {
             $msgPerm = 'The clearance level must be a valid number';
-        } else if ($perm < 1 || $perm > 9) {
+        } else if ($perm < 1 || $perm > 9) { //TODO make into config variables
             $msgPerm = 'The clearance level must be between 1 and 9';
         }
     }

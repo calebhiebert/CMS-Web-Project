@@ -4,8 +4,6 @@
  */
 
 require_once "token.php";
-require_once "db.php";
-require_once "util.php";
 
 if($token_valid) {
     header('Location: /');
@@ -14,7 +12,7 @@ if($token_valid) {
     $username = trim(filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS));
     $password = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS));
 
-    if (strlen($username) < 5 || strlen($username) > 60) {
+    if (strlen($username) < USERNAME_MIN_LENGTH || strlen($username) > USERNAME_MAX_LENGTH) {
         $bad_login = true;
     }
 
@@ -40,7 +38,7 @@ if($token_valid) {
                 $token = newToken($row['Id']);
 
                 if($token !== false) {
-                    setcookie('token', $token, time()+60*60*24*30, '/');
+                    setcookie('token', $token, time() + TOKEN_LIFE, '/');
                     header('Location: /');
                     exit;
                 }

@@ -1,7 +1,6 @@
 <?php
 require_once 'ti.php';
 require_once 'token.php';
-require_once 'db/crud.php';
 ?>
 
 <!DOCTYPE html>

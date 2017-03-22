@@ -15,7 +15,7 @@ $token = filter_input(INPUT_COOKIE, 'token');
 $token_valid = false;
 $user_id = null;
 
-if(strlen($token) == 32) {
+if(strlen($token) == TOKEN_LENGTH) {
     try {
         $stmt = $db->prepare('SELECT UserId, SupplyDate FROM Sessions WHERE Token = :token');
         $stmt->bindValue(':token', $token);
@@ -42,7 +42,7 @@ if(strlen($token) == 32) {
 function newToken($uid) {
     global $db;
 
-    $token = random_text('alnum', 32);
+    $token = random_text('alnum', TOKEN_LENGTH);
 
     try {
         $stmt = $db->prepare('REPLACE INTO Sessions (Token, UserId) VALUES (:token, :uid)');

@@ -1,6 +1,5 @@
 <?php
 require_once 'token.php';
-require_once 'db/crud.php';
 
 $id = filter_input(INPUT_GET, 'id', FILTER_VALIDATE_INT);
 
@@ -96,7 +95,7 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
                         </div>
                     </div>
                 <?php endif ?>
-                <?php if(count($ent->getChildren()) > 0): ?>
+                <?php if(count($ent->getChildren()) > 0 && DISPLAY_CHILDREN): ?>
                     <div class="col-md-auto mb-3">
                         <div class="card">
                             <h6 class="card-header">Children</h6>
@@ -108,7 +107,7 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
                         </div>
                     </div>
                 <?php endif ?>
-                <?php if($ent->getParent() != null && count($ent->getParent()->getChildren()) - 1 > 0): ?>
+                <?php if($ent->getParent() != null && count($ent->getParent()->getChildren()) - 1 > 0 && DISPLAY_SIBLINGS): ?>
                     <div class="col-md-auto mb-3">
                         <div class="card">
                             <h6 class="card-header">Siblings</h6>

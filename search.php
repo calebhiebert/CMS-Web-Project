@@ -4,8 +4,6 @@
  */
 
 require_once "token.php";
-require_once 'db/crud.php';
-require_once "db.php";
 
 $page = filter_input(INPUT_GET, 'page', FILTER_VALIDATE_INT);
 $query = filter_input(INPUT_GET, 'query', FILTER_SANITIZE_FULL_SPECIAL_CHARS);

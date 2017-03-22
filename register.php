@@ -11,16 +11,16 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $passwordConf = filter_input(INPUT_POST, 'password_conf', FILTER_SANITIZE_STRING);
     $employeeCode = filter_input(INPUT_POST, 'employee_code', FILTER_SANITIZE_SPECIAL_CHARS);
 
-    if (strlen(trim($username)) < USERNAME_MIN_LENGTH || strlen(trim($username)) > 60) {
-        $msgUname = 'Your username must be between 5 and 60 characters long';
+    if (strlen(trim($username)) < USERNAME_MIN_LENGTH || strlen(trim($username)) > USERNAME_MAX_LENGTH) {
+        $msgUname = 'Your username must be between ' . USERNAME_MIN_LENGTH . ' and ' . USERNAME_MAX_LENGTH . ' characters long';
     }
 
     if (strlen(trim($email)) == 0) {
         $msgEml = 'You must enter an email';
     } else if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
         $msgEml = 'Please enter a valid email';
-    } else if (strlen(trim($email)) > 255) {
-        $msgEml = 'This email is too long! The max length is 255 characters';
+    } else if (strlen(trim($email)) > EMAIL_MAX_LENGTH) {
+        $msgEml = 'This email is too long! The max length is ' . EMAIL_MAX_LENGTH . ' characters';
     }
 
     if(strlen(trim($password)) == 0) {
@@ -29,8 +29,8 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
         $msgPwd = 'These passwords do not match';
     }
 
-    if(strlen(trim($employeeCode)) != 16) {
-        $msgEmpCode = 'Your employee code should be 16 characters long';
+    if(strlen(trim($employeeCode)) != EMPLOYEE_CODE_LENGTH) {
+        $msgEmpCode = 'Your employee code should be ' . EMPLOYEE_CODE_LENGTH . ' characters long';
     }
 
     if(!isset($msgUname) && !isset($msgEml) && !isset($msgPwd) && !isset($msgEmpCode)) {

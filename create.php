@@ -1,22 +1,19 @@
 <?php
     require_once 'token.php';
-    require_once 'db/crud.php';
 
-    if($token_valid) {
-        $ents = getEntities(25, 0);
-    } else {
+    if(!$token_valid) {
         header('Location: /');
     }
 
-    if($_POST) {
+if($_POST) {
         $name = trim(filter_input(INPUT_POST, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
         $description = trim(filter_input(INPUT_POST, 'description', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
         $published = trim(filter_input(INPUT_POST, 'published', FILTER_VALIDATE_BOOLEAN));
         $parent = trim(filter_input(INPUT_POST, 'parent', FILTER_SANITIZE_NUMBER_INT));
         $editId = filter_input(INPUT_POST, 'editid', FILTER_SANITIZE_NUMBER_INT);
 
-        $errName = $name == null || strlen($name) < 3 || strlen($name) > 100;
-        $errDescription = $description == null || strlen($description) < 3;
+        $errName = $name == null || strlen($name) < ENTITY_NAME_MIN_LENGTH || strlen($name) > ENTITY_NAME_MAX_LENGTH;
+        $errDescription = $description == null || strlen($description) < DESCRIPTION_MIN_LENGTH;
 
         $newEntity = new Entity();
         $newEntity->setId($editId);
@@ -67,14 +64,14 @@
                     <label for="in-name" class="form-control-label">Name</label>
                     <input id="in-name" type="text" class="form-control" name="name" value="<?= isset($name) ? $name : '' ?>">
                     <?php if(isset($errName) && $errName == true): ?>
-                        <span class="form-control-feedback">The name must be between 3 and 100 characters long</span>
+                        <span class="form-control-feedback">The name must be between <?= ENTITY_NAME_MIN_LENGTH ?> and <?= ENTITY_NAME_MAX_LENGTH ?> characters long</span>
                     <?php endif ?>
                 </fieldset>
                 <fieldset class="form-group <?= $errDescription ? 'has-danger' : '' ?>">
                     <label for="in-description" class="form-control-label">Description</label>
                     <textarea id="in-description" class="form-control" name="description"><?= isset($description) ? $description : '' ?></textarea>
                     <?php if(isset($errDescription) && $errDescription == true): ?>
-                        <span class="form-control-feedback">The description must be more than 3 characters in length</span>
+                        <span class="form-control-feedback">The description must be more than <?= DESCRIPTION_MIN_LENGTH ?> characters in length</span>
                     <?php endif ?>
                 </fieldset>
                 <fieldset class="form-group">

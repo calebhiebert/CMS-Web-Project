@@ -1,16 +1,7 @@
 <?php
-/**
- * Main page
- */
-
 require_once "token.php";
-require_once 'db/crud.php';
-require_once "db.php";
 
-if($token_valid)
-    $entities = getEntities(9, 0, true);
-else
-    $entities = getEntities(9, 0, false);
+$entities = getEntities(ENTITIES_TO_DISPLAY, 0, $token_valid);
 ?>
 
 <?php include 'base.php' ?>
@@ -25,7 +16,7 @@ else
                 <h5 class="card-header"><?= $entity->getName() ?></h5>
                 <div class="card-block">
                     <p class="card-text">
-                        <?= truncate($entity->getDescription(), 100, '...') ?>
+                        <?= truncate($entity->getDescription(), ENTITY_DESCRIPTION_CHAR_TRUNCATION, '...') ?>
                     </p>
                     <small class="text-muted">Edited <?= prettyTime($edit->getTime()) ?> by <?= $edit->getUsername() ?></small>
                     <br/>
