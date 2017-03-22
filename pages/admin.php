@@ -8,7 +8,6 @@ exit;
     $edits = getEdits(EDITS_TO_DISPLAY, 0);
     $codes = getRegistrationCodes();
 
-    //TODO variablize perm level
     if($current_user == null || $current_user->getPermLevel() != 9) {
         header('Location: /');
         exit;
