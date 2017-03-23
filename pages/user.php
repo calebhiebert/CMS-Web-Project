@@ -17,8 +17,6 @@ if($token_valid) {
         $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
         $clearance = filter_input(INPUT_POST, 'clearance', FILTER_VALIDATE_INT);
 
-        print_r($_POST);
-
         if (strlen(trim($username)) < USERNAME_MIN_LENGTH || strlen(trim($username)) > USERNAME_MAX_LENGTH) {
             $msgUname = 'Your username must be between ' . USERNAME_MIN_LENGTH . ' and ' . USERNAME_MAX_LENGTH . ' characters long';
         }
@@ -39,7 +37,6 @@ if($token_valid) {
             $msgClrnce = 'The clearance level must be between 1 and 9';
         }
 
-        //TODO update in database
         if(!isset($msgUname) && !isset($msgEml) && !isset($msgClrnce)) {
             $user->setUsername($username);
             $user->setEmail($email);
