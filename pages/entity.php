@@ -11,6 +11,7 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
     $created = getEntityCreation($ent->getId());
     $edited = getEntityLastEdit($ent->getId());
     $ent->setTags(getEntityTags($ent->getId()));
+    $images = getEntityImages($ent->getId());
 
     $editString = 'Created ' . prettyTime($created->getTime()) . ($created != $edited ? ' by ' . $created->getUsername() . '. Last edited ' . prettyTime($edited->getTime()) . ' by ' . $edited->getUsername() . '.' : ' by '.$created->getUsername().'.');
 
@@ -64,6 +65,14 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
                     <div class="card-header">
                         <h5 class="mb-0"><?= $ent->getName() ?></h5>
                     </div>
+                    <?php foreach ($images as $image): ?>
+                        <div class="card mt-2">
+                            <img class="card-img" src="/images/<?= $image->getId().'.'.$image->getFileExt() ?>">
+                            <div class="card-block">
+                                <h5 class="card-title"><?= $image->getName() ?></h5>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
                     <div class="card-block">
                         <p class="card-text"><?= nl2br($ent->getDescription()) ?></p>
                         <?php if($token_valid): ?>

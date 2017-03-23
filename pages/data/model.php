@@ -476,3 +476,108 @@ class RegistrationCode {
 
 
 }
+
+class Image {
+    private $Id;
+    private $EntityId;
+    private $FileExt;
+    private $FileSize;
+    private $Caption;
+    private $Name;
+
+    /**
+     * @return mixed
+     */
+    public function getId()
+    {
+        return $this->Id;
+    }
+
+    /**
+     * @param mixed $Id
+     */
+    public function setId($Id)
+    {
+        $this->Id = $Id;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getEntityId()
+    {
+        return $this->EntityId;
+    }
+
+    /**
+     * @param mixed $EntityId
+     */
+    public function setEntityId($EntityId)
+    {
+        $this->EntityId = $EntityId;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFileExt()
+    {
+        return $this->FileExt;
+    }
+
+    /**
+     * @param mixed $FileExt
+     */
+    public function setFileExt($FileExt)
+    {
+        $this->FileExt = $FileExt;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getFileSize()
+    {
+        return $this->FileSize;
+    }
+
+    /**
+     * @param mixed $FileSize
+     */
+    public function setFileSize($FileSize)
+    {
+        $this->FileSize = $FileSize;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getCaption()
+    {
+        return $this->Caption;
+    }
+
+    /**
+     * @param mixed $Caption
+     */
+    public function setCaption($Caption)
+    {
+        $this->Caption = $Caption;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getName()
+    {
+        return $this->Name;
+    }
+
+    /**
+     * @param mixed $Name
+     */
+    public function setName($Name)
+    {
+        $this->Name = $Name;
+    }
+}

@@ -79,6 +79,8 @@ try {
         'CREATE TABLE Pictures (' .
         'Id CHAR(32) PRIMARY KEY NOT NULL,' .
         'EntityId INT UNSIGNED NOT NULL,' .
+        'FileExt CHAR(5) NOT NULL,' .
+        'FileSize INT UNSIGNED NOT NULL,' .
         'Caption TINYTEXT,' .
         'Name VARCHAR(60) NOT NULL,' .
         'CONSTRAINT Pictures_Entity_fk FOREIGN KEY (EntityId) REFERENCES Entities (Id))');

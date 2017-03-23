@@ -164,6 +164,14 @@ function getEntities($num, $page, $includeUnpublished) {
     );
 }
 
+function getEntityImages($entityId) {
+    return getMultiple(
+        'SELECT Id, EntityId, FileExt, FileSize, Caption, Name FROM Pictures WHERE EntityId = :id',
+        ['id'=>$entityId],
+        'Image'
+    );
+}
+
 function getEntityTags($entityId) {
     return getMultiple(
         'SELECT Tag FROM Tags WHERE EntityId = :id',
@@ -338,6 +346,13 @@ function putTags($tags, $entityId) {
     foreach ($tags as $tag) {
         insert('INSERT INTO Tags (EntityId, Tag) VALUES (:id, :tag)', ['id'=>$entityId, 'tag'=>$tag]);
     }
+}
+
+function putImage($id, $ext, $entityId, $fileSize, $caption, $name) {
+    return insert(
+        'INSERT INTO Pictures (Id, EntityId, FileExt, FileSize, Caption, Name) VALUES (:id, :entity, :ext, :size, :caption, :name)',
+        ['id'=>$id, 'entity'=>$entityId, 'ext'=>$ext, 'size'=>$fileSize, 'caption'=>$caption, 'name'=>$name]
+    );
 }
 
 function removeRegistrationCode($regCode) {
