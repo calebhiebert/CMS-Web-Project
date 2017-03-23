@@ -128,74 +128,42 @@ class Entity {
 }
 
 class Tag {
-    private $id;
-    private $tagName;
-    private $tagData;
-    private $description;
+    private $EntityId;
+    private $Tag;
 
     /**
      * @return mixed
      */
-    public function getId()
+    public function getEntityId()
     {
-        return $this->id;
+        return $this->EntityId;
     }
 
     /**
-     * @param mixed $id
+     * @param mixed $EntityId
      */
-    public function setId($id)
+    public function setEntityId($EntityId)
     {
-        $this->id = $id;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTagName()
-    {
-        return $this->tagName;
-    }
-
-    /**
-     * @param mixed $tagName
-     */
-    public function setTagName($tagName)
-    {
-        $this->tagName = $tagName;
+        $this->EntityId = $EntityId;
     }
 
     /**
      * @return mixed
      */
-    public function getTagData()
+    public function getTag()
     {
-        return $this->tagData;
+        return $this->Tag;
     }
 
     /**
-     * @param mixed $tagData
+     * @param mixed $Tag
      */
-    public function setTagData($tagData)
+    public function setTag($Tag)
     {
-        $this->tagData = $tagData;
+        $this->Tag = $Tag;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
 
-    /**
-     * @param mixed $description
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-    }
 }
 
 class User {

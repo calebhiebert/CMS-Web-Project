@@ -26,34 +26,18 @@ try {
 }
 
 try {
-// Create EntityData table
+    // Create tag table
     $create_tags = $db->prepare(
-        'CREATE TABLE Tags (' .
-        'Id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,' .
-        'DataType VARCHAR(60) NOT NULL,' .
-        'Data VARCHAR(60) NOT NULL,' .
-        'Description MEDIUMTEXT);'
-    );
+            'CREATE TABLE Tags (' .
+            'EntityId INT UNSIGNED NOT NULL,' .
+            'Tag VARCHAR(60) NOT NULL,' .
+            'CONSTRAINT Tags_EntityId_Tag_pk PRIMARY KEY (EntityId, Tag),' .
+            'CONSTRAINT Tags_Entities_Id_fk FOREIGN KEY (EntityId) REFERENCES Entities (Id) ON DELETE CASCADE' .
+            ')');
 
-    $status_tags = $create_tags->execute() ? 'Success' : 'Error';
+    $status_tags = $create_tags->execute();
 } catch (PDOException $e) {
-    $status_tags = $e->getMessage();
-}
-
-try {
-// Create EntityData table
-    $create_entity_tags = $db->prepare(
-        'CREATE TABLE EntityTags (' .
-        'EntityId INT UNSIGNED NOT NULL,' .
-        'TagId INT UNSIGNED NOT NULL,' .
-        'CONSTRAINT EntityTags_PK PRIMARY KEY (EntityId, TagId),' .
-        'CONSTRAINT EntityTags_Tag_FK FOREIGN KEY (TagId) REFERENCES Tags(Id) ON DELETE CASCADE,' .
-        'CONSTRAINT EntityTags_Entity_FK FOREIGN KEY (EntityId) REFERENCES Entities(Id) ON DELETE CASCADE);'
-    );
-
-    $status_entity_tags = $create_entity_tags->execute() ? 'Success' : 'Error';
-} catch (PDOException $e) {
-    $status_entity_tags = $e->getMessage();
+    $status_tag = $e->getMessage();
 }
 
 try {
@@ -93,13 +77,10 @@ try {
     $create_pictures = $db->prepare(
         'CREATE TABLE Pictures (' .
         'Id CHAR(32) PRIMARY KEY NOT NULL,' .
-        'EntityId INT UNSIGNED,' .
-        'TagId INT UNSIGNED,' .
+        'EntityId INT UNSIGNED NOT NULL,' .
         'Caption TINYTEXT,' .
         'Name VARCHAR(60) NOT NULL,' .
-        'CONSTRAINT Pictures_Entity_fk FOREIGN KEY (EntityId) REFERENCES Entities (Id),' .
-        'CONSTRAINT Pictures_Tag_fk FOREIGN KEY (TagId) REFERENCES Tags (Id),' .
-        'CONSTRAINT Pictures_Valid_Nullness CHECK (EntityId IS NOT NULL OR TagId IS NOT NULL));');
+        'CONSTRAINT Pictures_Entity_fk FOREIGN KEY (EntityId) REFERENCES Entities (Id))');
 
     $status_pictures = $create_pictures->execute() ? 'Success' : 'Error';
 } catch (PDOException $e) {
@@ -113,13 +94,11 @@ try {
         'UserId INT UNSIGNED,' .
         'Time DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,' .
         'EntityId INT UNSIGNED,' .
-        'TagId INT UNSIGNED,' .
         'PictureId CHAR(32),' .
         'CONSTRAINT EditLog_PK PRIMARY KEY (UserId, Time),' .
         'CONSTRAINT EditLog_Entity_Id_fk FOREIGN KEY (UserId) REFERENCES Entities (Id),' .
-        'CONSTRAINT EditLog_Data_DataType_fk FOREIGN KEY (TagId) REFERENCES Tags (Id),' .
         'CONSTRAINT EditLog_Picutres_Id_fk FOREIGN KEY (PictureId) REFERENCES Pictures (Id),' .
-        'CONSTRAINT Edit_Log_Valid_Nullness CHECK (COALESCE(EntityId, TagId, PictureId) IS NOT NULL));');
+        'CONSTRAINT Edit_Log_Valid_Nullness CHECK (COALESCE(EntityId, PictureId) IS NOT NULL));');
 
     $status_edit_log = $create_edit_log->execute() ? 'Success' : 'Error';
 } catch (PDOException $e) {
@@ -163,7 +142,6 @@ function dispTheme($msg) {
     <ul class="list-group">
         <li class="list-group-item<?= dispTheme($status_entity) ?>">Entities: <?= $status_entity ?></li>
         <li class="list-group-item<?= dispTheme($status_tags) ?>">Data: <?= $status_tags ?></li>
-        <li class="list-group-item<?= dispTheme($status_entity_tags) ?>">EntityData: <?= $status_entity_tags ?></li>
         <li class="list-group-item<?= dispTheme($status_users) ?>">Users: <?= $status_users ?></li>
         <li class="list-group-item<?= dispTheme($status_sessions) ?>">Sessions: <?= $status_sessions ?></li>
         <li class="list-group-item<?= dispTheme($status_pictures) ?>">Pictures: <?= $status_pictures ?></li>

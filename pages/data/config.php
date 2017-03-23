@@ -6,7 +6,6 @@ define('DB_USER', 'creature');
 define('DB_PASSWORD', 'creature');
 
 // Users
-const CLEARANCE_LEVELS = ['EMPLOYEE'=>1, 'ADVANCED_EMPLOYEE'=>6, 'ADMIN'=>9];
 const CLEARANCE_LEVELS_REV = [1=>'EMPLOYEE', 6=>'ADVANCED_EMPLOYEE', 9=>'ADMIN'];
 define('USERNAME_MIN_LENGTH', 5);
 define('USERNAME_MAX_LENGTH', 60);
@@ -16,6 +15,7 @@ define('TOKEN_LIFE', 60*60*24*30);
 define('TOKEN_LENGTH', 32);
 
 // Entity
+const DISALLOWED_NAME_CHARS = ['/', '\\'];
 define('ENTITY_NAME_MAX_LENGTH', 100);
 define('ENTITY_NAME_MIN_LENGTH', 3);
 define('DESCRIPTION_MIN_LENGTH', 3);

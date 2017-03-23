@@ -330,8 +330,9 @@ function putEntity($entity) {
  */
 function editEntity($entity) {
     $result = execute(
-        'UPDATE Entities SET Name = :name, Description = :description, Parent = :parent, Published = :published WHERE Name = :name',
-        ['name'=>$entity->getName(),
+        'UPDATE Entities SET Name = :name, Description = :description, Parent = :parent, Published = :published WHERE Id = :id',
+        ['id'=>$entity->getId(),
+            'name'=>$entity->getName(),
             'description'=>$entity->getDescription(),
             'parent'=>($entity->getParent() != null) ? $entity->getParent() : null,
             'published'=>($entity->isPublished() != null) ? 1 : 0]
