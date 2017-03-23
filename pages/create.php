@@ -42,7 +42,6 @@ if($_POST) {
             $result = putEntity($newEntity);
         } else {
             $result = editEntity($newEntity);
-            echo 'Editing existing entity';
         }
 
         if ($result != null) {
@@ -53,8 +52,6 @@ if($_POST) {
             echo putEditEntry($edit);
             header('Location: /entity/' . urlencode($newEntity->getName()));
             exit;
-        } else {
-
         }
     }
 
