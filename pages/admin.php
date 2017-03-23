@@ -66,7 +66,7 @@ exit;
                     <td><?= $usr->getEmail() ?></td>
                     <td><?= CLEARANCE_LEVELS_REV[$usr->getPermLevel()] ?></td>
                     <td><?= $usr->getRegisterDate() ?></td>
-                    <td class="text-center"><a href="/user/<?= $usr->getId() ?>"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                    <td class="text-center"><a href="/user/<?= $usr->getId() ?>/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
                 </tr>
             <?php endforeach ?>
         </tbody>

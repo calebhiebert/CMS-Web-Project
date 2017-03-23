@@ -327,6 +327,13 @@ function editEntity($entity) {
     }
 }
 
+function editUser($user) {
+    return execute(
+        'UPDATE Users SET Username = :name, Email = :email, PermLevel = :clearance WHERE Id = :id',
+        ['name'=>$user->getUsername(), 'email'=>$user->getEmail(), 'clearance'=>$user->getPermLevel(), 'id'=>$user->getId()]
+    );
+}
+
 /**
  * @param $edit Edit
  * @return null|string
