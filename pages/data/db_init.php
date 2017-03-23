@@ -18,6 +18,7 @@ try {
         "Published BOOLEAN NOT NULL DEFAULT FALSE," .
         "KEY Entity_Entity_Id_fk (Parent)," .
         "CONSTRAINT Entity_Entity_Id_fk FOREIGN KEY (Parent) REFERENCES Entities (Id) ON DELETE SET NULL," .
+        "CONSTRAINT Entity_Not_Parent_To_Self CHECK (Parent <> Id)," .
         "CONSTRAINT Entity_Name_Unique UNIQUE (Name))");
 
     $status_entity = $create_entity->execute() ? 'Success' : 'Error';
@@ -35,7 +36,7 @@ try {
             'CONSTRAINT Tags_Entities_Id_fk FOREIGN KEY (EntityId) REFERENCES Entities (Id) ON DELETE CASCADE' .
             ')');
 
-    $status_tags = $create_tags->execute();
+    $status_tags = $create_tags->execute() ? 'Success' : 'Error';
 } catch (PDOException $e) {
     $status_tag = $e->getMessage();
 }
@@ -96,7 +97,8 @@ try {
         'EntityId INT UNSIGNED,' .
         'PictureId CHAR(32),' .
         'CONSTRAINT EditLog_PK PRIMARY KEY (UserId, Time),' .
-        'CONSTRAINT EditLog_Entity_Id_fk FOREIGN KEY (UserId) REFERENCES Entities (Id),' .
+        'CONSTRAINT EditLog_Entity_Id_fk FOREIGN KEY (EntityId) REFERENCES Entities (Id),' .
+        'CONSTRAINT EditLog_User_fk FOREIGN KEY (UserId) REFERENCES Users (Id),' .
         'CONSTRAINT EditLog_Picutres_Id_fk FOREIGN KEY (PictureId) REFERENCES Pictures (Id),' .
         'CONSTRAINT Edit_Log_Valid_Nullness CHECK (COALESCE(EntityId, PictureId) IS NOT NULL));');
 
@@ -141,7 +143,7 @@ function dispTheme($msg) {
 <div class="container mt-4">
     <ul class="list-group">
         <li class="list-group-item<?= dispTheme($status_entity) ?>">Entities: <?= $status_entity ?></li>
-        <li class="list-group-item<?= dispTheme($status_tags) ?>">Data: <?= $status_tags ?></li>
+        <li class="list-group-item<?= dispTheme($status_tags) ?>">Tags: <?= $status_tags ?></li>
         <li class="list-group-item<?= dispTheme($status_users) ?>">Users: <?= $status_users ?></li>
         <li class="list-group-item<?= dispTheme($status_sessions) ?>">Sessions: <?= $status_sessions ?></li>
         <li class="list-group-item<?= dispTheme($status_pictures) ?>">Pictures: <?= $status_pictures ?></li>

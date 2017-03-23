@@ -5,6 +5,7 @@ if(!$token_valid) {
 header('Location: /');
 exit;
 } else {
+    $edits = [];
     $edits = getEdits(EDITS_TO_DISPLAY, 0);
     $codes = getRegistrationCodes();
 

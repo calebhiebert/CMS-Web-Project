@@ -339,7 +339,6 @@ class Edit {
     private $Username;
     private $Time;
     private $EntityId;
-    private $TagId;
     private $PictureId;
 
     /**
@@ -395,22 +394,6 @@ class Edit {
     public function setEntityId($EntityId)
     {
         $this->EntityId = $EntityId;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getTagId()
-    {
-        return $this->TagId;
-    }
-
-    /**
-     * @param mixed $TagId
-     */
-    public function setTagId($TagId)
-    {
-        $this->TagId = $TagId;
     }
 
     /**

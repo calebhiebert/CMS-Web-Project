@@ -166,37 +166,8 @@ function getEntities($num, $page, $includeUnpublished) {
 
 function getEntityTags($entityId) {
     return getMultiple(
-        'SELECT Id as id, DataType as tagName, Data as tagData, Description as description 
-            FROM EntityTags 
-            LEFT JOIN Tags ON EntityTags.TagId = Tags.Id 
-            WHERE EntityId = :id',
+        'SELECT Tag FROM Tags WHERE EntityId = :id',
         ['id'=>$entityId],
-        'Tag'
-    );
-}
-
-function getTag($tagName, $tagData) {
-    return getSingle(
-        'SELECT Id AS id, DataType AS tagName, Data AS tagData, Description AS description 
-            FROM Tags 
-            WHERE UPPER(Data) = :data AND UPPER(DataType) = :name',
-        ['data'=>$tagData, 'name'=>$tagName],
-        'Tag'
-    );
-}
-
-function getTagById($id) {
-    return getSingle(
-        'SELECT Id AS id, DataType AS tagName, Data AS tagData, Description AS description FROM Tags WHERE Id = :id',
-        ['id'=>$id],
-        'Tag'
-    );
-}
-
-function getTagsByName($tagName) {
-    return getMultiple(
-        'SELECT Id AS id, DataType AS tagName, Data AS tagData, Description AS description FROM Tags WHERE UPPER(DataType) = :name',
-        ['name'=>$tagName],
         'Tag'
     );
 }
@@ -218,7 +189,7 @@ function getSession($id) {
 
 function getEdits($num, $page) {
     return getMultiple(
-        'SELECT UserId, Time, EntityId, TagId, PictureId, Username 
+        'SELECT UserId, Time, EntityId, PictureId, Username 
           FROM EditLog 
           LEFT JOIN Users ON EditLog.UserId = Users.Id 
           ORDER BY Time DESC LIMIT :page, :num',
@@ -229,10 +200,9 @@ function getEdits($num, $page) {
 
 function searchEntities($query) {
     return getMultiple(
-        'SELECT DISTINCT Entities.Name, Entities.Id, GROUP_CONCAT(Tags.Data) Tags
-          FROM Entities 
-          LEFT JOIN EntityTags ON Entities.Id = EntityTags.EntityId 
-          LEFT JOIN Tags ON EntityTags.TagId = Tags.Id 
+        'SELECT DISTINCT Entities.Name, Entities.Id, GROUP_CONCAT(Tags.Tag) Tags
+          FROM Entities
+          LEFT JOIN Tags ON Entities.Id = Tags.EntityId
           GROUP BY Entities.Id HAVING Name LIKE :sterm OR Tags LIKE :sterm',
         ['sterm'=>('%'.$query.'%')]
     );
@@ -351,10 +321,9 @@ function editEntity($entity) {
  */
 function putEditEntry($edit) {
     return insert(
-        'INSERT INTO EditLog (UserId, EntityId, TagId, PictureId) VALUES (:userid, :entityid, :tagid, :pictureid)',
+        'INSERT INTO EditLog (UserId, EntityId, PictureId) VALUES (:userid, :entityid, :pictureid)',
         [':userid'=>$edit->getUserId(),
             ':entityid'=>($edit->getEntityId() != null) ? $edit->getEntityId() : null,
-            ':tagid'=>($edit->getTagId() != null) ? $edit->getTagId() : null,
             ':pictureid'=>($edit->getPictureId() != null) ? $edit->getPictureId() : null]
     );
 }

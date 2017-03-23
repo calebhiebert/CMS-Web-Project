@@ -15,7 +15,7 @@ if($_POST) {
     $description = trim(filter_input(INPUT_POST, 'description', FILTER_SANITIZE_FULL_SPECIAL_CHARS));
     $published = trim(filter_input(INPUT_POST, 'published', FILTER_VALIDATE_BOOLEAN));
     $parent = trim(filter_input(INPUT_POST, 'parent', FILTER_SANITIZE_NUMBER_INT));
-    $tagInput = $_POST['tags'];
+    $tagInput = isset($_POST['tags']) ? $_POST['tags'] : [];
     $editId = filter_input(INPUT_POST, 'editid', FILTER_SANITIZE_NUMBER_INT);
 
     $errName = $name == null || strlen($name) < ENTITY_NAME_MIN_LENGTH || strlen($name) > ENTITY_NAME_MAX_LENGTH;
@@ -50,16 +50,17 @@ if($_POST) {
             $edit = new Edit();
             $edit->setEntityId($result);
             $edit->setUserId($current_user->getId());
-            putEditEntry($edit);
+            echo putEditEntry($edit);
             header('Location: /entity/' . urlencode($newEntity->getName()));
             exit;
+        } else {
+
         }
     }
 
 } else if(isset($_GET['editid'])) {
     $editId = filter_input(INPUT_GET, 'editid', FILTER_SANITIZE_NUMBER_INT);
     $entity = getEntity($editId);
-    $tags = getEntityTags($editId);
     $name = $entity->getName();
     $description = $entity->getDescription();
     $published = $entity->isPublished();
