@@ -272,6 +272,10 @@ function getUsers() {
     );
 }
 
+function deleteEntity($id) {
+    execute('DELETE FROM Entities WHERE Id = :id LIMIT 1', ['id'=>$id]);
+}
+
 /**
  * @param $regCode RegistrationCode
  */
@@ -326,6 +330,14 @@ function putEditEntry($edit) {
             ':entityid'=>($edit->getEntityId() != null) ? $edit->getEntityId() : null,
             ':pictureid'=>($edit->getPictureId() != null) ? $edit->getPictureId() : null]
     );
+}
+
+function putTags($tags, $entityId) {
+    execute('DELETE FROM Tags WHERE EntityId = :id', ['id'=>$entityId]);
+
+    foreach ($tags as $tag) {
+        insert('INSERT INTO Tags (EntityId, Tag) VALUES (:id, :tag)', ['id'=>$entityId, 'tag'=>$tag]);
+    }
 }
 
 function removeRegistrationCode($regCode) {

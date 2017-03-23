@@ -97,7 +97,7 @@ try {
         'EntityId INT UNSIGNED,' .
         'PictureId CHAR(32),' .
         'CONSTRAINT EditLog_PK PRIMARY KEY (UserId, Time),' .
-        'CONSTRAINT EditLog_Entity_Id_fk FOREIGN KEY (EntityId) REFERENCES Entities (Id),' .
+        'CONSTRAINT EditLog_Entity_Id_fk FOREIGN KEY (EntityId) REFERENCES Entities (Id) ON DELETE CASCADE,' .
         'CONSTRAINT EditLog_User_fk FOREIGN KEY (UserId) REFERENCES Users (Id),' .
         'CONSTRAINT EditLog_Picutres_Id_fk FOREIGN KEY (PictureId) REFERENCES Pictures (Id),' .
         'CONSTRAINT Edit_Log_Valid_Nullness CHECK (COALESCE(EntityId, PictureId) IS NOT NULL));');

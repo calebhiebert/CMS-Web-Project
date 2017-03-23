@@ -40,13 +40,13 @@ if($_POST) {
 
         if ($editId == null) {
             $result = putEntity($newEntity);
-            echo 'Putting new entity';
         } else {
             $result = editEntity($newEntity);
             echo 'Editing existing entity';
         }
 
         if ($result != null) {
+            putTags($tagInput, $result);
             $edit = new Edit();
             $edit->setEntityId($result);
             $edit->setUserId($current_user->getId());
@@ -61,10 +61,19 @@ if($_POST) {
 } else if(isset($_GET['editid'])) {
     $editId = filter_input(INPUT_GET, 'editid', FILTER_SANITIZE_NUMBER_INT);
     $entity = getEntity($editId);
+    $entity->setTags(getEntityTags($editId));
     $name = $entity->getName();
     $description = $entity->getDescription();
     $published = $entity->isPublished();
     $parent = $entity->getParent();
+
+    foreach ($entity->getTags() as $tag) {
+        array_push($tagArr, $tag->getTag());
+    }
+} else if (isset($_GET['delete']) && isset($_GET['id'])) {
+    deleteEntity(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
+    header('Location: /');
+    exit;
 }
 ?>
 
@@ -118,14 +127,14 @@ if($_POST) {
                 <fieldset class="form-group">
                     <label for="tags"></label>
                     <select id="tags" class="form-control" name="tags[]" multiple="multiple">
-                        <?php foreach ($tags as $tag): ?>
-                            <option value="<?= $tag->getId() ?>" selected><?= $tag->getTagData() ?></option>
+                        <?php foreach ($tagArr as $tag): ?>
+                            <option value="<?= $tag ?>" selected><?= $tag ?></option>
                         <?php endforeach; ?>
                     </select>
                 </fieldset>
                 <button class="btn btn-primary" type="submit"><?= isset($editId) ? 'Edit' : 'Create' ?></button>
                 <?php if (isset($editId)): ?>
-                    <button type="button" class="btn btn-danger">Delete</button>
+                    <a href="/entity/<?= $editId ?>/delete" type="button" class="btn btn-danger">Delete</a>
                 <?php endif ?>
             </form>
         </div>

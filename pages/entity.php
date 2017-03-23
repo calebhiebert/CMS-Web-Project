@@ -10,6 +10,7 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
     $inheritedTags = array();
     $created = getEntityCreation($ent->getId());
     $edited = getEntityLastEdit($ent->getId());
+    $ent->setTags(getEntityTags($ent->getId()));
 
     $editString = 'Created ' . prettyTime($created->getTime()) . ($created != $edited ? ' by ' . $created->getUsername() . '. Last edited ' . prettyTime($edited->getTime()) . ' by ' . $edited->getUsername() . '.' : ' by '.$created->getUsername().'.');
 
@@ -75,13 +76,18 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
                 </div>
             </div>
             <div class="col-md-4">
+                <?php if (count($ent->getTags()) > 0): ?>
                     <div class="col-md-auto mb-3">
                         <div class="card">
                             <h6 class="card-header">Data</h6>
-                            <div class="list-group list-group-flush">
+                            <div class="list-group listgroupa list-group-flush">
+                                <?php foreach ($ent->getTags() as $tag): ?>
+                                    <a href="#" class="list-group-item list-group-item-action"><?= $tag->getTag() ?></a>
+                                <?php endforeach; ?>
                             </div>
                         </div>
                     </div>
+                <?php endif ?>
                 <?php if(count($ent->getChildren()) > 0 && DISPLAY_CHILDREN): ?>
                     <div class="col-md-auto mb-3">
                         <div class="card">
