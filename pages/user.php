@@ -44,7 +44,6 @@ if($token_valid) {
             editUser($user);
             header('Location: /user/'.$id);
             exit;
-        } else {
         }
     }
 

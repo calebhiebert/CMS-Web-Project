@@ -22,6 +22,8 @@ exit;
 <?php startblock('title') ?>Administration<?php endblock() ?>
 
 <?php startblock('body') ?>
+<link rel="stylesheet" type="text/css" href="/css/theme.default.min.css"/>
+
 <div class="modal fade" id="reg-code-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
@@ -48,7 +50,7 @@ exit;
 </div>
 <div class="container mt-3">
     <h4>Users</h4>
-    <table class="table table-sm table-bordered">
+    <table id="user-table" class="table table-sm table-bordered">
         <thead>
             <tr>
                 <th>#</th>
@@ -73,7 +75,7 @@ exit;
     </table>
 
     <h4>Recent Edits</h4>
-    <table class="table table-sm table-bordered">
+    <table id="edits-table" class="table table-sm table-bordered">
         <thead>
             <tr>
                 <th>User</th>
@@ -120,7 +122,14 @@ exit;
 </div>
 <?php endblock() ?>
 <?php startblock('script') ?>
+<script type="text/javascript" src="/js/jquery.tablesorter.js"></script>
 <script>
+
+    $(document).ready(function() {
+        $('#user-table').tablesorter();
+        $('#edits-table').tablesorter();
+    });
+
     $('#create-code').click(function () {
         var data = "perm-level=" + $('#perm-level').val();
 
