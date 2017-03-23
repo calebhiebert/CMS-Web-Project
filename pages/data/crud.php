@@ -250,7 +250,7 @@ function populateChildren($entity) {
  */
 function populatePublicChildren($entity) {
     $children = getMultiple(
-        'SELECT Id AS id, Name AS name, Description AS description, Parent AS parent, Published AS published FROM Entities WHERE Parent = :id AND Published = 1',
+        'SELECT Id, Name, Description, Parent, Published FROM Entities WHERE Parent = :id AND Published = 1',
         ['id'=>$entity->getId()],
         'Entity'
     );
