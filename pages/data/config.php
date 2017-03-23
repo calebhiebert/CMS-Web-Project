@@ -24,6 +24,7 @@ define('DESCRIPTION_MIN_LENGTH', 3);
  * Index Page
  */
 define('ENTITIES_TO_DISPLAY', 9);
+define('INDEX_IMAGE_DISPLAY_SIZE', 'medium');
 define('ENTITY_DESCRIPTION_CHAR_TRUNCATION', 100);
 
 /**
@@ -36,6 +37,7 @@ define('EDITS_TO_DISPLAY', 15);
  */
 define('DISPLAY_SIBLINGS', true);
 define('DISPLAY_CHILDREN', true);
+define('IMAGE_DISPLAY_SIZE', 'medium');
 
 /**
  * Search Page
@@ -43,3 +45,10 @@ define('DISPLAY_CHILDREN', true);
 define('DEFAULT_RESULTS_PER_PAGE', 10);
 define('MINIMUM_RESULTS_PER_PAGE', 10);
 define('MAXIMUM_RESULTS_PER_PAGE', 250);
+
+/**
+ * Images
+ */
+const IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg', 'gif'];
+// coresponds to the height of the image
+const IMAGE_FILE_SIZES = ['medium'=>550];

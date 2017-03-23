@@ -42,92 +42,107 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
 
 <?php startblock('body') ?>
 <div class="container mt-3">
-    <?php if($ent): ?>
-        <nav class="breadcrumb">
-            <?php foreach ($parents as $entity): ?>
-                <?php if($entity === end($parents)): ?>
-                    <span class="breadcrumb-item active"><?= $entity->getName() ?></span>
-                <?php else: ?>
-                    <a class="breadcrumb-item" href="<?= '/entity/' . urlencode($entity->getName()) ?>"><?= $entity->getName() ?></a>
-                <?php endif ?>
-            <?php endforeach ?>
-        </nav>
-        <?php if(!$ent->isPublished()): ?>
-            <div class="alert alert-info alert-dismissible fade show" role="alert">
-                <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
-                This page is not visible to the public!
-                You are able to view this page because you are logged in.
-            </div>
-        <?php endif ?>
-        <div class="row">
-            <div class="col-md mb-3">
-                <div class="card">
-                    <div class="card-header">
-                        <h5 class="mb-0"><?= $ent->getName() ?></h5>
-                    </div>
+    <nav class="breadcrumb">
+        <?php foreach ($parents as $entity): ?>
+            <?php if($entity === end($parents)): ?>
+                <span class="breadcrumb-item active"><?= $entity->getName() ?></span>
+            <?php else: ?>
+                <a class="breadcrumb-item" href="<?= '/entity/' . urlencode($entity->getName()) ?>"><?= $entity->getName() ?></a>
+            <?php endif; ?>
+        <?php endforeach ?>
+    </nav>
+    <?php if(!$ent->isPublished()): ?>
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
+            <button type="button" class="close" data-dismiss="alert"><span>&times;</span></button>
+            This page is not visible to the public!
+            You are able to view this page because you are logged in.
+        </div>
+    <?php endif; ?>
+    <div class="row">
+        <div class="col-md mb-3">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="mb-0"><?= $ent->getName() ?></h5>
+                </div>
+                <?php if (count($images) == 1): ?>
                     <?php foreach ($images as $image): ?>
-                        <div class="card mt-2">
-                            <img class="card-img" src="/images/<?= $image->getId().'.'.$image->getFileExt() ?>">
-                            <div class="card-block">
-                                <h5 class="card-title"><?= $image->getName() ?></h5>
-                            </div>
+                        <div class="card">
+                            <img class="card-img img-fluid" src="/images/<?= IMAGE_DISPLAY_SIZE ?>/<?= $image->getId().'.'.$image->getFileExt() ?>">
+                            <?php if(strlen(trim($image->getCaption())) > 0): ?>
+                                <div class="card-block">
+                                    <h5 class="card-title"><?= $image->getName() ?></h5>
+                                    <p class="card-text"><?= $image->getCaption() ?></p>
+                                </div>
+                            <?php endif; ?>
                         </div>
                     <?php endforeach; ?>
-                    <div class="card-block">
-                        <p class="card-text"><?= nl2br($ent->getDescription()) ?></p>
-                        <?php if($token_valid): ?>
-                            <a class="card-link" href="/entity/<?= $ent->getId() ?>/edit">Edit</a>
-                        <?php endif ?>
-                    </div>
-                    <small class="card-footer text-muted p-2">
-                        <?= $editString ?>
-                    </small>
+                <?php endif; ?>
+                <div class="card-block">
+                    <p class="card-text"><?= nl2br($ent->getDescription()) ?></p>
+                    <?php if($token_valid): ?>
+                        <a class="card-link" href="/entity/<?= $ent->getId() ?>/edit">Edit</a>
+                        <a class="card-link" href="/entity/<?= $ent->getId() ?>/addimage">Add Image</a>
+                    <?php endif ?>
                 </div>
-            </div>
-            <div class="col-md-4">
-                <?php if (count($ent->getTags()) > 0): ?>
-                    <div class="col-md-auto mb-3">
-                        <div class="card">
-                            <h6 class="card-header">Data</h6>
-                            <div class="list-group listgroupa list-group-flush">
-                                <?php foreach ($ent->getTags() as $tag): ?>
-                                    <a href="#" class="list-group-item list-group-item-action"><?= $tag->getTag() ?></a>
-                                <?php endforeach; ?>
-                            </div>
-                        </div>
-                    </div>
-                <?php endif ?>
-                <?php if(count($ent->getChildren()) > 0 && DISPLAY_CHILDREN): ?>
-                    <div class="col-md-auto mb-3">
-                        <div class="card">
-                            <h6 class="card-header">Children</h6>
-                            <ul class="list-group list-group-flush">
-                                <?php foreach ($ent->getChildren() as $child): ?>
-                                    <a href="/entity/<?= urlencode($child->getName()) ?>" class="list-group-item"><?= $child->getName() ?></a>
-                                <?php endforeach ?>
-                            </ul>
-                        </div>
-                    </div>
-                <?php endif ?>
-                <?php if($ent->getParent() != null && count($ent->getParent()->getChildren()) - 1 > 0 && DISPLAY_SIBLINGS): ?>
-                    <div class="col-md-auto mb-3">
-                        <div class="card">
-                            <h6 class="card-header">Siblings</h6>
-                            <ul class="list-group list-group-flush">
-                                <?php foreach ($ent->getParent()->getChildren() as $sibling): ?>
-                                    <?php if($sibling->getId() != $ent->getId() && $sibling->isPublished()): ?>
-                                        <a href="/entity/<?= urlencode($sibling->getName()) ?>" class="list-group-item"><?= $sibling->getName() ?></a>
-                                    <?php endif ?>
-                                <?php endforeach ?>
-                            </ul>
-                        </div>
-                    </div>
-                <?php endif ?>
+                <small class="card-footer text-muted p-2">
+                    <?= $editString ?>
+                </small>
             </div>
         </div>
-    <?php else: ?>
-        The entity was not found :(
-    <?php endif ?>
+        <div class="col-md-4">
+            <?php if (count($ent->getTags()) > 0): ?>
+                <div class="col-md-auto mb-3">
+                    <div class="card">
+                        <h6 class="card-header">Data</h6>
+                        <div class="list-group listgroupa list-group-flush">
+                            <?php foreach ($ent->getTags() as $tag): ?>
+                                <a href="#" class="list-group-item list-group-item-action"><?= $tag->getTag() ?></a>
+                            <?php endforeach; ?>
+                        </div>
+                    </div>
+                </div>
+            <?php endif ?>
+            <?php if(count($ent->getChildren()) > 0 && DISPLAY_CHILDREN): ?>
+                <div class="col-md-auto mb-3">
+                    <div class="card">
+                        <h6 class="card-header">Children</h6>
+                        <ul class="list-group list-group-flush">
+                            <?php foreach ($ent->getChildren() as $child): ?>
+                                <a href="/entity/<?= urlencode($child->getName()) ?>" class="list-group-item"><?= $child->getName() ?></a>
+                            <?php endforeach ?>
+                        </ul>
+                    </div>
+                </div>
+            <?php endif ?>
+            <?php if($ent->getParent() != null && count($ent->getParent()->getChildren()) - 1 > 0 && DISPLAY_SIBLINGS): ?>
+                <div class="col-md-auto mb-3">
+                    <div class="card">
+                        <h6 class="card-header">Siblings</h6>
+                        <ul class="list-group list-group-flush">
+                            <?php foreach ($ent->getParent()->getChildren() as $sibling): ?>
+                                <?php if($sibling->getId() != $ent->getId() && $sibling->isPublished()): ?>
+                                    <a href="/entity/<?= urlencode($sibling->getName()) ?>" class="list-group-item"><?= $sibling->getName() ?></a>
+                                <?php endif ?>
+                            <?php endforeach ?>
+                        </ul>
+                    </div>
+                </div>
+            <?php endif ?>
+            <?php if(count($images) > 1): ?>
+                <?php foreach ($images as $image): ?>
+                    <div class="card">
+                        <img class="card-img img-fluid" src="/images/<?= IMAGE_DISPLAY_SIZE ?>/<?= $image->getId().'.'.$image->getFileExt() ?>">
+                        <?php if(strlen(trim($image->getCaption())) > 0): ?>
+                            <div class="card-block">
+                                <h5 class="card-title"><?= $image->getName() ?></h5>
+                                <p class="card-text"><?= $image->getCaption() ?></p>
+                            </div>
+                        <?php endif; ?>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif ?>
+        </div>
+    </div>
 </div>
 <?php endblock() ?>
 
