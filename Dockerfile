@@ -14,3 +14,7 @@ RUN docker-php-ext-install pdo pdo_mysql exif mbstring
 
 COPY ./config/php.ini /usr/local/etc/php/
 COPY . /var/www/html
+
+ADD chmod.sh /
+
+CMD ["chmod.sh"]
