@@ -11,7 +11,6 @@ require_once 'crud.php';
 require_once "util.php";
 
 $token = filter_input(INPUT_COOKIE, 'token');
-
 $token_valid = false;
 $user_id = null;
 
@@ -37,6 +36,20 @@ if(strlen($token) == TOKEN_LENGTH) {
 } else {
     $token_valid = false;
     setcookie('token', '', 0);
+}
+
+function validateToken($token) {
+    if(strlen($token) == TOKEN_LENGTH) {
+        $query = getSingle('SELECT UserId, SupplyDate FROM Sessions WHERE Token = :token', ['token'=>$token]);
+
+        var_dump($query);
+
+        if(getUser($query['UserId']) != null) {
+            return true;
+        }
+    }
+
+    return false;
 }
 
 function newToken($uid) {

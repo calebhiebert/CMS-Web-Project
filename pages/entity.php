@@ -64,24 +64,35 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
                 <div class="card-header">
                     <h5 class="mb-0"><?= $ent->getName() ?></h5>
                 </div>
-                <?php if (count($images) == 1): ?>
-                    <?php foreach ($images as $image): ?>
-                        <div class="card">
-                            <img class="card-img img-fluid" src="/images/<?= IMAGE_DISPLAY_SIZE ?>/<?= $image->getId().'.'.$image->getFileExt() ?>">
-                            <?php if(strlen(trim($image->getCaption())) > 0): ?>
-                                <div class="card-block">
-                                    <h5 class="card-title"><?= $image->getName() ?></h5>
-                                    <p class="card-text"><?= $image->getCaption() ?></p>
+                <?php if(count($images) > 0): ?>
+                    <div id="entity-images" class="carousel slide" data-ride="carousel">
+                        <ol class="carousel-indicators">
+                            <?php for ($i = 0; $i < count($images); $i++): ?>
+                                <li data-target="#entity-images" data-slide-to="<?= $i ?>" class="active"></li>
+                            <?php endfor; ?>
+                        </ol>
+                        <?php $first = true; ?>
+                        <div class="carousel-inner" role="listbox">
+                            <?php foreach ($images as $image): ?>
+                                <div class="carousel-item<?= $first == true ? ' active' : '' ?>">
+                                    <img class="card-img d-block img-fluid" src="/images/<?= IMAGE_DISPLAY_SIZE ?>/<?= $image->getId().'.'.$image->getFileExt() ?>">
                                 </div>
-                            <?php endif; ?>
+                                <?php $first = false; ?>
+                            <?php endforeach; ?>
                         </div>
-                    <?php endforeach; ?>
+                        <a class="carousel-control-prev" href="#entity-images" role="button" data-slide="prev">
+                            <span class="carousel-control-prev-icon"></span>
+                        </a>
+                        <a class="carousel-control-next" href="#entity-images" role="button" data-slide="next">
+                            <span class="carousel-control-next-icon"></span>
+                        </a>
+                    </div>
                 <?php endif; ?>
                 <div class="card-block">
                     <p class="card-text"><?= nl2br($ent->getDescription()) ?></p>
                     <?php if($token_valid): ?>
                         <a class="card-link" href="/entity/<?= $ent->getId() ?>/edit">Edit</a>
-                        <a class="card-link" href="/entity/<?= $ent->getId() ?>/addimage">Add Image</a>
+                        <a class="card-link" href="/entity/<?= $ent->getId() ?>/images">Images</a>
                     <?php endif ?>
                 </div>
                 <small class="card-footer text-muted p-2">
@@ -127,19 +138,6 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
                         </ul>
                     </div>
                 </div>
-            <?php endif ?>
-            <?php if(count($images) > 1): ?>
-                <?php foreach ($images as $image): ?>
-                    <div class="card">
-                        <img class="card-img img-fluid" src="/images/<?= IMAGE_DISPLAY_SIZE ?>/<?= $image->getId().'.'.$image->getFileExt() ?>">
-                        <?php if(strlen(trim($image->getCaption())) > 0): ?>
-                            <div class="card-block">
-                                <h5 class="card-title"><?= $image->getName() ?></h5>
-                                <p class="card-text"><?= $image->getCaption() ?></p>
-                            </div>
-                        <?php endif; ?>
-                    </div>
-                <?php endforeach; ?>
             <?php endif ?>
         </div>
     </div>

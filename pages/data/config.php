@@ -49,6 +49,7 @@ define('MAXIMUM_RESULTS_PER_PAGE', 250);
 /**
  * Images
  */
+define('IMAGE_LOCATION', '..'.DIRECTORY_SEPARATOR.'images');
 const IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg', 'gif'];
 // coresponds to the height of the image
 const IMAGE_FILE_SIZES = ['medium'=>550];
