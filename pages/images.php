@@ -11,6 +11,7 @@ if(!$token_valid) {
 
 $entityId = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 $entity = getEntity($entityId);
+$images = getEntityImages($entity->getId());
 
 if($entity == null) {
     header('Location: /');
@@ -32,6 +33,21 @@ if($entity == null) {
                 </fieldset>
                 <a href="/entity/<?= urlencode($entity->getName()) ?>" class="btn btn-primary">Done</a>
             </form>
+        </div>
+    </div>
+    <div class="container mt-2">
+        <div class="card-columns">
+            <?php foreach ($images as $image): ?>
+                <div class="card card-inverse">
+                    <img class="card-img img-fluid" src="/images/<?= IMAGE_DISPLAY_SIZE ?>/<?= $image->getId().'.'.$image->getFileExt() ?>">
+                    <div class="card-img-overlay">
+                        <h5 class="card-title"><?= $image->getName() ?></h5>
+                        <p class="card-text"><?= prettyTime(getImageLastEdit($image->getId())['Time']) ?></p>
+                        <a class="card-link" href="/image/<?= $image->getId() ?>/delete">Delete</a>
+                        <a class="card-link" href="#">Edit</a>
+                    </div>
+                </div>
+            <?php endforeach; ?>
         </div>
     </div>
 <?php endblock() ?>

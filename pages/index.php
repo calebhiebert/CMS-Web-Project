@@ -16,14 +16,19 @@ $entities = getEntities(ENTITIES_TO_DISPLAY, 0, $token_valid);
             <div class="card mt-2" >
                 <?php if (count($images) > 0): ?>
                     <img class="card-img img-fluid" src="/images/<?= INDEX_IMAGE_DISPLAY_SIZE?>/<?= $images[0]->getId().'.'.$images[0]->getFileExt() ?>">
+                    <div class="pt-2 pl-2">
+                        <a href="/entity/<?= urlencode($entity->getName()) ?>" style="color: black;"><h5 class="card-title"><?= $entity->getName() ?></h5></a>
+                    </div>
+                <?php else: ?>
+                    <div class="card-block">
+                        <a href="/entity/<?= urlencode($entity->getName()) ?>" style="color: black;"><h5 class="card-title"><?= $entity->getName() ?></h5></a>
+                        <p class="card-text">
+                            <?= truncate($entity->getDescription(), ENTITY_DESCRIPTION_CHAR_TRUNCATION, '...') ?>
+                        </p>
+                        <small class="text-muted">Edited <?= prettyTime($edit->getTime()) ?> by <?= $edit->getUsername() ?></small>
+                    </div>
                 <?php endif; ?>
-                <div class="card-block">
-                    <a  href="/entity/<?= urlencode($entity->getName()) ?>" style="color: black;"><h5 class="card-title"><?= $entity->getName() ?></h5></a>
-                    <p class="card-text">
-                        <?= truncate($entity->getDescription(), ENTITY_DESCRIPTION_CHAR_TRUNCATION, '...') ?>
-                    </p>
-                    <small class="text-muted">Edited <?= prettyTime($edit->getTime()) ?> by <?= $edit->getUsername() ?></small>
-                </div>
+
             </div>
         <?php endforeach; ?>
     </div>

@@ -94,14 +94,14 @@ try {
 // Create edit log table
     $create_edit_log = $db->prepare(
         'CREATE TABLE EditLog (' .
+        'Id INT UNSIGNED NOT NULL PRIMARY KEY AUTO_INCREMENT,' .
         'UserId INT UNSIGNED,' .
         'Time DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,' .
         'EntityId INT UNSIGNED,' .
         'PictureId CHAR(32),' .
-        'CONSTRAINT EditLog_PK PRIMARY KEY (UserId, Time),' .
         'CONSTRAINT EditLog_Entity_Id_fk FOREIGN KEY (EntityId) REFERENCES Entities (Id) ON DELETE CASCADE,' .
         'CONSTRAINT EditLog_User_fk FOREIGN KEY (UserId) REFERENCES Users (Id),' .
-        'CONSTRAINT EditLog_Picutres_Id_fk FOREIGN KEY (PictureId) REFERENCES Pictures (Id),' .
+        'CONSTRAINT EditLog_Picutres_Id_fk FOREIGN KEY (PictureId) REFERENCES Pictures (Id) ON DELETE CASCADE,' .
         'CONSTRAINT Edit_Log_Valid_Nullness CHECK (COALESCE(EntityId, PictureId) IS NOT NULL));');
 
     $status_edit_log = $create_edit_log->execute() ? 'Success' : 'Error';

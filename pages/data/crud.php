@@ -216,6 +216,13 @@ function searchEntities($query) {
     );
 }
 
+function getImageLastEdit($imageId) {
+    return getSingle(
+        'SELECT (SELECT Username FROM Users WHERE Id = EditLog.UserId) Username, EntityId, Time FROM EditLog WHERE Time = (SELECT MAX(Time) FROM EditLog WHERE PictureId = :id)',
+        ['id'=>$imageId]
+    );
+}
+
 /**
  * @param Entity $entity
  */
@@ -282,6 +289,10 @@ function getUsers() {
 
 function deleteEntity($id) {
     execute('DELETE FROM Entities WHERE Id = :id LIMIT 1', ['id'=>$id]);
+}
+
+function deleteImage($id) {
+    execute('DELETE FROM Pictures WHERE Id = :id LIMIT 1', ['id'=>$id]);
 }
 
 /**

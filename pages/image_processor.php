@@ -15,8 +15,8 @@ if (isset($_FILES['image'])) {
     $entity = getEntity($entityId);
     $tokenValid = validateToken($token);
 
-
     if($tokenValid && $entity != null) {
+        $user = getUserByToken($token);
         $file = $_FILES['image'];
 
         if ($file['error'] == 0) {
@@ -42,6 +42,11 @@ if (isset($_FILES['image'])) {
 
             // add the image to the database
             putImage($imageId, $ext, $entity->getId(), $file['size'], null, substr($file['name'], 0, 60));
+
+            $edit = new Edit();
+            $edit->setPictureId($imageId);
+            $edit->setUserId($user->getId());
+            putEditEntry($edit);
 
             $log .= 'Success!';
         } else {
