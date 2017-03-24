@@ -25,6 +25,10 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
 
     while ($parents[0]->getParent() != null) {
         array_unshift($parents, $parents[0]->getParent());
+
+        foreach ($parents[0]->getTags() as $tag) {
+            array_unshift($inheritedTags, $tag);
+        }
     }
 
     if($ent->getParent() != null) {
@@ -75,7 +79,7 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
                         <div class="carousel-inner" role="listbox">
                             <?php foreach ($images as $image): ?>
                                 <div class="carousel-item<?= $first == true ? ' active' : '' ?>">
-                                    <img class="card-img d-block img-fluid" src="/images/<?= IMAGE_DISPLAY_SIZE ?>/<?= $image->getId().'.'.$image->getFileExt() ?>">
+                                    <img class="d-block img-fluid" src="/images/<?= IMAGE_DISPLAY_SIZE ?>/<?= $image->getId().'.'.$image->getFileExt() ?>">
                                 </div>
                                 <?php $first = false; ?>
                             <?php endforeach; ?>
@@ -106,8 +110,11 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
                     <div class="card">
                         <h6 class="card-header">Tags</h6>
                         <div class="card-block">
+                            <?php foreach ($inheritedTags as $itag): ?>
+                                <span class="badge badge-default mt-2"><?= $itag->getTag() ?></span>
+                            <?php endforeach; ?>
                             <?php foreach ($ent->getTags() as $tag): ?>
-                                <span class="badge badge-pill badge-primary mt-2"><?= $tag->getTag() ?></span>
+                                <span class="badge badge-primary mt-2"><?= $tag->getTag() ?></span>
                             <?php endforeach; ?>
                         </div>
                     </div>

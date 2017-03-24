@@ -24,7 +24,7 @@ define('DESCRIPTION_MIN_LENGTH', 3);
  * Index Page
  */
 define('ENTITIES_TO_DISPLAY', 11);
-define('INDEX_IMAGE_DISPLAY_SIZE', 'medium');
+define('INDEX_IMAGE_DISPLAY_SIZE', 'small');
 define('ENTITY_DESCRIPTION_CHAR_TRUNCATION', 100);
 
 /**
@@ -50,7 +50,7 @@ define('MAXIMUM_RESULTS_PER_PAGE', 250);
  * Images
  */
 define('IMAGE_LOCATION', '..'.DIRECTORY_SEPARATOR.'images');
-define('IMAGE_EDIT_PAGE_IMAGE_SIZE', 'medium');
+define('IMAGE_EDIT_PAGE_IMAGE_SIZE', 'full');
 const IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg', 'gif'];
-// coresponds to the height of the image
-const IMAGE_FILE_SIZES = ['medium'=>550];
+// coresponds to the width of the image
+const IMAGE_FILE_SIZES = ['small'=>576, 'medium'=>768, 'full'=>1200];

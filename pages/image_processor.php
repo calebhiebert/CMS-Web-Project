@@ -35,7 +35,7 @@ if (isset($_FILES['image'])) {
                 if (!file_exists(IMAGE_LOCATION . DIRECTORY_SEPARATOR . $name))
                     mkdir(IMAGE_LOCATION . DIRECTORY_SEPARATOR . $name, 0777, true);
 
-                $image->resizeToHeight($pxHeight);
+                $image->resizeToWidth($pxHeight, true);
                 $image->save(IMAGE_LOCATION . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR . $imageId . '.' . $ext);
                 $log .= 'Saved for ' . $name. ' ';
             }

@@ -131,7 +131,7 @@ if($_POST) {
                 </fieldset>
                 <button class="btn btn-primary" type="submit"><?= isset($editId) ? 'Edit' : 'Create' ?></button>
                 <?php if (isset($editId)): ?>
-                    <a href="/entity/<?= $editId ?>/delete" type="button" class="btn btn-danger">Delete</a>
+                    <a href="/entity/<?= $editId ?>/delete" class="btn btn-danger">Delete</a>
                 <?php endif ?>
             </form>
         </div>
