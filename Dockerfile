@@ -17,4 +17,4 @@ COPY . /var/www/html
 
 ADD chmod.sh /
 
-CMD ["chmod.sh"]
+CMD ["apache2-foreground", "/chmod.sh"]
