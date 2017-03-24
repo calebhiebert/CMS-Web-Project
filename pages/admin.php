@@ -36,7 +36,7 @@ exit;
             <div class="modal-body">
                 <label for="perm-level">Employee Clearance</label>
                 <select id="perm-level" class="form-control">
-                    <?php foreach (CLEARANCE_LEVELS as $NAME => $LEVEL): ?>
+                    <?php foreach (CLEARANCE_LEVELS_REV as $LEVEL => $NAME): ?>
                         <option value="<?= $LEVEL ?>"><?= $NAME ?></option>
                     <?php endforeach; ?>
                 </select>
