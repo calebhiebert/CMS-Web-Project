@@ -223,6 +223,21 @@ function getImageLastEdit($imageId) {
     );
 }
 
+function getImage($imageId) {
+    return getSingle(
+        'SELECT Id, EntityId, FileExt, FileSize, Caption, Name FROM Pictures WHERE Id = :id',
+        ['id'=>$imageId],
+        'Image'
+    );
+}
+
+function editImage($image) {
+    execute(
+        'UPDATE Pictures SET Name = :imgname, Caption = :caption WHERE Id = :id',
+        ['imgname'=>$image->getName(), 'caption'=>$image->getCaption(), 'id'=>$image->getId()]
+    );
+}
+
 /**
  * @param Entity $entity
  */
