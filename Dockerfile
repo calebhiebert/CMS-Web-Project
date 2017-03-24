@@ -14,6 +14,6 @@ RUN docker-php-ext-install pdo pdo_mysql exif mbstring
 
 COPY ./config/php.ini /usr/local/etc/php/
 
-COPY . /src
+ADD . /src
 RUN rm -rf /var/www/html && mv /src /var/www/html &&\
     chmod -R 777 /var/www/html/images /var/www/html/logs
