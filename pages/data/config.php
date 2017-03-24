@@ -38,6 +38,7 @@ define('EDITS_TO_DISPLAY', 15);
 define('DISPLAY_SIBLINGS', true);
 define('DISPLAY_CHILDREN', true);
 define('IMAGE_DISPLAY_SIZE', 'medium');
+define('BACKGROUND_IMAGE_SIZE', 'full');
 
 /**
  * Search Page

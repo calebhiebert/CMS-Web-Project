@@ -150,4 +150,3 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
     </div>
 </div>
 <?php endblock() ?>
-
