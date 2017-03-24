@@ -66,5 +66,5 @@ if (isset($_FILES['image'])) {
 }
 
 echo $log;
-file_put_contents('../image.log', $log."\n", FILE_APPEND);
+file_put_contents('../logs/image.log', $log."\n", FILE_APPEND);
 ?>

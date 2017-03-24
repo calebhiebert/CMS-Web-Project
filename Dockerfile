@@ -12,10 +12,9 @@ RUN apt-get update && apt-get install -y \
 RUN a2enmod rewrite
 RUN docker-php-ext-install pdo pdo_mysql exif mbstring
 
-COPY . /var/www/html
 COPY ./config/php.ini /usr/local/etc/php/
 
-ADD chmod.sh /
-RUN chmod 755 /chmod.sh
+COPY . /src
 
-CMD ["/chmod.sh"]
+RUN rm -rf /var/www/html && mv /src /var/www/html &&\
+    chmod -R 777 /var/www/html/images /var/www/html/logs
