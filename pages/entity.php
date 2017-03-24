@@ -104,10 +104,10 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
             <?php if (count($ent->getTags()) > 0): ?>
                 <div class="col-md-auto mb-3">
                     <div class="card">
-                        <h6 class="card-header">Data</h6>
-                        <div class="list-group listgroupa list-group-flush">
+                        <h6 class="card-header">Tags</h6>
+                        <div class="card-block">
                             <?php foreach ($ent->getTags() as $tag): ?>
-                                <a href="#" class="list-group-item list-group-item-action"><?= $tag->getTag() ?></a>
+                                <span class="badge badge-pill badge-primary mt-2"><?= $tag->getTag() ?></span>
                             <?php endforeach; ?>
                         </div>
                     </div>

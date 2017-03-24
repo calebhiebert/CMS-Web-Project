@@ -23,7 +23,7 @@ define('DESCRIPTION_MIN_LENGTH', 3);
 /**
  * Index Page
  */
-define('ENTITIES_TO_DISPLAY', 9);
+define('ENTITIES_TO_DISPLAY', 11);
 define('INDEX_IMAGE_DISPLAY_SIZE', 'medium');
 define('ENTITY_DESCRIPTION_CHAR_TRUNCATION', 100);
 

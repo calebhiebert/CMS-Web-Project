@@ -44,7 +44,7 @@ if($entity == null) {
                         <h5 class="card-title"><?= $image->getName() ?></h5>
                         <p class="card-text"><?= prettyTime(getImageLastEdit($image->getId())['Time']) ?></p>
                         <a class="card-link" href="/image/<?= $image->getId() ?>/delete">Delete</a>
-                        <a class="card-link" href="#">Edit</a>
+                        <a class="card-link" href="/image/<?= $image->getId() ?>/edit">Edit</a>
                     </div>
                 </div>
             <?php endforeach; ?>

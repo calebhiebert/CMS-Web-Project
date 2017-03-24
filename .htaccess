@@ -28,6 +28,7 @@ RewriteRule ^entity/(.*)/?$ pages/entity.php?name=$1
 
 # Images
 RewriteRule ^image/(.*)/delete/?$ pages/image_edit.php?id=$1&delete
+RewriteRule ^image/(.*)/edit/?$ pages/image_edit.php?id=$1
 
 # Tag
 RewriteRule ^tag/(.*)/(.*)/?$ pages/tag.php?name=$1&data=$2
