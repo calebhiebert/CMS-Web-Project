@@ -13,6 +13,4 @@ RUN a2enmod rewrite
 RUN docker-php-ext-install pdo pdo_mysql exif mbstring
 
 COPY ./config/php.ini /usr/local/etc/php/
-
-ADD . /var/www/html
-RUN chmod -R 777 /var/www/html/images /var/www/html/logs
+COPY . /var/www/html
