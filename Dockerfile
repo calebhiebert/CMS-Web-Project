@@ -16,5 +16,6 @@ COPY ./config/php.ini /usr/local/etc/php/
 COPY . /var/www/html
 
 ADD chmod.sh /
+RUN chmod 755 /chmod.sh
 
-CMD ["apache2-foreground", "/chmod.sh"]
+CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
