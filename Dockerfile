@@ -15,7 +15,7 @@ RUN docker-php-ext-install pdo pdo_mysql exif mbstring
 COPY ./config/php.ini /usr/local/etc/php/
 COPY . /var/www/html
 
-ADD chmod.sh /
-RUN chmod 755 /chmod.sh
+ADD run.sh /
+RUN chmod 755 /run.sh
 
-CMD ["/usr/sbin/apache2ctl", "-D", "FOREGROUND"]
+CMD ["/run.sh"]

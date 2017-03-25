@@ -1,7 +1,11 @@
 <?php
 require_once "data/token.php";
+$entities = getMultiple(
+        'SELECT * FROM Entities '. ($token_valid ? '' : 'WHERE Published = 1') .' ORDER BY rand() LIMIT :lmt',
+        ['lmt'=>ENTITIES_TO_DISPLAY],
+        'Entity'
+)
 
-$entities = getEntities(ENTITIES_TO_DISPLAY, 0, $token_valid);
 ?>
 
 <?php include 'data/base.php' ?>
