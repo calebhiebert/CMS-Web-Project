@@ -40,7 +40,7 @@ define('DISPLAY_CHILDREN', true);
 define('IMAGE_DISPLAY_SIZE', 'medium');
 define('BACKGROUND_IMAGE_SIZE', 'tiny');
 define('SHOW_BACKGROUND_IMAGE', true);
-define('BACKGROUND_BLUR_INTENSITY', 5);
+define('BACKGROUND_BLUR_INTENSITY', 15);
 
 /**
  * Search Page
