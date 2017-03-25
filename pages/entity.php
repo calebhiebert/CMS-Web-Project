@@ -45,6 +45,34 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
 <?php startblock('title') ?>Main Page<?php endblock() ?>
 
 <?php startblock('body') ?>
+<?php if (count($images) > 0 && SHOW_BACKGROUND_IMAGE): ?>
+    <style>
+        img.bg {
+            /* Set rules to fill background */
+            min-height: 100%;
+            min-width: 1024px;
+
+            /* Set up proportionate scaling */
+            width: 100%;
+            height: auto;
+
+            /* Set up positioning */
+            position: fixed;
+            top: 0;
+            left: 0;
+
+            z-index: -1;
+        }
+
+        @media screen and (max-width: 1024px) { /* Specific to this particular image */
+            img.bg {
+                left: 50%;
+                margin-left: -512px;   /* 50% */
+            }
+        }
+    </style>
+    <img class="bg" src="/images/<?= BACKGROUND_IMAGE_SIZE.'/'.$images[0]->getId().'.'.$images[0]->getFileExt() ?>">
+<?php endif; ?>
 <div class="container mt-3">
     <nav class="breadcrumb">
         <?php foreach ($parents as $entity): ?>
@@ -105,16 +133,16 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
             </div>
         </div>
         <div class="col-md-4">
-            <?php if (count($ent->getTags()) > 0): ?>
+            <?php if (count($ent->getTags()) > 0 || count($inheritedTags) > 0): ?>
                 <div class="col-md-auto mb-3">
                     <div class="card">
                         <h6 class="card-header">Tags</h6>
                         <div class="card-block">
                             <?php foreach ($inheritedTags as $itag): ?>
-                                <span class="badge badge-default mt-2"><?= $itag->getTag() ?></span>
+                                <a href="/search?query=<?= urlencode($itag->getTag()) ?>"><span class="badge badge-default mt-2"><?= $itag->getTag() ?></span></a>
                             <?php endforeach; ?>
                             <?php foreach ($ent->getTags() as $tag): ?>
-                                <span class="badge badge-primary mt-2"><?= $tag->getTag() ?></span>
+                                <a href="/search?query=<?= urlencode($tag->getTag()) ?>"><span class="badge badge-primary mt-2"><?= $tag->getTag() ?></span></a>
                             <?php endforeach; ?>
                         </div>
                     </div>
@@ -150,3 +178,19 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
     </div>
 </div>
 <?php endblock() ?>
+<?php startblock('script'); ?>
+    <?php if(count($images) > 0 && SHOW_BACKGROUND_IMAGE): ?>
+        <script src="/js/Vague.js"></script>
+        <script>
+            var vague = $('.bg').Vague({
+                intensity: <?= BACKGROUND_BLUR_INTENSITY ?>,
+                animationOptions: {
+                    duration: 1000,
+                    easing: 'linear'
+                }
+            });
+
+            vague.blur();
+        </script>
+    <?php endif; ?>
+<?php endblock(); ?>

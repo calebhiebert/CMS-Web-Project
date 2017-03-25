@@ -24,7 +24,7 @@ define('DESCRIPTION_MIN_LENGTH', 3);
  * Index Page
  */
 define('ENTITIES_TO_DISPLAY', 11);
-define('INDEX_IMAGE_DISPLAY_SIZE', 'small');
+define('INDEX_IMAGE_DISPLAY_SIZE', 'medium');
 define('ENTITY_DESCRIPTION_CHAR_TRUNCATION', 100);
 
 /**
@@ -38,7 +38,9 @@ define('EDITS_TO_DISPLAY', 15);
 define('DISPLAY_SIBLINGS', true);
 define('DISPLAY_CHILDREN', true);
 define('IMAGE_DISPLAY_SIZE', 'medium');
-define('BACKGROUND_IMAGE_SIZE', 'full');
+define('BACKGROUND_IMAGE_SIZE', 'tiny');
+define('SHOW_BACKGROUND_IMAGE', true);
+define('BACKGROUND_BLUR_INTENSITY', 5);
 
 /**
  * Search Page
@@ -54,4 +56,4 @@ define('IMAGE_LOCATION', '..'.DIRECTORY_SEPARATOR.'images');
 define('IMAGE_EDIT_PAGE_IMAGE_SIZE', 'full');
 const IMAGE_FILE_TYPES = ['png', 'jpg', 'jpeg', 'gif'];
 // coresponds to the width of the image
-const IMAGE_FILE_SIZES = ['small'=>576, 'medium'=>768, 'full'=>1200];
+const IMAGE_FILE_SIZES = ['tiny'=>50, 'medium'=>768, 'full'=>1200];
