@@ -11,5 +11,6 @@ docker run -d \
         -e VIRTUAL_HOST="cms.piikl.com" \
         -e LETSENCRYPT_HOST="cms.piikl.com" \
         -e LETSENCRYPT_EMAIL="info@piikl.com" \
+        -v /home/panchem/cms-images:/var/www/html/images
         panchem/cms
 
