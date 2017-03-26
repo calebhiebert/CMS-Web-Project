@@ -194,17 +194,19 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
         <?php if (SHOW_BACKGROUND_IMAGE): ?>
             <script src="/js/StackBlur.js"></script>
             <script>
-                stackBlurImage('bg-img', 'bg-img-canvas', 5, false);
-                var rgb = getAverageRGB(document.getElementById('bg-img'));
+                $(document).ready(function () {
+                    stackBlurImage('bg-img', 'bg-img-canvas', 5, false);
+                    var rgb = getAverageRGB(document.getElementById('bg-img'));
 
-                $('.navbar')
-                    .removeClass('bg-primary')
-                    .removeClass('navbar-light')
-                    .addClass('navbar-inverse')
-                    .addClass('shadowed')
-                    .css('background-color', shadeBlend(-0.6, rgbToHex(rgb.r, rgb.g, rgb.b)));
+                    $('.navbar')
+                        .removeClass('bg-primary')
+                        .removeClass('navbar-light')
+                        .addClass('navbar-inverse')
+                        .addClass('shadowed')
+                        .css('background-color', shadeBlend(-0.6, rgbToHex(rgb.r, rgb.g, rgb.b)));
 
-                document.getElementById('bg-img').parentNode.removeChild(document.getElementById('bg-img'));
+                    document.getElementById('bg-img').parentNode.removeChild(document.getElementById('bg-img'));
+                });
 
                 function getAverageRGB(imgEl) {
 
