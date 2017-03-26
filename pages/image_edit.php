@@ -47,7 +47,7 @@ if(isset($_GET['delete'])) {
         try {
             unlink(IMAGE_LOCATION . DIRECTORY_SEPARATOR . $NAME . DIRECTORY_SEPARATOR . $image->getId() . '.' . $image->getFileExt());
         } catch (Exception $e) {
-            
+
         }
     }
 

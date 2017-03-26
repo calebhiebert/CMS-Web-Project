@@ -120,13 +120,15 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
                 <h5 class="mb-0"><?= $ent->getName() ?></h5>
             </div>
         <?php endif ?>
-        <div class="card-block slick">
-            <?php foreach ($images as $image): ?>
-                <div>
-                    <img class="d-block img-fluid" src="/images/<?= IMAGE_DISPLAY_SIZE ?>/<?= $image->getId().'.'.$image->getFileExt() ?>">
-                </div>
-            <?php endforeach; ?>
-        </div>
+        <?php if(count($images) > 0 && SHOW_BACKGROUND_IMAGE): ?>
+            <div class="card-block slick">
+                <?php foreach ($images as $image): ?>
+                    <div>
+                        <img class="d-block img-fluid" src="/images/<?= IMAGE_DISPLAY_SIZE ?>/<?= $image->getId().'.'.$image->getFileExt() ?>">
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endif; ?>
         <div class="card-block">
             <p class="card-text"><?= nl2br($ent->getDescription()) ?></p>
             <?php if(count($ent->getChildren()) > 0 && DISPLAY_CHILDREN): ?>
