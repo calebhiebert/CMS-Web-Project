@@ -39,7 +39,7 @@ if($entity == null) {
         <div class="card-columns">
             <?php foreach ($images as $image): ?>
                 <div class="card card-inverse">
-                    <img class="card-img img-fluid" src="<?= SITE_PREFIX ?>/images/<?= IMAGE_DISPLAY_SIZE ?>/<?= $image->getId().'.'.$image->getFileExt() ?>">
+                    <img class="card-img img-fluid" alt="<?= $image->getName() ?>" src="<?= SITE_PREFIX ?>/images/<?= IMAGE_DISPLAY_SIZE ?>/<?= $image->getId().'.'.$image->getFileExt() ?>">
                     <div class="card-img-overlay">
                         <h5 class="card-title"><?= $image->getName() ?></h5>
                         <p class="card-text"><?= prettyTime(getImageLastEdit($image->getId())['Time']) ?></p>

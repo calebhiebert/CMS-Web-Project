@@ -64,7 +64,7 @@ if(isset($_GET['delete'])) {
 <?php startblock('body') ?>
 <div class="container mt-4">
     <div class="card mb-4">
-        <img class="card-img img-fluid" src="<?= SITE_PREFIX ?>/images/<?= IMAGE_EDIT_PAGE_IMAGE_SIZE.DIRECTORY_SEPARATOR.$image->getId().'.'.$image->getFileExt() ?>">
+        <img alt="<?= $image->getName() ?>" class="card-img img-fluid" src="<?= SITE_PREFIX ?>/images/<?= IMAGE_EDIT_PAGE_IMAGE_SIZE.'/'.$image->getId().'.'.$image->getFileExt() ?>">
 
         <div class="card-block">
             <form method="post">

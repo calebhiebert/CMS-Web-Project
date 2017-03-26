@@ -11,6 +11,8 @@ require_once 'token.php';
     <link rel="stylesheet" href="<?= SITE_PREFIX ?>/css/font-awesome.min.css">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php startblock('title') ?><?php endblock()?></title>
+    <?php startblock('style') ?>
+    <?php endblock() ?>
 </head>
 <body>
 <nav class="navbar navbar-toggleable-md bg-primary navbar-light p-1 pl-2">

@@ -44,39 +44,32 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
 <?php include 'data/base.php' ?>
 <?php startblock('title') ?>Main Page<?php endblock() ?>
 
-<?php startblock('body') ?>
-<?php if (count($images) > 0 && SHOW_BACKGROUND_IMAGE): ?>
-    <style>
-        .bg {
-            /* Set rules to fill background */
-            min-height: 100%;
-            min-width: 1920px;
-
-            /* Set up proportionate scaling */
-            width: 100%;
-            height: auto;
-
-            /* Set up positioning */
-            position: fixed;
-            top: 0;
-            left: 0;
-
-            z-index: -1;
-        }
-
-        @media screen and (max-width: 1024px) { /* Specific to this particular image */
-            .bg {
-                left: 50%;
-                margin-left: -512px;   /* 50% */
-            }
-        }
-    </style>
-    <img id="bg-img" src="<?= SITE_PREFIX ?>/images/<?= BACKGROUND_IMAGE_SIZE.'/'.$images[0]->getId().'.'.$images[0]->getFileExt() ?>">
-    <canvas class="bg" id="bg-img-canvas"></canvas>
-<?php endif; ?>
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
-<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick-theme.css"/>
+<?php startblock('style') ?>
 <style>
+    .bg {
+        /* Set rules to fill background */
+        min-height: 100%;
+        min-width: 1920px;
+
+        /* Set up proportionate scaling */
+        width: 100%;
+        height: auto;
+
+        /* Set up positioning */
+        position: fixed;
+        top: 0;
+        left: 0;
+
+        z-index: -1;
+    }
+
+    @media screen and (max-width: 1024px) { /* Specific to this particular image */
+        .bg {
+            left: 50%;
+            margin-left: -512px;   /* 50% */
+        }
+    }
+
     .shadowed {
         -webkit-box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.40);
         -moz-box-shadow: 0px 0px 13px 0px rgba(0,0,0,0.40);
@@ -87,6 +80,15 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
         margin: auto;
     }
 </style>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
+<link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick-theme.css"/>
+<?php endblock() ?>
+
+<?php startblock('body') ?>
+<?php if (count($images) > 0 && SHOW_BACKGROUND_IMAGE): ?>
+    <img id="bg-img" alt="<?= $images[0]->getName() ?>" src="<?= SITE_PREFIX ?>/images/<?= BACKGROUND_IMAGE_SIZE.'/'.$images[0]->getId().'.'.$images[0]->getFileExt() ?>">
+    <canvas class="bg" id="bg-img-canvas"></canvas>
+<?php endif; ?>
 <div class="container mt-3 mb-3">
     <?php if (count($parents) > 1): ?>
     <nav class="breadcrumb">
@@ -124,7 +126,7 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
             <div class="card-block slick">
                 <?php foreach ($images as $image): ?>
                     <div>
-                        <img class="d-block img-fluid" src="<?= SITE_PREFIX ?>/images/<?= IMAGE_DISPLAY_SIZE ?>/<?= $image->getId().'.'.$image->getFileExt() ?>">
+                        <img class="d-block img-fluid" alt="<?= $image->getName() ?>" src="<?= SITE_PREFIX ?>/images/<?= IMAGE_DISPLAY_SIZE ?>/<?= $image->getId().'.'.$image->getFileExt() ?>">
                     </div>
                 <?php endforeach; ?>
             </div>
