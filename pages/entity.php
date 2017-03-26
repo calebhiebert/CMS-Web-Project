@@ -194,7 +194,7 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
         <?php if (SHOW_BACKGROUND_IMAGE): ?>
             <script src="/js/StackBlur.js"></script>
             <script>
-                $(document).ready(function () {
+                $(window).on('load', function () {
                     stackBlurImage('bg-img', 'bg-img-canvas', 5, false);
                     var rgb = getAverageRGB(document.getElementById('bg-img'));
 
