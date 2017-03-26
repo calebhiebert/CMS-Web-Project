@@ -13,7 +13,7 @@ require_once 'token.php';
     <title><?php startblock('title') ?><?php endblock()?></title>
 </head>
 <body>
-<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+<nav class="navbar navbar-toggleable-md bg-primary navbar-light p-1 pl-2">
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navContent">
         <span class="navbar-toggler-icon"></span>
     </button>

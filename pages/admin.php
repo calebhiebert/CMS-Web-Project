@@ -90,11 +90,8 @@ exit;
                     <td><?= prettyTime($edit->getTime()) ?> (<?= $edit->getTime() ?>)</td>
                     <?php if($edit->getEntityId() != null): ?>
                         <td><a href="/entity/<?= urlencode(getEntity($edit->getEntityId())->getName()) ?>">Entity</a></td>
-                    <?php elseif($edit->getTagId() != null): ?>
-                        <?php $tag = getTagById($edit->getTagId()) ?>
-                        <td><a href="/tag/<?= urlencode($tag->getTagName()) ?>/<?= urlencode($tag->getTagData()) ?>">Tag</a></td>
                     <?php elseif($edit->getPictureId() != null): ?>
-                        <td><a href="#">Picture</a></td>
+                        <td><a href="/image/<?= $edit->getPictureId() ?>/edit">Picture</a></td>
                     <?php endif ?>
                 </tr>
             <?php endforeach; ?>
