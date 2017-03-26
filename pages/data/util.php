@@ -60,4 +60,8 @@ function prettyTime($time) {
     return PrettyDateTime::parse(date_create_from_format('Y-m-d H:i:s', $time), new DateTime('now'));
 }
 
+function redirect($target = '/') {
+    header('Location: '.SITE_PREFIX.$target);
+}
+
 ?>

@@ -6,9 +6,9 @@
 require_once "data/token.php";
 
 if($token_valid) {
-    header('Location: /');
+    redirect();
     exit;
-} else if($_SERVER['REQUEST_METHOD'] == 'POST') {
+} else if($_POST) {
     $username = trim(filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS));
     $password = trim(filter_input(INPUT_POST, 'password', FILTER_SANITIZE_SPECIAL_CHARS));
 
@@ -39,7 +39,7 @@ if($token_valid) {
 
                 if($token !== false) {
                     setcookie('token', $token, time() + TOKEN_LIFE, '/');
-                    header('Location: /');
+                    redirect();
                     exit;
                 }
             } else {
@@ -58,7 +58,7 @@ if($token_valid) {
         <div class="row justify-content-center">
             <div class="card col-md-5">
                 <div class="card-block">
-                    <form action="/login" method="post">
+                    <form action="<?= SITE_PREFIX ?>/login" method="post">
                         <fieldset class="form-group">
                             <label for="inpt-username" class="form-control-label">Username</label>
                             <div class="input-group">
@@ -79,7 +79,7 @@ if($token_valid) {
                             </div>
                         <?php endif ?>
                         <button type="submit" class="btn btn-primary">Log In</button>
-                        <a class="btn btn-secondary" href="/register">Register</a>
+                        <a class="btn btn-secondary" href="<?= SITE_PREFIX ?>/register">Register</a>
                     </form>
                 </div>
             </div>

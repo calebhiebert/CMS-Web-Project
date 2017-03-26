@@ -2,7 +2,7 @@
 require_once 'data/token.php';
 
 if(!$token_valid) {
-    header('Location: /');
+    redirect();
     exit;
 }
 
@@ -50,7 +50,7 @@ if($_POST) {
             $edit->setEntityId($result);
             $edit->setUserId($current_user->getId());
             putEditEntry($edit);
-            header('Location: /entity/' . urlencode($newEntity->getName()));
+            redirect('/entity/'.urlencode($newEntity->getName()));
             exit;
         }
     }
@@ -69,7 +69,7 @@ if($_POST) {
     }
 } else if (isset($_GET['delete']) && isset($_GET['id'])) {
     deleteEntity(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
-    header('Location: /');
+    redirect();
     exit;
 }
 ?>
@@ -78,7 +78,7 @@ if($_POST) {
 <?php startblock('title') ?><?= isset($editId) ? 'Edit Entity' : 'Create Entity' ?><?php endblock() ?>
 
 <?php startblock('body') ?>
-<link rel="stylesheet" href="/css/select2.min.css">
+<link rel="stylesheet" href="<?= SITE_PREFIX ?>/css/select2.min.css">
 
 <div class="container mt-4">
     <?php if(isset($editId)): ?>
@@ -88,7 +88,7 @@ if($_POST) {
     <?php endif; ?>
     <div class="card">
         <div class="card-block">
-            <form action="<?= isset($editId) ? '/entity/'.$editId.'/edit' : '/entity/create' ?>" method="post">
+            <form action="<?= SITE_PREFIX ?><?= isset($editId) ? '/entity/'.$editId.'/edit' : '/entity/create' ?>" method="post">
                 <?php if(isset($editId)): ?>
                     <input type="hidden" name="editid" value="<?= $editId ?>">
                 <?php endif; ?>
@@ -131,7 +131,7 @@ if($_POST) {
                 </fieldset>
                 <button class="btn btn-primary" type="submit"><?= isset($editId) ? 'Save' : 'Create' ?></button>
                 <?php if (isset($editId)): ?>
-                    <a href="/entity/<?= $editId ?>/delete" class="btn btn-danger">Delete</a>
+                    <a href="<?= SITE_PREFIX ?>/entity/<?= $editId ?>/delete" class="btn btn-danger">Delete</a>
                 <?php endif ?>
             </form>
         </div>
@@ -139,7 +139,7 @@ if($_POST) {
 </div>
 <?php endblock() ?>
 <?php startblock('script') ?>
-    <script src="/js/select2.full.min.js"></script>
+    <script src="<?= SITE_PREFIX ?>/js/select2.full.min.js"></script>
     <?php if(isset($parent)): ?>
         <script>
             $('#in-parent').val(<?= $parent ?>);

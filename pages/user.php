@@ -8,7 +8,7 @@ if($token_valid) {
     $user = getUser($id);
 
     if($user == null) {
-        header('Location: /');
+        redirect();
         exit;
     }
 
@@ -42,13 +42,13 @@ if($token_valid) {
             $user->setEmail($email);
             $user->setPermLevel($clearance);
             editUser($user);
-            header('Location: /user/'.$id);
+            redirect('/user'.$id);
             exit;
         }
     }
 
 } else {
-    header('Location: /');
+    redirect();
     exit;
 }
 ?>
@@ -58,7 +58,7 @@ if($token_valid) {
 
 <?php startblock('body') ?>
 <div class="container mt-3">
-    <form action="/user/<?= $user->getId() ?>/edit" method="post">
+    <form action="<?= SITE_PREFIX ?>/user/<?= $user->getId() ?>/edit" method="post">
         <div class="card">
             <h5 class="card-header"><?= $user->getUsername() ?></h5>
             <ul class="list-group list-group-flush">
@@ -93,7 +93,7 @@ if($token_valid) {
         <?php if ($editing): ?>
             <button type="submit" class="btn btn-primary mt-2">Update User</button>
         <?php endif ?>
-        <a href="/user/<?= $user->getId() ?>/delete" class="btn btn-danger mt-2">Delete User</a>
+        <a href="<?= SITE_PREFIX ?>/user/<?= $user->getId() ?>/delete" class="btn btn-danger mt-2">Delete User</a>
     </form>
 </div>
 <?php endblock() ?>

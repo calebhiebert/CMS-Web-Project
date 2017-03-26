@@ -1,5 +1,5 @@
 <?php
 setcookie('token', null, 0, '/');
-header('Location: /');
+header('Location: '.SITE_PREFIX);
 exit;
 ?>

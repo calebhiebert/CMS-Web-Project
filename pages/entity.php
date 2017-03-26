@@ -36,7 +36,7 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
     }
 
 } else {
-    header('Location: /');
+    redirect();
     exit;
 }
 ?>
@@ -71,7 +71,7 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
             }
         }
     </style>
-    <img id="bg-img" src="/images/<?= BACKGROUND_IMAGE_SIZE.'/'.$images[0]->getId().'.'.$images[0]->getFileExt() ?>">
+    <img id="bg-img" src="<?= SITE_PREFIX ?>/images/<?= BACKGROUND_IMAGE_SIZE.'/'.$images[0]->getId().'.'.$images[0]->getFileExt() ?>">
     <canvas class="bg" id="bg-img-canvas"></canvas>
 <?php endif; ?>
 <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css"/>
@@ -94,7 +94,7 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
             <?php if($entity === end($parents)): ?>
                 <span class="breadcrumb-item active"><?= $entity->getName() ?></span>
             <?php else: ?>
-                <a class="breadcrumb-item" href="<?= '/entity/' . urlencode($entity->getName()) ?>"><?= $entity->getName() ?></a>
+                <a class="breadcrumb-item" href="<?= SITE_PREFIX ?><?= '/entity/' . urlencode($entity->getName()) ?>"><?= $entity->getName() ?></a>
             <?php endif; ?>
         <?php endforeach ?>
     </nav>
@@ -111,8 +111,8 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
             <div class="card-header p-2 d-flex justify-content-between">
                 <h5 class="mb-0"><?= $ent->getName() ?></h5>
                 <div class="p-0">
-                    <a class="card-link" href="/entity/<?= $ent->getId() ?>/edit" style="color: black;"><i class="fa fa-pencil"></i></a>
-                    <a class="card-link" href="/entity/<?= $ent->getId() ?>/images" style="color: black;"><i class="fa fa-picture-o"></i></a>
+                    <a class="card-link" href="<?= SITE_PREFIX ?>/entity/<?= $ent->getId() ?>/edit" style="color: black;"><i class="fa fa-pencil"></i></a>
+                    <a class="card-link" href="<?= SITE_PREFIX ?>/entity/<?= $ent->getId() ?>/images" style="color: black;"><i class="fa fa-picture-o"></i></a>
                 </div>
             </div>
         <?php else: ?>
@@ -124,7 +124,7 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
             <div class="card-block slick">
                 <?php foreach ($images as $image): ?>
                     <div>
-                        <img class="d-block img-fluid" src="/images/<?= IMAGE_DISPLAY_SIZE ?>/<?= $image->getId().'.'.$image->getFileExt() ?>">
+                        <img class="d-block img-fluid" src="<?= SITE_PREFIX ?>/images/<?= IMAGE_DISPLAY_SIZE ?>/<?= $image->getId().'.'.$image->getFileExt() ?>">
                     </div>
                 <?php endforeach; ?>
             </div>
@@ -135,7 +135,7 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
                 <h6>Children</h6>
                 <ul>
                     <?php foreach ($ent->getChildren() as $child): ?>
-                        <li><a href="/entity/<?= urlencode($child->getName()) ?>"><?= $child->getName() ?></a></li>
+                        <li><a href="<?= SITE_PREFIX ?>/entity/<?= urlencode($child->getName()) ?>"><?= $child->getName() ?></a></li>
                     <?php endforeach ?>
                 </ul>
             <?php endif ?>
@@ -144,16 +144,16 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
                 <ul>
                     <?php foreach ($ent->getParent()->getChildren() as $sibling): ?>
                         <?php if($sibling->getId() != $ent->getId() && $sibling->isPublished()): ?>
-                            <li><a href="/entity/<?= urlencode($sibling->getName()) ?>"><?= $sibling->getName() ?></a></li>
+                            <li><a href="<?= SITE_PREFIX ?>/entity/<?= urlencode($sibling->getName()) ?>"><?= $sibling->getName() ?></a></li>
                         <?php endif ?>
                     <?php endforeach ?>
                 </ul>
             <?php endif ?>
             <?php foreach ($inheritedTags as $itag): ?>
-                <a href="/search?query=<?= urlencode($itag->getTag()) ?>"><span class="badge badge-default mt-1 p-1"><?= $itag->getTag() ?></span></a>
+                <a href="<?= SITE_PREFIX ?>/search?query=<?= urlencode($itag->getTag()) ?>"><span class="badge badge-default mt-1 p-1"><?= $itag->getTag() ?></span></a>
             <?php endforeach; ?>
             <?php foreach ($ent->getTags() as $tag): ?>
-                <a href="/search?query=<?= urlencode($tag->getTag()) ?>"><span class="badge badge-primary mt-1 p-1"><?= $tag->getTag() ?></span></a>
+                <a href="<?= SITE_PREFIX ?>/search?query=<?= urlencode($tag->getTag()) ?>"><span class="badge badge-primary mt-1 p-1"><?= $tag->getTag() ?></span></a>
             <?php endforeach; ?>
         </div>
 
@@ -192,7 +192,7 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
             });
         </script>
         <?php if (SHOW_BACKGROUND_IMAGE): ?>
-            <script src="/js/StackBlur.js"></script>
+            <script src="<?= SITE_PREFIX ?>/js/StackBlur.js"></script>
             <script>
                 $(window).on('load', function () {
                     stackBlurImage('bg-img', 'bg-img-canvas', 5, false);

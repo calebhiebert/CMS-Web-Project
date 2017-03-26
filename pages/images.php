@@ -5,7 +5,7 @@ require_once 'data/ImageResize.php';
 use \Eventviva\ImageResize;
 
 if(!$token_valid) {
-    header('Location: /');
+    redirect();
     exit;
 }
 
@@ -14,7 +14,7 @@ $entity = getEntity($entityId);
 $images = getEntityImages($entity->getId());
 
 if($entity == null) {
-    header('Location: /');
+    redirect();
     exit;
 }
 ?>
@@ -23,7 +23,7 @@ if($entity == null) {
 <?php startblock('title') ?>Add Images<?php endblock() ?>
 
 <?php startblock('body') ?>
-    <link rel="stylesheet" href="/css/dropzone.css">
+    <link rel="stylesheet" href="<?= SITE_PREFIX ?>/css/dropzone.css">
     <div class="container mt-4">
         <div class="card">
             <h5 class="card-header">Upload Picture for <?= $entity->getName() ?></h5>
@@ -31,7 +31,7 @@ if($entity == null) {
                 <fieldset class="form-group">
                     <div id="drop" class="dropzone"></div>
                 </fieldset>
-                <a href="/entity/<?= urlencode($entity->getName()) ?>" class="btn btn-primary">Done</a>
+                <a href="<?= SITE_PREFIX ?>/entity/<?= urlencode($entity->getName()) ?>" class="btn btn-primary">Done</a>
             </form>
         </div>
     </div>
@@ -39,12 +39,12 @@ if($entity == null) {
         <div class="card-columns">
             <?php foreach ($images as $image): ?>
                 <div class="card card-inverse">
-                    <img class="card-img img-fluid" src="/images/<?= IMAGE_DISPLAY_SIZE ?>/<?= $image->getId().'.'.$image->getFileExt() ?>">
+                    <img class="card-img img-fluid" src="<?= SITE_PREFIX ?>/images/<?= IMAGE_DISPLAY_SIZE ?>/<?= $image->getId().'.'.$image->getFileExt() ?>">
                     <div class="card-img-overlay">
                         <h5 class="card-title"><?= $image->getName() ?></h5>
                         <p class="card-text"><?= prettyTime(getImageLastEdit($image->getId())['Time']) ?></p>
-                        <a class="card-link" href="/image/<?= $image->getId() ?>/delete">Delete</a>
-                        <a class="card-link" href="/image/<?= $image->getId() ?>/edit">Edit</a>
+                        <a class="card-link" href="<?= SITE_PREFIX ?>/image/<?= $image->getId() ?>/delete">Delete</a>
+                        <a class="card-link" href="<?= SITE_PREFIX ?>/image/<?= $image->getId() ?>/edit">Edit</a>
                     </div>
                 </div>
             <?php endforeach; ?>
@@ -53,12 +53,12 @@ if($entity == null) {
 <?php endblock() ?>
 
 <?php startblock('script') ?>
-    <script src="/js/dropzone.js"></script>
+    <script src="<?= SITE_PREFIX ?>/js/dropzone.js"></script>
     <script>
         Dropzone.autoDiscover = false;
 
         var dzone = new Dropzone("div#drop", {
-            url: '/pages/image_processor.php?entityid=<?= $entity->getId() ?>&token=<?= $token ?>',
+            url: '<?= SITE_PREFIX ?>/pages/image_processor.php?entityid=<?= $entity->getId() ?>&token=<?= $token ?>',
             paramName: 'image',
             maxFilesize: 10,
             acceptedFiles: '.png,.jpg,.gif,.jpeg',

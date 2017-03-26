@@ -2,7 +2,7 @@
 require_once 'data/token.php';
 
 if(!$token_valid) {
-header('Location: /');
+redirect();
 exit;
 } else {
     $edits = [];
@@ -10,7 +10,7 @@ exit;
     $codes = getRegistrationCodes();
 
     if($current_user == null || $current_user->getPermLevel() != 9) {
-        header('Location: /');
+        redirect();
         exit;
     } else {
         $users = getUsers();
@@ -22,7 +22,7 @@ exit;
 <?php startblock('title') ?>Administration<?php endblock() ?>
 
 <?php startblock('body') ?>
-<link rel="stylesheet" type="text/css" href="/css/theme.default.min.css"/>
+<link rel="stylesheet" type="text/css" href="<?= SITE_PREFIX ?>/css/theme.default.min.css"/>
 
 <div class="modal fade" id="reg-code-modal" tabindex="-1" role="dialog">
     <div class="modal-dialog" role="document">
@@ -68,7 +68,7 @@ exit;
                     <td><?= $usr->getEmail() ?></td>
                     <td><?= CLEARANCE_LEVELS_REV[$usr->getPermLevel()] ?></td>
                     <td><?= $usr->getRegisterDate() ?></td>
-                    <td class="text-center"><a href="/user/<?= $usr->getId() ?>/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
+                    <td class="text-center"><a href="<?= SITE_PREFIX ?>/user/<?= $usr->getId() ?>/edit"><i class="fa fa-pencil" aria-hidden="true"></i></a></td>
                 </tr>
             <?php endforeach ?>
         </tbody>
@@ -89,9 +89,9 @@ exit;
                     <td><?= $edit->getUsername() ?></td>
                     <td><?= prettyTime($edit->getTime()) ?> (<?= $edit->getTime() ?>)</td>
                     <?php if($edit->getEntityId() != null): ?>
-                        <td><a href="/entity/<?= urlencode(getEntity($edit->getEntityId())->getName()) ?>">Entity</a></td>
+                        <td><a href="<?= SITE_PREFIX ?>/entity/<?= urlencode(getEntity($edit->getEntityId())->getName()) ?>">Entity</a></td>
                     <?php elseif($edit->getPictureId() != null): ?>
-                        <td><a href="/image/<?= $edit->getPictureId() ?>/edit">Picture</a></td>
+                        <td><a href="<?= SITE_PREFIX ?>/image/<?= $edit->getPictureId() ?>/edit">Picture</a></td>
                     <?php endif ?>
                 </tr>
             <?php endforeach; ?>
@@ -119,7 +119,7 @@ exit;
 </div>
 <?php endblock() ?>
 <?php startblock('script') ?>
-<script type="text/javascript" src="/js/jquery.tablesorter.js"></script>
+<script type="text/javascript" src="<?= SITE_PREFIX ?>/js/jquery.tablesorter.js"></script>
 <script>
 
     $(document).ready(function() {
@@ -140,7 +140,7 @@ exit;
             }
         });
 
-        xhr.open("POST", "api/create-registration-code");
+        xhr.open("POST", "<?= SITE_PREFIX ?>/api/create-registration-code");
         xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
         xhr.send(data);
@@ -157,7 +157,7 @@ exit;
             }
         });
 
-        xhr.open("POST", "api/delete-registration-code");
+        xhr.open("POST", "<?= SITE_PREFIX ?>/api/delete-registration-code");
         xhr.setRequestHeader("content-type", "application/x-www-form-urlencoded");
 
         xhr.send(data);

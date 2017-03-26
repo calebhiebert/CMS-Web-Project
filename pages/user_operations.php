@@ -9,12 +9,12 @@ if($token_valid) {
     switch ($operation) {
         case 'delete':
             deleteUser($id);
-            header('Location: /admin');
+            redirect('/admin');
             break;
     }
 
 } else {
-    header('Location: /');
+    redirect();
     exit;
 }
 ?>

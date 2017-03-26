@@ -50,7 +50,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $stmt = $db->prepare('INSERT INTO Users (Username, Password, Email, PermLevel) VALUES (:username, :pwHash, :email, :permLevel)');
                 $stmt->execute(['username' => $username, 'pwHash' => $pwHash, 'email' => $email, 'permLevel' => $permLevel]);
                 $db->commit();
-                header('Location: /login');
+                redirect('/login');
             } catch (PDOException $e) {
                 if(strpos($e->getMessage(), 'uc_Username') !== false) {
                     $msgUname = 'This username is taken';
@@ -101,8 +101,8 @@ function invalidatemployeeCode($code) {
 <div class="container mt-4">
     <div class="card">
         <div class="card-block">
-            <?php if($_SERVER['REQUEST_METHOD'] == 'POST'): ?>
-                <form action="register" method="post">
+            <?php if($_POST): ?>
+                <form action="<?= SITE_PREFIX ?>/register" method="post">
                     <fieldset class="form-group<?= isset($msgUname) ? ' has-danger' : '' ?>">
                         <label for="inpt-username" class="form-control-label">Username</label>
                         <input type="text" class="form-control" name="username" id="inpt-username" value="<?= $username ?>" minlength="5" maxlength="60" required>
@@ -129,7 +129,7 @@ function invalidatemployeeCode($code) {
                     <button type="submit" class="btn btn-primary">Register</button>
                 </form>
             <?php else: ?>
-                <form action="register" method="post">
+                <form action="<?= SITE_PREFIX ?>/register" method="post">
                     <fieldset class="form-group">
                         <label for="inpt-username" class="form-control-label">Username</label>
                         <input type="text" class="form-control" name="username" id="inpt-username" required>

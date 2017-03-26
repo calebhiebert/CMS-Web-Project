@@ -2,7 +2,7 @@
 require_once 'data/token.php';
 
 if(!$token_valid) {
-    header('Location: /');
+    redirect();
     exit;
 }
 
@@ -10,7 +10,7 @@ $imageId = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_FULL_SPECIAL_CHARS);
 $image = getImage($imageId);
 
 if($image == null) {
-    header('Location: /');
+    redirect();
     exit;
 }
 
@@ -34,7 +34,7 @@ if($_POST) {
         $image->setName($name);
         $image->setCaption($caption);
         editImage($image);
-        header('Location: /entity/'.$image->getEntityId().'/images');
+        redirect('/entity/'.$image->getEntityId().'/images');
         exit;
     }
 }
@@ -51,7 +51,7 @@ if(isset($_GET['delete'])) {
         }
     }
 
-    header('Location: '.$_SERVER['HTTP_REFERER']);
+    redirect($_SERVER['HTTP_REFERER']);
     exit;
 } else {
 
@@ -64,7 +64,7 @@ if(isset($_GET['delete'])) {
 <?php startblock('body') ?>
 <div class="container mt-4">
     <div class="card mb-4">
-        <img class="card-img img-fluid" src="/images/<?= IMAGE_EDIT_PAGE_IMAGE_SIZE.DIRECTORY_SEPARATOR.$image->getId().'.'.$image->getFileExt() ?>">
+        <img class="card-img img-fluid" src="<?= SITE_PREFIX ?>/images/<?= IMAGE_EDIT_PAGE_IMAGE_SIZE.DIRECTORY_SEPARATOR.$image->getId().'.'.$image->getFileExt() ?>">
 
         <div class="card-block">
             <form method="post">
