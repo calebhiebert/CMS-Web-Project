@@ -44,7 +44,11 @@ if(isset($_GET['delete'])) {
 
     //delete the files
     foreach (IMAGE_FILE_SIZES as $NAME => $SIZE) {
-        unlink(IMAGE_LOCATION.DIRECTORY_SEPARATOR.$NAME.DIRECTORY_SEPARATOR.$image->getId().'.'.$image->getFileExt());
+        try {
+            unlink(IMAGE_LOCATION . DIRECTORY_SEPARATOR . $NAME . DIRECTORY_SEPARATOR . $image->getId() . '.' . $image->getFileExt());
+        } catch (Exception $e) {
+            
+        }
     }
 
     header('Location: '.$_SERVER['HTTP_REFERER']);
