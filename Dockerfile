@@ -18,4 +18,7 @@ COPY . /var/www/html
 ADD run.sh /
 RUN chmod 755 /run.sh
 
+EXPOSE 80
+VOLUME /var/www/html/images
+
 CMD ["/run.sh"]
