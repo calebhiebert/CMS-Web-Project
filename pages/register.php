@@ -2,7 +2,7 @@
 /**
  * Allows a user to register for an account
  */
-require_once "data/db.php";
+require_once 'data/token.php';
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
     $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_SPECIAL_CHARS);

@@ -51,7 +51,7 @@ if(isset($_GET['delete'])) {
         }
     }
 
-    redirect($_SERVER['HTTP_REFERER']);
+    redirect('/entity/'.$image->getEntityId().'/images');
     exit;
 } else {
 

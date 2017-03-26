@@ -42,7 +42,7 @@ if($token_valid) {
             $user->setEmail($email);
             $user->setPermLevel($clearance);
             editUser($user);
-            redirect('/user'.$id);
+            redirect('/user/'.$id);
             exit;
         }
     }
