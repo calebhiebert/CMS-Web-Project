@@ -5,22 +5,6 @@ $entities = getMultiple(
         ['lmt'=>ENTITIES_TO_DISPLAY],
         'Entity'
 );
-
-$ents = '';
-
-for ($i = 0; $i < count($entities); $i++) {
-    $ents .= $entities[$i]->getId();
-
-    if($i < count($entities) - 1) {
-        $ents .= ', ';
-    }
-}
-
-$image = getSingle(
-        'SELECT * FROM Pictures WHERE EntityId IN (:ids) LIMIT 1', ['ids'=>$ents],
-        'Image'
-);
-
 ?>
 
 <?php include 'data/base.php' ?>
@@ -32,7 +16,7 @@ $image = getSingle(
 
 <?php startblock('body') ?>
 <?php if ($image != null): ?>
-    <img id="bg-img" class="hidden" alt="<?= $image->getName() ?>" src="<?= SITE_PREFIX ?>/images/<?= BACKGROUND_IMAGE_SIZE.'/'.$image->getId().'.'.$image->getFileExt() ?>">
+    <img id="bg-img" class="hidden" alt="background" src="<?= SITE_PREFIX ?>/css/images/mainbg.jpg">
     <canvas class="bg" id="bg-img-canvas"></canvas>
 <?php endif; ?>
 <div class="container mt-4">

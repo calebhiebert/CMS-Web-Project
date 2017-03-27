@@ -27,28 +27,33 @@ if (isset($_FILES['image'])) {
             // get the file extension
             $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
 
-            // create a new image object to resize the image
-            $image = new ImageResize($file['tmp_name']);
+            if(in_array($ext, IMAGE_FILE_TYPES)) {
 
-            // save to all defined sizes
-            foreach (IMAGE_FILE_SIZES as $name => $pxHeight) {
-                if (!file_exists(IMAGE_LOCATION . DIRECTORY_SEPARATOR . $name))
-                    mkdir(IMAGE_LOCATION . DIRECTORY_SEPARATOR . $name, 0777, true);
+                // create a new image object to resize the image
+                $image = new ImageResize($file['tmp_name']);
 
-                $image->resizeToWidth($pxHeight, true);
-                $image->save(IMAGE_LOCATION . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR . $imageId . '.' . $ext);
-                $log .= 'Saved for ' . $name. ' ';
+                // save to all defined sizes
+                foreach (IMAGE_FILE_SIZES as $name => $pxHeight) {
+                    if (!file_exists(IMAGE_LOCATION . DIRECTORY_SEPARATOR . $name))
+                        mkdir(IMAGE_LOCATION . DIRECTORY_SEPARATOR . $name, 0777, true);
+
+                    $image->resizeToWidth($pxHeight, true);
+                    $image->save(IMAGE_LOCATION . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR . $imageId . '.' . $ext);
+                    $log .= 'Saved for ' . $name . ' ';
+                }
+
+                // add the image to the database
+                putImage($imageId, $ext, $entity->getId(), $file['size'], null, substr($file['name'], 0, 60));
+
+                $edit = new Edit();
+                $edit->setPictureId($imageId);
+                $edit->setUserId($user->getId());
+                putEditEntry($edit);
+
+                $log .= 'Success!';
+            } else {
+                $log .= 'Invalid format. ';
             }
-
-            // add the image to the database
-            putImage($imageId, $ext, $entity->getId(), $file['size'], null, substr($file['name'], 0, 60));
-
-            $edit = new Edit();
-            $edit->setPictureId($imageId);
-            $edit->setUserId($user->getId());
-            putEditEntry($edit);
-
-            $log .= 'Success!';
         } else {
             $log .= 'Upload Error: '.$file['error'];
         }
