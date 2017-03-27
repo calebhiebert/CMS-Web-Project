@@ -15,10 +15,8 @@ $entities = getMultiple(
 <?php endblock() ?>
 
 <?php startblock('body') ?>
-<?php if ($image != null): ?>
-    <img id="bg-img" class="hidden" alt="background" src="<?= SITE_PREFIX ?>/css/images/mainbg.jpg">
-    <canvas class="bg" id="bg-img-canvas"></canvas>
-<?php endif; ?>
+<img id="bg-img" class="hidden" alt="background" src="<?= SITE_PREFIX ?>/css/images/mainbg.jpg">
+<canvas class="bg" id="bg-img-canvas"></canvas>
 <div class="container mt-4">
     <div class="card-columns">
         <?php foreach ($entities as $entity): ?>
