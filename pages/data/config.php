@@ -1,6 +1,6 @@
 <?php
 // Site config
-define('SITE_PREFIX', '/test');
+define('SITE_PREFIX', '');
 
 // Database config
 define('DB_HOST', 'piikl.com');
