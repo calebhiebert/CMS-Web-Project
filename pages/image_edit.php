@@ -41,16 +41,7 @@ if($_POST) {
 
 if(isset($_GET['delete'])) {
     deleteImage($image->getId());
-
-    //delete the files
-    foreach (IMAGE_FILE_SIZES as $NAME => $SIZE) {
-        try {
-            @unlink(IMAGE_LOCATION . DIRECTORY_SEPARATOR . $NAME . DIRECTORY_SEPARATOR . $image->getId() . '.' . $image->getFileExt());
-        } catch (Exception $e) {
-
-        }
-    }
-
+    deleteImageFile($image->getId(), $image->getFileExt());
     redirect('/entity/'.$image->getEntityId().'/images');
     exit;
 } else {

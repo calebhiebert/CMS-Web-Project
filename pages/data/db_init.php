@@ -83,7 +83,7 @@ try {
         'FileSize INT UNSIGNED NOT NULL,' .
         'Caption TINYTEXT,' .
         'Name VARCHAR(60) NOT NULL,' .
-        'CONSTRAINT Pictures_Entity_fk FOREIGN KEY (EntityId) REFERENCES Entities (Id))');
+        'CONSTRAINT Pictures_Entity_fk FOREIGN KEY (EntityId) REFERENCES Entities (Id) ON DELETE CASCADE)');
 
     $status_pictures = $create_pictures->execute() ? 'Success' : 'Error';
 } catch (PDOException $e) {

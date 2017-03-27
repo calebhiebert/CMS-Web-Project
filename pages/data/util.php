@@ -64,4 +64,15 @@ function redirect($target = '/') {
     header('Location: '.SITE_PREFIX.$target);
 }
 
+function deleteImageFile($imgId, $fileExt) {
+    //delete the files
+    foreach (IMAGE_FILE_SIZES as $NAME => $SIZE) {
+        try {
+            @unlink(IMAGE_LOCATION . DIRECTORY_SEPARATOR . $NAME . DIRECTORY_SEPARATOR . $imgId . '.' . $fileExt);
+        } catch (Exception $e) {
+
+        }
+    }
+}
+
 ?>

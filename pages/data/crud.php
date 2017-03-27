@@ -303,11 +303,11 @@ function getUsers() {
 }
 
 function deleteEntity($id) {
-    execute('DELETE FROM Entities WHERE Id = :id LIMIT 1', ['id'=>$id]);
+    return execute('DELETE FROM Entities WHERE Id = :id LIMIT 1', ['id'=>$id]);
 }
 
 function deleteImage($id) {
-    execute('DELETE FROM Pictures WHERE Id = :id LIMIT 1', ['id'=>$id]);
+    return execute('DELETE FROM Pictures WHERE Id = :id LIMIT 1', ['id'=>$id]);
 }
 
 /**

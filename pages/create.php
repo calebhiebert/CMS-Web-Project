@@ -68,7 +68,15 @@ if($_POST) {
         array_push($tagArr, $tag->getTag());
     }
 } else if (isset($_GET['delete']) && isset($_GET['id'])) {
-    deleteEntity(filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT));
+    $entityId = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
+
+    $imgs = getEntityImages($entityId);
+    deleteEntity($entityId);
+
+    foreach ($imgs as $img) {
+        deleteImageFile($img->getId(), $img->getFileExt());
+    }
+
     redirect();
     exit;
 }

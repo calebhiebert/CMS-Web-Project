@@ -1,17 +1,30 @@
 <?php
 require_once "data/token.php";
 $entities = getMultiple(
-        'SELECT * FROM Entities '. ($token_valid ? '' : 'WHERE Published = 1') .' ORDER BY rand() LIMIT :lmt',
+        'SELECT Entities.Id, Name, Description, Parent, Published FROM Entities LEFT JOIN EditLog ON Entities.Id = EditLog.EntityId '. ($token_valid ? '' : 'WHERE Published = 1') .' ORDER BY EditLog.Time DESC LIMIT :lmt',
         ['lmt'=>ENTITIES_TO_DISPLAY],
         'Entity'
-)
+);
+
+$image = getSingle(
+        'SELECT * FROM Pictures ORDER BY rand() LIMIT 1', [],
+        'Image'
+);
 
 ?>
 
 <?php include 'data/base.php' ?>
 <?php startblock('title') ?>Main Page<?php endblock() ?>
 
+<?php startblock('style') ?>
+    <link rel="stylesheet" type="text/css" href="<?= SITE_PREFIX ?>/css/bgblur.css"/>
+<?php endblock() ?>
+
 <?php startblock('body') ?>
+<?php if ($image != null): ?>
+    <img id="bg-img" alt="<?= $image->getName() ?>" src="<?= SITE_PREFIX ?>/images/<?= BACKGROUND_IMAGE_SIZE.'/'.$image->getId().'.'.$image->getFileExt() ?>">
+    <canvas class="bg" id="bg-img-canvas"></canvas>
+<?php endif; ?>
 <div class="container mt-4">
     <div class="card-columns">
         <?php foreach ($entities as $entity): ?>
@@ -37,4 +50,9 @@ $entities = getMultiple(
         <?php endforeach; ?>
     </div>
 </div>
+<?php endblock() ?>
+
+<?php startblock('script') ?>
+    <script src="<?= SITE_PREFIX ?>/js/StackBlur.js"></script>
+    <script src="<?= SITE_PREFIX ?>/js/bgblur.js"></script>
 <?php endblock() ?>
