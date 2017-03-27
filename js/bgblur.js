@@ -8,9 +8,14 @@ $(window).on('load', function () {
         .addClass('navbar-inverse')
         .addClass('shadowed')
         .css('background-color', shadeBlend(-0.6, rgbToHex(rgb.r, rgb.g, rgb.b)));
-
-    document.getElementById('bg-img').parentNode.removeChild(document.getElementById('bg-img'));
 });
+
+function applyImage(url) {
+    var img = $('<img>').attr('src', url);
+    img.load(function () {
+        stackBlurImage($img[0], 'bg-img-canvas', 5, false);
+    });
+}
 
 function getAverageRGB(imgEl) {
 

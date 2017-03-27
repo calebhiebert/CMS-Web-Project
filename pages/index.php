@@ -6,8 +6,18 @@ $entities = getMultiple(
         'Entity'
 );
 
+$ents = '';
+
+for ($i = 0; $i < count($entities); $i++) {
+    $ents .= $entities[$i]->getId();
+
+    if($i < count($entities) - 1) {
+        $ents .= ', ';
+    }
+}
+
 $image = getSingle(
-        'SELECT * FROM Pictures ORDER BY rand() LIMIT 1', [],
+        'SELECT * FROM Pictures WHERE EntityId IN (:ids) LIMIT 1', ['ids'=>$ents],
         'Image'
 );
 
@@ -22,7 +32,7 @@ $image = getSingle(
 
 <?php startblock('body') ?>
 <?php if ($image != null): ?>
-    <img id="bg-img" alt="<?= $image->getName() ?>" src="<?= SITE_PREFIX ?>/images/<?= BACKGROUND_IMAGE_SIZE.'/'.$image->getId().'.'.$image->getFileExt() ?>">
+    <img id="bg-img" class="hidden" alt="<?= $image->getName() ?>" src="<?= SITE_PREFIX ?>/images/<?= BACKGROUND_IMAGE_SIZE.'/'.$image->getId().'.'.$image->getFileExt() ?>">
     <canvas class="bg" id="bg-img-canvas"></canvas>
 <?php endif; ?>
 <div class="container mt-4">

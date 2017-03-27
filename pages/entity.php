@@ -52,7 +52,7 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
 
 <?php startblock('body') ?>
 <?php if (count($images) > 0 && SHOW_BACKGROUND_IMAGE): ?>
-    <img id="bg-img" alt="<?= $images[0]->getName() ?>" src="<?= SITE_PREFIX ?>/images/<?= BACKGROUND_IMAGE_SIZE.'/'.$images[0]->getId().'.'.$images[0]->getFileExt() ?>">
+    <img id="bg-img" class="hidden" alt="<?= $images[0]->getName() ?>" src="<?= SITE_PREFIX ?>/images/<?= BACKGROUND_IMAGE_SIZE.'/'.$images[0]->getId().'.'.$images[0]->getFileExt() ?>">
     <canvas class="bg" id="bg-img-canvas"></canvas>
 <?php endif; ?>
 <div class="container mt-3 mb-3">
