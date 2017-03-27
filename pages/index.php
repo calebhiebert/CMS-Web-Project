@@ -1,7 +1,7 @@
 <?php
 require_once "data/token.php";
 $entities = getMultiple(
-        'SELECT DISTINCT Entities.Id, Name, Description, Parent, Published, EditLog.Time FROM Entities LEFT JOIN EditLog ON Entities.Id = EditLog.EntityId '. ($token_valid ? '' : 'WHERE Published = 1') .' ORDER BY EditLog.Time DESC LIMIT :lmt',
+        'SELECT DISTINCT Entities.Id, Name, Description, Parent, Published, (SELECT MAX(Time) FROM EditLog WHERE EntityId = Entities.Id) lastEdit FROM Entities '. ($token_valid ? '' : 'WHERE Published = 1') .' ORDER BY lastEdit DESC LIMIT :lmt',
         ['lmt'=>ENTITIES_TO_DISPLAY],
         'Entity'
 );
