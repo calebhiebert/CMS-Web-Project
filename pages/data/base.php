@@ -19,7 +19,7 @@ require_once 'token.php';
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navContent">
         <span class="navbar-toggler-icon"></span>
     </button>
-    <a class="navbar-brand" href="<?= SITE_PREFIX ?>">O.P.E Creature Database</a>
+    <a class="navbar-brand" href="<?= SITE_PREFIX ?>/">O.P.E Creature Database</a>
 
     <div class="collapse navbar-collapse" id="navContent">
         <ul class="navbar-nav mr-auto">
