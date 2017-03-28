@@ -43,7 +43,14 @@ require_once 'token.php';
                     <a href="<?= SITE_PREFIX ?>/logout" class="nav-link">Logout</a>
                 </li>
             <?php endif ?>
+            <?php startblock('navbar') ?>
+            <?php endblock() ?>
         </ul>
+
+        <form class="form-inline my-2 my-lg-0" action="<?= SITE_PREFIX ?>/search" method="get">
+            <input class="form-control mr-sm-2" type="text" name="query" placeholder="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
     </div>
 </nav>
 <?php

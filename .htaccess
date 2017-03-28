@@ -2,7 +2,8 @@ RewriteEngine on
 
 # Admin Related
 RewriteRule ^admin/?$ pages/admin.php
-RewriteRule ^admin/initialize-database/?$ db_init.php
+RewriteRule ^admin/initialize-database/?$ pages/data/db_init.php
+RewriteRule ^admin/entities/?$ pages/entities.php
 
 # Match index
 RewriteRule ^/?$ pages/index.php

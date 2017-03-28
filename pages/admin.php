@@ -21,6 +21,12 @@ exit;
 <?php include 'data/base.php' ?>
 <?php startblock('title') ?>Administration<?php endblock() ?>
 
+<?php startblock('navbar') ?>
+    <li class="nav-item">
+        <a class="nav-link" href="<?= SITE_PREFIX ?>/admin/entities">Entity List</a>
+    </li>
+<?php endblock() ?>
+
 <?php startblock('body') ?>
 <link rel="stylesheet" type="text/css" href="<?= SITE_PREFIX ?>/css/theme.default.min.css"/>
 
