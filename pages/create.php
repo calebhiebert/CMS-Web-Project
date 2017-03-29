@@ -85,6 +85,11 @@ if($_POST) {
 <?php include 'data/base.php' ?>
 <?php startblock('title') ?><?= isset($editId) ? 'Edit Entity' : 'Create Entity' ?><?php endblock() ?>
 
+<?php startblock('style') ?>
+<!--    <link href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1/css/froala_editor.min.css' rel='stylesheet' type='text/css' />-->
+<!--    <link href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1/css/froala_style.min.css' rel='stylesheet' type='text/css' />-->
+<?php endblock() ?>
+
 <?php startblock('body') ?>
 <link rel="stylesheet" href="<?= SITE_PREFIX ?>/css/select2.min.css">
 
@@ -148,6 +153,7 @@ if($_POST) {
 <?php endblock() ?>
 <?php startblock('script') ?>
     <script src="<?= SITE_PREFIX ?>/js/select2.full.min.js"></script>
+<!--    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1/js/froala_editor.min.js'></script>-->
     <?php if(isset($parent)): ?>
         <script>
             $('#in-parent').val(<?= $parent ?>);
@@ -162,5 +168,7 @@ if($_POST) {
         $('#tags').select2({
             tags: true
         });
+
+//        $('#in-description').froalaEditor();
     </script>
 <?php endblock() ?>
