@@ -204,5 +204,13 @@ if($_POST) {
         $('#in-description').froalaEditor({
             toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'fontFamily', 'fontSize', '|', 'specialCharacters', 'color', 'emoticons', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', '-', 'quote', 'insertHR', 'insertLink', 'insertTable', '|', 'undo', 'redo', 'clearFormatting', 'selectAll', 'html', 'applyFormat', 'removeFormat', 'fullscreen', 'help']
         });
+
+        $(".fr-box > div").each(function()
+        {
+            if($(this).css('z-index') == 9999)
+            {
+                $(this).remove();
+            }
+        });
     </script>
 <?php endblock() ?>
