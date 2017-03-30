@@ -2,6 +2,10 @@
 // Site config
 define('SITE_PREFIX', '');
 
+// Flickr
+define('FLICKR_API_KEY', '40a0e6e6e10e77a99cd6a0a8f96b7af8');
+define('FLICKR_SECRET', 'af3889b046ee91d5');
+
 // Database config
 define('DB_HOST', 'piikl.com');
 define('DB_USER', 'creature');

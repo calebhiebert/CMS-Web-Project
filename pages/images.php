@@ -1,8 +1,6 @@
 <?php
 require_once 'data/token.php';
-require_once 'data/ImageResize.php';
-
-use \Eventviva\ImageResize;
+require_once 'data/flickr/phpFlickr.php';
 
 if(!$token_valid) {
     redirect();
@@ -17,13 +15,28 @@ if($entity == null) {
     redirect();
     exit;
 }
+
+$f = new phpFlickr(FLICKR_API_KEY);
+
+$picSearch = $f->photos_search(['api_key'=>FLICKR_API_KEY,'text'=>'tiger', 'per_page'=>5]);
+
 ?>
 
 <?php include 'data/base.php' ?>
 <?php startblock('title') ?>Add Images<?php endblock() ?>
 
+<?php startblock('style') ?>
+<link rel="stylesheet" href="<?= SITE_PREFIX ?>/css/dropzone.css">
+<?php endblock() ?>
+
 <?php startblock('body') ?>
-    <link rel="stylesheet" href="<?= SITE_PREFIX ?>/css/dropzone.css">
+    <pre>
+        <?php
+            var_dump($picSearch);
+            var_dump($f->getErrorMsg());
+            var_dump($f->getErrorCode());
+        ?>
+    </pre>
     <div class="container mt-4">
         <div class="card">
             <h5 class="card-header">Upload Picture for <?= $entity->getName() ?></h5>

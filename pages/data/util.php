@@ -1,5 +1,4 @@
 <?php
-require_once 'PrettyDateTime.php';
 
 use PrettyDateTime\PrettyDateTime;
 
@@ -57,6 +56,7 @@ function truncate($text, $length, $truncationChars) {
 }
 
 function prettyTime($time) {
+    global $dt;
     return PrettyDateTime::parse(date_create_from_format('Y-m-d H:i:s', $time), new DateTime('now'));
 }
 

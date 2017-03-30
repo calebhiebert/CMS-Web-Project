@@ -9,6 +9,7 @@
 require_once "db.php";
 require_once 'crud.php';
 require_once "util.php";
+require_once '../vendor/autoload.php';
 
 $token = filter_input(INPUT_COOKIE, 'token');
 $token_valid = false;

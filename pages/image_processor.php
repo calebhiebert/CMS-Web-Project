@@ -1,6 +1,6 @@
 <?php
 require_once 'data/token.php';
-require_once 'data/ImageResize.php';
+
 
 use \Eventviva\ImageResize;
 
