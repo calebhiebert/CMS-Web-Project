@@ -43,8 +43,6 @@ function validateToken($token) {
     if(strlen($token) == TOKEN_LENGTH) {
         $query = getSingle('SELECT UserId, SupplyDate FROM Sessions WHERE Token = :token', ['token'=>$token]);
 
-        var_dump($query);
-
         if(getUser($query['UserId']) != null) {
             return true;
         }

@@ -20,13 +20,15 @@ $res = $client->request('GET', 'https://api.flickr.com/services/rest/', [
         'query' => ['api_key' => FLICKR_API_KEY,
                     'method' => 'flickr.photos.search',
                     'text' => $entity->getName(),
-                    'per_page' => 10,
-                    'sort' => 'relevance'],
+                    'per_page' => 50,
+                    'sort' => 'relevance',
+                    'extras' => 'original_format'],
         'verify' => false
 ]);
 
 $flickr = simplexml_load_string($res->getBody());
 
+$counter = 0;
 ?>
 
 <?php include 'data/base.php' ?>
@@ -48,12 +50,16 @@ $flickr = simplexml_load_string($res->getBody());
             </form>
         </div>
     </div>
-    <div class="container">
+    <div class="container mt-2">
+        <h5>Photo Suggestions</h5>
         <div class="card-group">
             <?php foreach ($flickr->photos->photo as $photo): ?>
-                <div class="card card-inverse">
-                    <img class="card-img img-fluid" src="https://farm<?= $photo['farm'] ?>.staticflickr.com/<?= $photo['server'] ?>/<?= $photo['id'] ?>_<?= $photo['secret'] ?>.jpg">
-                </div>
+                <?php if(isset($photo['originalsecret']) && $counter < 9): ?>
+                    <?php $counter++ ?>
+                    <a href="<?= SITE_PREFIX ?>/pages/image_processor.php?entityid=<?= $entity->getId() ?>&token=<?= $token ?>&f_id=<?= $photo['id'] ?>&f_farm=<?= $photo['farm'] ?>&f_server=<?= $photo['server'] ?>&f_secret=<?= $photo['originalsecret'] ?>&f_format=<?= $photo['originalformat'] ?>">
+                        <img class="card-img img-fluid" src="<?= constructFlickrUrl($photo, 'q') ?>">
+                    </a>
+                <?php endif; ?>
             <?php endforeach; ?>
         </div>
     </div>

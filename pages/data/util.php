@@ -75,4 +75,8 @@ function deleteImageFile($imgId, $fileExt) {
     }
 }
 
+function constructFlickrUrl($photo, $size = 'o', $format = 'jpg') {
+    return 'https://farm'.$photo['farm'].'.staticflickr.com/'.$photo['server'].'/'.$photo['id'].'_'.$photo['secret'].'_'.$size.'.'.$format;
+}
+
 ?>
