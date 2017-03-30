@@ -110,14 +110,14 @@ if($_POST) {
 <?php endblock() ?>
 
 <?php startblock('body') ?>
-<div class="container mt-4">
+<div class="container mt-4 mb-4">
     <?php if(isset($editId)): ?>
         <h4>Edit <?= $entity->getName() ?></h4>
     <?php else: ?>
         <h4>Create Entity</h4>
     <?php endif; ?>
-    <div class="card">
-        <div class="card-block">
+<!--    <div class="card">-->
+<!--        <div class="card-block">-->
             <form action="<?= SITE_PREFIX ?><?= isset($editId) ? '/entity/'.$editId.'/edit' : '/entity/create' ?>" method="post">
                 <?php if(isset($editId)): ?>
                     <input type="hidden" name="editid" value="<?= $editId ?>">
@@ -165,8 +165,8 @@ if($_POST) {
                 <?php endif ?>
             </form>
         </div>
-    </div>
-</div>
+<!--    </div>-->
+<!--</div>-->
 <?php endblock() ?>
 <?php startblock('script') ?>
     <script src="<?= SITE_PREFIX ?>/js/select2.full.min.js"></script>

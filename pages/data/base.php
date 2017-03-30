@@ -23,9 +23,6 @@ require_once 'token.php';
 
     <div class="collapse navbar-collapse" id="navContent">
         <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a href="<?= SITE_PREFIX ?>/search" class="nav-link">Search</a>
-            </li>
             <?php if(!$token_valid): ?>
             <li class="nav-item">
                 <a href="<?= SITE_PREFIX ?>/login" class="nav-link">Log In</a>

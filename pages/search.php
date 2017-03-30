@@ -39,14 +39,19 @@ $searchResults = searchEntities($query);
             </form>
         </div>
         <div class="list-group mt-2">
+            <?php if(count($searchResults) == 0): ?>
+                <span class="list-group-item">No results were found :(</span>
+            <?php endif; ?>
             <?php for ($i = ($page * $resultsPerPage); $i < min(($page * $resultsPerPage) + $resultsPerPage, count($searchResults)); $i++): ?>
                 <a class="list-group-item list-group-item-action" href="<?= SITE_PREFIX ?>/entity/<?= urlencode($searchResults[$i]['Name']) ?>"><?= $searchResults[$i]['Name'] ?></a>
             <?php endfor ?>
         </div>
-        <ul class="pagination justify-content-center mt-2">
-            <?php for ($i = 0; $i < ceil(count($searchResults) / $resultsPerPage); $i++): ?>
-                <li class="page-item<?= $i == $page ? ' active' : '' ?>"><a href="<?= SITE_PREFIX ?>/search?query=<?= urlencode($query) ?>&page=<?= $i + 1 ?>&rpp=<?= $resultsPerPage ?>" class="page-link"><?= $i + 1 ?></a></li>
-            <?php endfor; ?>
-        </ul>
+        <?php if(ceil(count($searchResults) / $resultsPerPage) > 1): ?>
+            <ul class="pagination justify-content-center mt-2">
+                <?php for ($i = 0; $i < ceil(count($searchResults) / $resultsPerPage); $i++): ?>
+                    <li class="page-item<?= $i == $page ? ' active' : '' ?>"><a href="<?= SITE_PREFIX ?>/search?query=<?= urlencode($query) ?>&page=<?= $i + 1 ?>&rpp=<?= $resultsPerPage ?>" class="page-link"><?= $i + 1 ?></a></li>
+                <?php endfor; ?>
+            </ul>
+        <?php endif; ?>
     </div>
 <?php endblock() ?>
