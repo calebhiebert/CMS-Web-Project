@@ -138,7 +138,7 @@ if($_POST) {
                 </fieldset>
                 <fieldset class="form-group">
                     <label for="in-published" class="form-control-label">
-                        <input id="in-published" name="published" type="checkbox" <?= isset($published) ? $published ? 'checked' : '' : '' ?>>
+                        <input id="in-published" name="published" type="checkbox" <?= isset($published) ? $published ? 'checked' : '' : 'checked' ?>>
                         Published
                     </label>
                 </fieldset>
