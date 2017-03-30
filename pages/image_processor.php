@@ -49,8 +49,6 @@ function handleImage($entityId, $token, $name, $size, $tmpName) {
         // generate a random id for this image
         $imageId = random_text('alpha', 16);
 
-        echo $name;
-
         // get the file extension
         $ext = strtolower(pathinfo($name, PATHINFO_EXTENSION));
 
@@ -90,8 +88,5 @@ function handleImage($entityId, $token, $name, $size, $tmpName) {
             $log .= 'Entity does not exist! ';
         }
     }
-
-    echo $log;
-//    file_put_contents('../logs/image.log', $log."\n", FILE_APPEND);
 }
 ?>
