@@ -2,6 +2,7 @@
   "require" : {
     "danielstjules/php-pretty-datetime": "dev-master",
     "eventviva/php-image-resize": "1.6.*",
-    "arshaw/phpti": "dev-master"
+    "arshaw/phpti": "dev-master",
+    "guzzlehttp/guzzle": "~6.0"
   }
 }

@@ -1,6 +1,5 @@
 <?php
 require_once 'data/token.php';
-require_once 'data/flickr/phpFlickr.php';
 
 if(!$token_valid) {
     redirect();
@@ -16,9 +15,17 @@ if($entity == null) {
     exit;
 }
 
-$f = new phpFlickr(FLICKR_API_KEY);
+$client = new GuzzleHttp\Client();
+$res = $client->request('GET', 'https://api.flickr.com/services/rest/', [
+        'query' => ['api_key' => FLICKR_API_KEY,
+                    'method' => 'flickr.photos.search',
+                    'text' => $entity->getName(),
+                    'per_page' => 10,
+                    'sort' => 'relevance'],
+        'verify' => false
+]);
 
-$picSearch = $f->photos_search(['api_key'=>FLICKR_API_KEY,'text'=>'tiger', 'per_page'=>5]);
+$flickr = simplexml_load_string($res->getBody());
 
 ?>
 
@@ -30,13 +37,6 @@ $picSearch = $f->photos_search(['api_key'=>FLICKR_API_KEY,'text'=>'tiger', 'per_
 <?php endblock() ?>
 
 <?php startblock('body') ?>
-    <pre>
-        <?php
-            var_dump($picSearch);
-            var_dump($f->getErrorMsg());
-            var_dump($f->getErrorCode());
-        ?>
-    </pre>
     <div class="container mt-4">
         <div class="card">
             <h5 class="card-header">Upload Picture for <?= $entity->getName() ?></h5>
@@ -46,6 +46,15 @@ $picSearch = $f->photos_search(['api_key'=>FLICKR_API_KEY,'text'=>'tiger', 'per_
                 </fieldset>
                 <a href="<?= SITE_PREFIX ?>/entity/<?= urlencode($entity->getName()) ?>" class="btn btn-primary">Done</a>
             </form>
+        </div>
+    </div>
+    <div class="container">
+        <div class="card-group">
+            <?php foreach ($flickr->photos->photo as $photo): ?>
+                <div class="card card-inverse">
+                    <img class="card-img img-fluid" src="https://farm<?= $photo['farm'] ?>.staticflickr.com/<?= $photo['server'] ?>/<?= $photo['id'] ?>_<?= $photo['secret'] ?>.jpg">
+                </div>
+            <?php endforeach; ?>
         </div>
     </div>
     <div class="container mt-2">
