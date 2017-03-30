@@ -7,19 +7,30 @@
 require_once "db.php";
 require_once "util.php";
 
+// mb4 stuff
+try {
+    $alter_db_mb4 = $db->prepare(
+        "ALTER DATABASE creature CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci"
+    );
+
+    $alter_db_mb4->execute();
+} catch (PDOException $e) {
+
+}
+
 try {
 // Create entity table
     $create_entity = $db->prepare(
         "CREATE TABLE Entities (" .
         "Id INT UNSIGNED PRIMARY KEY AUTO_INCREMENT, " .
-        "Name VARCHAR(100) NOT NULL, " .
-        "Description TEXT NOT NULL," .
+        "Name VARCHAR(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL, " .
+        "Description TEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL," .
         "Parent INT UNSIGNED," .
         "Published BOOLEAN NOT NULL DEFAULT FALSE," .
         "KEY Entity_Entity_Id_fk (Parent)," .
         "CONSTRAINT Entity_Entity_Id_fk FOREIGN KEY (Parent) REFERENCES Entities (Id) ON DELETE SET NULL," .
         "CONSTRAINT Entity_Not_Parent_To_Self CHECK (Parent <> Id)," .
-        "CONSTRAINT Entity_Name_Unique UNIQUE (Name))");
+        "CONSTRAINT Entity_Name_Unique UNIQUE (Name)) CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicode_ci");
 
     $status_entity = $create_entity->execute() ? 'Success' : 'Error';
 } catch (PDOException $e) {
@@ -31,10 +42,10 @@ try {
     $create_tags = $db->prepare(
             'CREATE TABLE Tags (' .
             'EntityId INT UNSIGNED NOT NULL,' .
-            'Tag VARCHAR(60) NOT NULL,' .
+            'Tag VARCHAR(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,' .
             'CONSTRAINT Tags_EntityId_Tag_pk PRIMARY KEY (EntityId, Tag),' .
             'CONSTRAINT Tags_Entities_Id_fk FOREIGN KEY (EntityId) REFERENCES Entities (Id) ON DELETE CASCADE' .
-            ')');
+            ') CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicode_ci');
 
     $status_tags = $create_tags->execute() ? 'Success' : 'Error';
 } catch (PDOException $e) {
@@ -64,9 +75,9 @@ try {
     $create_sessions = $db->prepare(
         'CREATE TABLE Sessions (' .
         'UserId INT UNSIGNED NOT NULL PRIMARY KEY,' .
-        'Token CHAR(32) NOT NULL,' .
+        'Token CHAR(32) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,' .
         'SupplyDate DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,' .
-        'CONSTRAINT Sessions_Users_Fk FOREIGN KEY (UserId) REFERENCES Users (Id) ON DELETE CASCADE);');
+        'CONSTRAINT Sessions_Users_Fk FOREIGN KEY (UserId) REFERENCES Users (Id) ON DELETE CASCADE) CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicode_ci');
 
     $status_sessions = $create_sessions->execute() ? 'Success' : 'Error';
 } catch (PDOException $e) {
@@ -81,9 +92,10 @@ try {
         'EntityId INT UNSIGNED NOT NULL,' .
         'FileExt CHAR(5) NOT NULL,' .
         'FileSize INT UNSIGNED NOT NULL,' .
-        'Caption TINYTEXT,' .
-        'Name VARCHAR(60) NOT NULL,' .
-        'CONSTRAINT Pictures_Entity_fk FOREIGN KEY (EntityId) REFERENCES Entities (Id) ON DELETE CASCADE)');
+        'Caption TINYTEXT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci,' .
+        'Name VARCHAR(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NOT NULL,' .
+        'CONSTRAINT Pictures_Entity_fk FOREIGN KEY (EntityId) REFERENCES Entities (Id) ON DELETE CASCADE' .
+        ') CHARACTER SET=utf8mb4 COLLATE=utf8mb4_unicode_ci');
 
     $status_pictures = $create_pictures->execute() ? 'Success' : 'Error';
 } catch (PDOException $e) {

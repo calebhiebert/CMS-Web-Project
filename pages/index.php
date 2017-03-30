@@ -32,7 +32,7 @@ $entities = getMultiple(
                     <div class="card-block">
                         <a href="<?= SITE_PREFIX ?>/entity/<?= urlencode($entity->getName()) ?>" style="color: black;"><h5 class="card-title"><?= $entity->getName() ?></h5></a>
                         <p class="card-text">
-                            <?= truncate($entity->getDescription(), ENTITY_DESCRIPTION_CHAR_TRUNCATION, '...') ?>
+                            <?= truncate(strip_tags(html_entity_decode($entity->getDescription(), ENT_QUOTES, 'UTF-8')), ENTITY_DESCRIPTION_CHAR_TRUNCATION, '...') ?>
                         </p>
                         <small class="text-muted">Edited <?= prettyTime($edit->getTime()) ?> by <?= $edit->getUsername() ?></small>
                     </div>

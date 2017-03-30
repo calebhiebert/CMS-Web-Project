@@ -28,6 +28,11 @@ if($_POST) {
     if(isset($_GET['editid'])) {
         $editId = filter_input(INPUT_GET, 'editid', FILTER_SANITIZE_NUMBER_INT);
         $entity = getEntity($editId);
+        
+        if($entity == null) {
+            redirect();
+            exit;
+        }
     }
 
     if(!$errName && !$errDescription) {
@@ -58,6 +63,12 @@ if($_POST) {
 } else if(isset($_GET['editid'])) {
     $editId = filter_input(INPUT_GET, 'editid', FILTER_SANITIZE_NUMBER_INT);
     $entity = getEntity($editId);
+
+    if($entity == null) {
+        redirect();
+        exit;
+    }
+
     $entity->setTags(getEntityTags($editId));
     $name = $entity->getName();
     $description = $entity->getDescription();
@@ -86,13 +97,19 @@ if($_POST) {
 <?php startblock('title') ?><?= isset($editId) ? 'Edit Entity' : 'Create Entity' ?><?php endblock() ?>
 
 <?php startblock('style') ?>
-<!--    <link href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1/css/froala_editor.min.css' rel='stylesheet' type='text/css' />-->
-<!--    <link href='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1/css/froala_style.min.css' rel='stylesheet' type='text/css' />-->
+    <link href="<?= SITE_PREFIX ?>/css/froala_editor.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?= SITE_PREFIX ?>/css/froala_style.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?= SITE_PREFIX ?>/css/plugins/colors.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?= SITE_PREFIX ?>/css/plugins/emoticons.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?= SITE_PREFIX ?>/css/plugins/line_breaker.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?= SITE_PREFIX ?>/css/plugins/quick_insert.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?= SITE_PREFIX ?>/css/plugins/special_characters.min.css" rel="stylesheet" type="text/css" />
+    <link href="<?= SITE_PREFIX ?>/css/plugins/table.min.css" rel="stylesheet" type="text/css" />
+
+<link rel="stylesheet" href="<?= SITE_PREFIX ?>/css/select2.min.css">
 <?php endblock() ?>
 
 <?php startblock('body') ?>
-<link rel="stylesheet" href="<?= SITE_PREFIX ?>/css/select2.min.css">
-
 <div class="container mt-4">
     <?php if(isset($editId)): ?>
         <h4>Edit <?= $entity->getName() ?></h4>
@@ -153,7 +170,22 @@ if($_POST) {
 <?php endblock() ?>
 <?php startblock('script') ?>
     <script src="<?= SITE_PREFIX ?>/js/select2.full.min.js"></script>
-<!--    <script type='text/javascript' src='https://cdnjs.cloudflare.com/ajax/libs/froala-editor/2.5.1/js/froala_editor.min.js'></script>-->
+    <script type='text/javascript' src='<?= SITE_PREFIX ?>/js/froala_editor.min.js'></script>
+    <script type='text/javascript' src='<?= SITE_PREFIX ?>/js/plugins/align.min.js'></script>
+    <script type='text/javascript' src='<?= SITE_PREFIX ?>/js/plugins/colors.min.js'></script>
+    <script type='text/javascript' src='<?= SITE_PREFIX ?>/js/plugins/emoticons.min.js'></script>
+    <script type='text/javascript' src='<?= SITE_PREFIX ?>/js/plugins/font_family.min.js'></script>
+    <script type='text/javascript' src='<?= SITE_PREFIX ?>/js/plugins/font_size.min.js'></script>
+    <script type='text/javascript' src='<?= SITE_PREFIX ?>/js/plugins/line_breaker.min.js'></script>
+    <script type='text/javascript' src='<?= SITE_PREFIX ?>/js/plugins/link.min.js'></script>
+    <script type='text/javascript' src='<?= SITE_PREFIX ?>/js/plugins/lists.min.js'></script>
+    <script type='text/javascript' src='<?= SITE_PREFIX ?>/js/plugins/paragraph_format.min.js'></script>
+    <script type='text/javascript' src='<?= SITE_PREFIX ?>/js/plugins/paragraph_style.min.js'></script>
+    <script type='text/javascript' src='<?= SITE_PREFIX ?>/js/plugins/quick_insert.min.js'></script>
+    <script type='text/javascript' src='<?= SITE_PREFIX ?>/js/plugins/quote.min.js'></script>
+    <script type='text/javascript' src='<?= SITE_PREFIX ?>/js/plugins/special_characters.min.js'></script>
+    <script type='text/javascript' src='<?= SITE_PREFIX ?>/js/plugins/table.min.js'></script>
+    <script type='text/javascript' src='<?= SITE_PREFIX ?>/js/plugins/url.min.js'></script>
     <?php if(isset($parent)): ?>
         <script>
             $('#in-parent').val(<?= $parent ?>);
@@ -169,6 +201,8 @@ if($_POST) {
             tags: true
         });
 
-//        $('#in-description').froalaEditor();
+        $('#in-description').froalaEditor({
+            toolbarButtons: ['bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'fontFamily', 'fontSize', '|', 'specialCharacters', 'color', 'emoticons', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', '-', 'quote', 'insertHR', 'insertLink', 'insertTable', '|', 'undo', 'redo', 'clearFormatting', 'selectAll', 'html', 'applyFormat', 'removeFormat', 'fullscreen', 'help']
+        });
     </script>
 <?php endblock() ?>

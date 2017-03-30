@@ -98,7 +98,7 @@ if($ent != null && ($ent->isPublished() || $token_valid)) {
             </div>
         <?php endif; ?>
         <div class="card-block">
-            <p class="card-text"><?= nl2br($ent->getDescription()) ?></p>
+            <div class="card-text"><?= html_entity_decode($ent->getDescription(), ENT_QUOTES, 'UTF-8') ?></div>
             <?php if(count($ent->getChildren()) > 0 && DISPLAY_CHILDREN): ?>
                 <h6>Children</h6>
                 <ul>
