@@ -38,8 +38,6 @@ try {
 redirect('/entity/'.$entityId.'/images');
 
 function handleImage($entityId, $token, $name, $size, $tmpName) {
-    $log = 'Token: '.$token.' EntityId: '.$entityId.' ';
-
     $entity = getEntity($entityId);
     $tokenValid = validateToken($token);
 
@@ -64,7 +62,6 @@ function handleImage($entityId, $token, $name, $size, $tmpName) {
 
                 $image->resizeToWidth($pxHeight, true);
                 $image->save(IMAGE_LOCATION . DIRECTORY_SEPARATOR . $name . DIRECTORY_SEPARATOR . $imageId . '.' . $ext);
-                $log .= 'Saved for ' . $name . ' ';
             }
 
             // add the image to the database
@@ -75,17 +72,10 @@ function handleImage($entityId, $token, $name, $size, $tmpName) {
             $edit->setUserId($user->getId());
             putEditEntry($edit);
 
-            $log .= 'Success!';
-        } else {
-            $log .= 'Invalid format. ';
-        }
-    } else {
-        if(!$tokenValid) {
-            $log .= 'Token invalid! ';
-        }
-
-        if($entity == null) {
-            $log .= 'Entity does not exist! ';
+            try {
+                unlink($tmpName);
+            } catch (Exception $e) {
+            }
         }
     }
 }
