@@ -1,4 +1,7 @@
 <?php
+/**
+ * Index page
+ */
 require_once "data/token.php";
 $entities = getMultiple(
         'SELECT DISTINCT Entities.Id, Name, Description, Parent, Published, (SELECT MAX(Time) FROM EditLog WHERE EntityId = Entities.Id) lastEdit FROM Entities '. ($token_valid ? '' : 'WHERE Published = 1') .' ORDER BY lastEdit DESC LIMIT :lmt',

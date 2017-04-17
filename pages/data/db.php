@@ -1,4 +1,7 @@
 <?php
+/**
+ * Database connector
+ */
 require 'config.php';
 
 try {

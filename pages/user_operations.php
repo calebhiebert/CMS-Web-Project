@@ -1,4 +1,8 @@
 <?php
+/**
+ * Does things to users
+ * was supposed to have more stuff but it doesn't because I forgot how to organize big projects
+ */
 require_once 'data/token.php';
 
 if($token_valid) {

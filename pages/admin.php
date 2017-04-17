@@ -1,4 +1,7 @@
 <?php
+/**
+ * Admin page for administering the cms
+ */
 require_once 'data/token.php';
 
 if(!$token_valid) {

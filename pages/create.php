@@ -1,4 +1,7 @@
 <?php
+/**
+ * Page for creating and editing entities
+ */
 require_once 'data/token.php';
 
 if(!$token_valid) {

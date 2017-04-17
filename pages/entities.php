@@ -1,4 +1,7 @@
 <?php
+/**
+ * Page for displaying entities in a sortable table
+ */
 require_once 'data/token.php';
 
 if(!$token_valid) {

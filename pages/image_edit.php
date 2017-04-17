@@ -1,4 +1,7 @@
 <?php
+/**
+ * Page for editing a single image
+ */
 require_once 'data/token.php';
 
 if(!$token_valid) {

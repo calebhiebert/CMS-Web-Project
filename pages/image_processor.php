@@ -1,4 +1,7 @@
 <?php
+/**
+ * Processes image uploads and saves them
+ */
 require_once 'data/token.php';
 
 use \Eventviva\ImageResize;

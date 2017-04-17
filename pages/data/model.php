@@ -1,5 +1,11 @@
 <?php
+/**
+ * Model contains required database tables as php objects
+ */
 
+/**
+ * Class Entity
+ */
 class Entity {
     private $Id;
     private $Name;

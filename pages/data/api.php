@@ -1,4 +1,8 @@
 <?php
+/*
+ * Api class generates registration codes
+ * Was supposed to have way more but I didn't feel like using a lot of javascript
+ */
 require_once 'util.php';
 require_once 'db.php';
 require_once 'crud.php';

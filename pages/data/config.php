@@ -1,4 +1,9 @@
 <?php
+/**
+ * Config file for adjusting various things about the site
+ */
+
+
 // Site config
 define('SITE_PREFIX', '');
 

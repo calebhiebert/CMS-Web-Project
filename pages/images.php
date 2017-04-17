@@ -1,4 +1,7 @@
 <?php
+/**
+ * Page for managing an entities images
+ */
 require_once 'data/token.php';
 
 if(!$token_valid) {

@@ -1,4 +1,7 @@
 <?php
+/**
+ * Displays a user's data
+ */
 require_once 'data/token.php';
 
 if($token_valid) {

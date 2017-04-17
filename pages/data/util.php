@@ -1,5 +1,9 @@
 <?php
 
+/**
+ * Contains random utility methods
+ */
+
 use PrettyDateTime\PrettyDateTime;
 
 function random_text( $type = 'alnum', $length = 8 )

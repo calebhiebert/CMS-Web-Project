@@ -1,4 +1,7 @@
 <?php
+/**
+ * Page for displaying a single entity
+ */
 require_once 'data/token.php';
 
 $name = filter_input(INPUT_GET, 'name', FILTER_SANITIZE_FULL_SPECIAL_CHARS);

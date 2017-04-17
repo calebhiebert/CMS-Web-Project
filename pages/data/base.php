@@ -1,4 +1,7 @@
 <?php
+/**
+ * Base template for all pages on the site
+ */
 require_once '../vendor/autoload.php';
 require_once 'token.php';
 ?>

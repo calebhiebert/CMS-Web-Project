@@ -1,4 +1,8 @@
 <?php
+/**
+ * CRUD file for all database related operations
+ */
+
 require_once 'model.php';
 
 /**
